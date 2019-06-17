@@ -18,15 +18,15 @@ const (
 )
 
 const (
-	scheme   string = `?P<scheme>https?|ftp`
-	username string = `?P<username>.*?`
-	password string = `?P<password>.*?`
-	hostname string = `?P<hostname>[^:\/\s]+`
-	port     string = `?P<port>:([^\/]*)`
-	path     string = `?P<path>(\/\w+)*\/`
-	filename string = `?P<filename>[-\w.]+[^#?\s]*`
-	query    string = `?P<query>\?([^#]*)`
-	fragment string = `?P<fragment>#(.*)`
+	scheme   string = `?P<` + SCHEME + `>https?|ftp`
+	username string = `?P<` + USERNAME + `>.*?`
+	password string = `?P<` + PASSWORD + `>.*?`
+	hostname string = `?P<` + HOSTNAME + `>[^:\/\s]+`
+	port     string = `?P<` + PORT + `>:([^\/]*)`
+	path     string = `?P<` + PATH + `>(\/\w+)*\/`
+	filename string = `?P<` + FILENAME + `>[-\w.]+[^#?\s]*`
+	query    string = `?P<` + QUERY + `>\?([^#]*)`
+	fragment string = `?P<` + FRAGMENT + `>#(.*)`
 )
 
 const (

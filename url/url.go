@@ -25,6 +25,7 @@ type url interface {
 	Host() string
 	HTTP() string
 	HTTPS() string
+	Path() string
 	Protocol() string
 }
 
@@ -32,9 +33,9 @@ type URL string
 
 func (pointer *URL) Host() string {
 	var (
-		URL = string(*pointer)
+		m = pointer.Map()
 	)
-	return URL
+	return m[HOSTNAME]
 }
 
 func (pointer *URL) HTTP() bool {
@@ -58,7 +59,7 @@ func (pointer *URL) Protocol() string {
 	return URL
 }
 
-func (pointer *URL) Keyset() map[string]string {
+func (pointer *URL) Map() map[string]string {
 	var (
 		content = pointer.Unpack()
 	)
@@ -71,6 +72,13 @@ func (pointer *URL) Keyset() map[string]string {
 		}
 	}
 	return m
+}
+
+func (pointer *URL) Path() string {
+	var (
+		m = pointer.Map()
+	)
+	return m[PATH]
 }
 
 func (pointer *URL) Unpack() []string {
