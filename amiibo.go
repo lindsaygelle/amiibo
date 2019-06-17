@@ -1,5 +1,10 @@
 package main
 
+func NewAmiibo() Amiibo {
+
+	return Amiibo{}
+}
+
 type Amiibo struct {
 	API       string  `json:"api"`
 	Character string  `json:"character"`

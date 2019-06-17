@@ -5,5 +5,5 @@ const (
 )
 
 const (
-	ErrTest string = "amiibo.Test %s. case %s did not pass. expected %v and received %v."
+	ErrTest string = "test case \"%s\" did not pass. expected \"%v\" but received \"%v\"."
 )
