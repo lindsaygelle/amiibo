@@ -32,3 +32,4 @@ const (
 const (
 	pattern string = `^((%s):\/)?\/?((%s)(:(%s)|)@)?(%s)(%s)?(%s)(%s)?(%s)?(%s)?$`
 )
+
