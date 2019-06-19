@@ -30,12 +30,34 @@ var (
 		maxForwards,
 		origin,
 		pragma,
-		ranger,
+		rnge,
 		referer,
 		te,
 		userAgent,
 		upgrade,
 		upgradeInsecureRequests)
+)
+
+var (
+	HTTPHeadersResponse = (&Set{}).Assign(
+		age,
+		cacheControl,
+		connection,
+		contentEncoding,
+		contentLanguage,
+		contentLength,
+		contentLocation,
+		date,
+		eTag,
+		expires,
+		location,
+		pragma,
+		setCookie,
+		tk,
+		upgrade,
+		vary,
+		via,
+		warning)
 )
 
 var (

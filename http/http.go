@@ -3,11 +3,14 @@ package http
 import "net/http"
 
 func NewHTTP() *HTTP {
-	return &HTTP{http: &http.Client{}}
+	return &HTTP{
+		HTTP: &http.Client{},
+		URL:  URL}
 }
 
 type HTTP struct {
-	http *http.Client
+	HTTP *http.Client
+	URL  string
 }
 
 func (pointer *HTTP) New(r, URL string) (*http.Request, error) {
