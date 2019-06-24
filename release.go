@@ -1,10 +1,19 @@
-package main
+package amiibo
 
 import "time"
 
-type Release struct {
-	AU time.Time
-	EU time.Time
-	JP time.Time
-	NA time.Time
+var (
+	_ release = (*Release)(nil)
+)
+
+func newRelease() *Release {
+	return &Release{}
 }
+
+func NewRelease(AU, EU, JP, NA time.Time) *Release {
+	return &Release{}
+}
+
+type release interface{}
+
+type Release struct{}
