@@ -1,13 +1,17 @@
 package amiibo
 
-import "github.com/gellel/slice"
+import (
+	"fmt"
+
+	"github.com/gellel/slice"
+)
 
 var (
 	_ s = (*Slice)(nil)
 )
 
 func NewSlice(amiibo ...*Amiibo) *Slice {
-	return &Slice{slice: &slice.Slice{}}
+	return (&Slice{slice: &slice.Slice{}}).Assign(amiibo...)
 }
 
 type s interface {
@@ -30,6 +34,7 @@ type s interface {
 	Replace(i int, amiibo *Amiibo) bool
 	Slice(start, end int) *Slice
 	Splice(start, end int) *Slice
+	String() string
 }
 
 type Slice struct {
@@ -137,4 +142,8 @@ func (pointer *Slice) Slice(start, end int) *Slice {
 
 func (pointer *Slice) Splice(start, end int) *Slice {
 	return &Slice{slice: pointer.slice.Splice(start, end)}
+}
+
+func (pointer *Slice) String() string {
+	return fmt.Sprintf("%v", pointer.slice)
 }

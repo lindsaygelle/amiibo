@@ -77,9 +77,31 @@ func TestSliceMap(t *testing.T) {
 		return amiibo
 	})
 	if amiibo := slice.Fetch(0); amiibo != nil {
-		fmt.Println(amiibo)
 		if amiibo.Name != "0" {
 			t.Fatalf("slice.Map(f func(i int, amiibo *amiibo.Amiibo) did not mutate the amiibo at the reference integer")
 		}
+	}
+}
+
+func TestSliceSplice(t *testing.T) {
+
+	a := amiibo.NewSlice(&amiibo.Amiibo{Name: "a"}, &amiibo.Amiibo{Name: "b"})
+
+	b := a.Splice(0, 1)
+
+	a.Each(func(i int, amiibo *amiibo.Amiibo) {
+		fmt.Println(amiibo.Name)
+	})
+
+	b.Each(func(i int, amiibo *amiibo.Amiibo) {
+		fmt.Println(amiibo.Name)
+	})
+
+	if ok := (a.Len() + b.Len()) == 2; ok != true {
+		t.Fatalf("slice.Splice(start, end int) did not truncate the length of the slice")
+	}
+
+	if ok := a.Poll().Name == "b" && b.Poll().Name == "a"; ok != true {
+		t.Fatalf("slice.Splice(start, end int) did not consume the first N elements from base slice")
 	}
 }
