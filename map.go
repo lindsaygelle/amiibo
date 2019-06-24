@@ -1,6 +1,8 @@
 package amiibo
 
 import (
+	"fmt"
+
 	"github.com/gellel/lexicon"
 	"github.com/gellel/slice"
 )
@@ -9,8 +11,8 @@ var (
 	_ m = (*Map)(nil)
 )
 
-func NewMap() *Map {
-	return &Map{lexicon: lexicon.New()}
+func NewMap(amiibo ...*Amiibo) *Map {
+	return (&Map{lexicon: lexicon.New()}).Mesh(amiibo...)
 }
 
 type m interface {
@@ -102,6 +104,10 @@ func (pointer *Map) Mesh(amiibo ...*Amiibo) *Map {
 		pointer.Add(amiibo)
 	}
 	return pointer
+}
+
+func (pointer *Map) String() string {
+	return fmt.Sprintf("%v", pointer.lexicon)
 }
 
 func (pointer *Map) Values() *Slice {
