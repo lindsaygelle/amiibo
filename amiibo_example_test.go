@@ -7,7 +7,6 @@ import (
 )
 
 func ExampleNewAmiibo() {
-
 	var (
 		character = "Fox"
 		game      = "Star Fox"
@@ -23,5 +22,5 @@ func ExampleNewAmiibo() {
 		NA        = "2014-11-21"
 	)
 	fmt.Println(amiibo.NewAmiibo(character, game, head, image, name, series, tail, t, AU, EU, JP, NA))
-	// Output Fox
+	// Output: Fox
 }
