@@ -89,14 +89,6 @@ func TestSliceSplice(t *testing.T) {
 
 	b := a.Splice(0, 1)
 
-	a.Each(func(i int, amiibo *amiibo.Amiibo) {
-		fmt.Println(amiibo.Name)
-	})
-
-	b.Each(func(i int, amiibo *amiibo.Amiibo) {
-		fmt.Println(amiibo.Name)
-	})
-
 	if ok := (a.Len() + b.Len()) == 2; ok != true {
 		t.Fatalf("slice.Splice(start, end int) did not truncate the length of the slice")
 	}
