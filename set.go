@@ -1,12 +1,14 @@
 package amiibo
 
 import (
+	"fmt"
+
 	"github.com/gellel/lexicon"
 	"github.com/gellel/slice"
 )
 
 func NewSet(amiibo ...*Amiibo) *Set {
-	return &Set{lexicon: lexicon.New()}
+	return (&Set{lexicon: lexicon.New()}).Assign(amiibo...)
 }
 
 var (
@@ -15,6 +17,7 @@ var (
 
 type set interface {
 	Add(amiibo *Amiibo) *Set
+	Assign(amiibo ...*Amiibo) *Set
 	Del(key string) bool
 	Each(f func(key string, slice *Slice)) *Set
 	Empty() bool
@@ -25,6 +28,7 @@ type set interface {
 	Len() int
 	Map(f func(key string, slice *Slice) *Slice) *Set
 	Size() int
+	String() string
 	Values() *Slice
 }
 
@@ -37,6 +41,13 @@ func (pointer *Set) Add(amiibo *Amiibo) *Set {
 		pointer.lexicon.Add(amiibo.Name, NewSlice())
 	}
 	pointer.Fetch(amiibo.Name).Append(amiibo)
+	return pointer
+}
+
+func (pointer *Set) Assign(amiibo ...*Amiibo) *Set {
+	for _, amiibo := range amiibo {
+		pointer.Add(amiibo)
+	}
 	return pointer
 }
 
@@ -93,6 +104,10 @@ func (pointer *Set) Size() int {
 		n = (n + slice.Len())
 	})
 	return n
+}
+
+func (pointer *Set) String() string {
+	return fmt.Sprintf("%v", pointer.lexicon)
 }
 
 func (pointer *Set) Values() *Slice {
