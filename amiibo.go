@@ -1,6 +1,9 @@
 package amiibo
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 var (
 	_ amiibo = (*Amiibo)(nil)
@@ -40,4 +43,8 @@ type Amiibo struct {
 	Tail      string   `json:"tail"`
 	Type      string   `json:"type"`
 	URL       string   `json:"URL"`
+}
+
+func (pointer *Amiibo) String() string {
+	return fmt.Sprintf("%s", pointer.Name)
 }
