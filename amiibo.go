@@ -2,20 +2,14 @@ package amiibo
 
 import (
 	"fmt"
-	"time"
 )
 
 var (
 	_ amiibo = (*Amiibo)(nil)
 )
 
-func newAmiibo() *Amiibo {
-	return &Amiibo{Release: newRelease()}
-}
-
-func NewAmiibo(amiibo, character, game, head, image, name, series, tail, t, URL string, AU, EU, JP, NA time.Time) *Amiibo {
+func NewAmiibo(character, game, head, image, name, series, tail, t, AU, EU, JP, NA string) *Amiibo {
 	return &Amiibo{
-		Amiibo:    amiibo,
 		Character: character,
 		Game:      game,
 		Head:      head,
@@ -25,15 +19,16 @@ func NewAmiibo(amiibo, character, game, head, image, name, series, tail, t, URL 
 		Series:    series,
 		Tail:      tail,
 		Type:      t,
-		URL:       URL}
+		URL:       "https://www.amiiboapi.com/api/amiibo/?id=" + head + tail}
 }
 
-type amiibo interface{}
+type amiibo interface {
+	String() string
+}
 
 type Amiibo struct {
-	Amiibo    string   `json:"amiiboSeries"`
 	Character string   `json:"character"`
-	Game      string   `json:"gameSeries"`
+	Game      string   `json:"game"`
 	Head      string   `json:"head"`
 	ID        string   `json:"ID"`
 	Image     string   `json:"image"`
