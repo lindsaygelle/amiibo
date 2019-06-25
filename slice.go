@@ -14,10 +14,12 @@ func newSlice() *Slice {
 	return &Slice{slice: &slice.Slice{}}
 }
 
+// NewSlice returns a new Slice of Amiibo pointers.
 func NewSlice(amiibo ...*Amiibo) *Slice {
 	return newSlice().Assign(amiibo...)
 }
 
+// NewSliceFromResponse creates a Amiibo Slice from the return JSON fetched from the API endpoint.
 func NewSliceFromResponse(r *RawResponse) *Slice {
 	slice := newSlice()
 	for _, r := range *r.Amiibo {
@@ -49,6 +51,7 @@ type s interface {
 	String() string
 }
 
+// Slice is a slice like structure that holds a collection of Amiibo struct pointers.
 type Slice struct {
 	slice *slice.Slice
 }

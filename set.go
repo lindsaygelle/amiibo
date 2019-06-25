@@ -11,10 +11,12 @@ func newSet() *Set {
 	return &Set{lexicon: &lexicon.Lexicon{}}
 }
 
+// NewSet returns a Set of Amiibo.
 func NewSet(amiibo ...*Amiibo) *Set {
 	return newSet().Assign(amiibo...)
 }
 
+// NewSetFromResponse creates a Amiibo Set from the return JSON fetched from the API endpoint.
 func NewSetFromResponse(r *RawResponse) *Set {
 	set := newSet()
 	for _, r := range *r.Amiibo {
@@ -44,6 +46,9 @@ type set interface {
 	Values() *Slice
 }
 
+// Set is a hashmap-like object whose methods are used to perform traversal and mutation operations by key-value pair.
+// Stores Amiibo struct pointers as Amiibo Slices, using the Amiibo Name as the key.
+// Each duplicate name Amiibo is pushed onto the end of the corresponding Amiibo Slice.
 type Set struct {
 	lexicon *lexicon.Lexicon
 }
