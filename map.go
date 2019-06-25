@@ -15,6 +15,8 @@ func NewMap(amiibo ...*Amiibo) *Map {
 	return (&Map{lexicon: lexicon.New()}).Mesh(amiibo...)
 }
 
+func NewMapFromRaw(rawSlice *RawSlice) {}
+
 type m interface {
 	Add(amiibo *Amiibo) *Map
 	Del(key string) bool
