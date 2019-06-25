@@ -46,7 +46,7 @@ func (pointer *Map) Del(key string) bool {
 }
 
 func (pointer *Map) Contains(amiibo *Amiibo) bool {
-	return pointer.lexicon.Has(amiibo.ID)
+	return pointer.lexicon.Has(amiibo.Head + amiibo.Tail)
 }
 
 func (pointer *Map) Each(f func(amiibo *Amiibo)) *Map {

@@ -9,10 +9,6 @@ var (
 	_ release = (*Release)(nil)
 )
 
-func newRelease() *Release {
-	return &Release{}
-}
-
 func NewRelease(AU, EU, JP, NA string) *Release {
 	const (
 		t string = "2006-01-02T15:04:05.000Z"

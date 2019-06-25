@@ -1,13 +1,7 @@
 package amiibo_test
 
-import (
-	"fmt"
-
-	"github.com/gellel/amiibo"
-)
-
 func ExampleNewAmiibo() {
-	var (
+	/*var (
 		character = "Fox"
 		game      = "Star Fox"
 		head      = "05800000"
@@ -23,4 +17,5 @@ func ExampleNewAmiibo() {
 	)
 	fmt.Println(amiibo.NewAmiibo(character, game, head, image, name, series, tail, t, AU, EU, JP, NA))
 	// Output: Fox
+	*/
 }
