@@ -7,8 +7,20 @@ import (
 	"github.com/gellel/slice"
 )
 
+func newSet() *Set {
+	return &Set{lexicon: &lexicon.Lexicon{}}
+}
+
 func NewSet(amiibo ...*Amiibo) *Set {
-	return (&Set{lexicon: lexicon.New()}).Assign(amiibo...)
+	return newSet().Assign(amiibo...)
+}
+
+func NewSetFromRaw(r *RawSlice) *Set {
+	set := newSet()
+	for _, r := range *r {
+		set.Add(NewAmiiboFromRaw(r))
+	}
+	return set
 }
 
 var (
