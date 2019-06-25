@@ -2,6 +2,10 @@ package amiibo
 
 import "fmt"
 
+func newRawAmiibo() *RawAmiibo {
+	return &RawAmiibo{}
+}
+
 func NewRawAmiibo(amiibo, character, game, head, image, name, tail, t, AU, EU, JP, NA string) *RawAmiibo {
 	return &RawAmiibo{
 		Amiibo:    amiibo,

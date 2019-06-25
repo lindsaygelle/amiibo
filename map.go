@@ -11,11 +11,21 @@ var (
 	_ m = (*Map)(nil)
 )
 
-func NewMap(amiibo ...*Amiibo) *Map {
-	return (&Map{lexicon: lexicon.New()}).Mesh(amiibo...)
+func newMap() *Map {
+	return &Map{lexicon: &lexicon.Lexicon{}}
 }
 
-func NewMapFromRaw(rawSlice *RawSlice) {}
+func NewMap(amiibo ...*Amiibo) *Map {
+	return newMap().Mesh(amiibo...)
+}
+
+func NewMapFromRaw(r *RawSlice) *Map {
+	m := newMap()
+	for _, r := range *r {
+		m.Add(NewAmiiboFromRaw(r))
+	}
+	return m
+}
 
 type m interface {
 	Add(amiibo *Amiibo) *Map

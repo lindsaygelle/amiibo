@@ -10,8 +10,20 @@ var (
 	_ s = (*Slice)(nil)
 )
 
+func newSlice() *Slice {
+	return &Slice{slice: &slice.Slice{}}
+}
+
 func NewSlice(amiibo ...*Amiibo) *Slice {
-	return (&Slice{slice: &slice.Slice{}}).Assign(amiibo...)
+	return newSlice().Assign(amiibo...)
+}
+
+func NewSliceFromRaw(rawSlice *RawSlice) *Slice {
+	slice := newSlice()
+	for _, r := range *rawSlice {
+		slice.Append(NewAmiiboFromRaw(r))
+	}
+	return slice
 }
 
 type s interface {

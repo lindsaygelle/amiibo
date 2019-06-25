@@ -31,3 +31,19 @@ func GetRawAmiibo(URI ...string) (*RawResponse, error) {
 	}
 	return &rawResponse, nil
 }
+
+func GetAmiiboSlice(URI ...string) (*Slice, error) {
+	r, err := GetRawAmiibo(URI...)
+	if err != nil {
+		return nil, err
+	}
+	return NewSliceFromRaw(r.Amiibo), nil
+}
+
+func GetAmiiboMap(URI ...string) (*Map, error) {
+	r, err := GetRawAmiibo(URI...)
+	if err != nil {
+		return nil, err
+	}
+	return NewMapFromRaw(r.Amiibo), nil
+}
