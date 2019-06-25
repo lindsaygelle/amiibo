@@ -15,14 +15,16 @@ func newMap() *Map {
 	return &Map{lexicon: &lexicon.Lexicon{}}
 }
 
+// NewMap returns a Map of Amiibo
 func NewMap(amiibo ...*Amiibo) *Map {
 	return newMap().Mesh(amiibo...)
 }
 
-func NewMapFromRaw(r *RawSlice) *Map {
+// NewMapFromResponse creates a Amiibo Map from the return JSON fetched from the API endpoint.
+func NewMapFromResponse(r *RawResponse) *Map {
 	m := newMap()
-	for _, r := range *r {
-		m.Add(NewAmiiboFromRaw(r))
+	for _, r := range *r.Amiibo {
+		m.Add(NewAmiiboFromRawAmiibo(r))
 	}
 	return m
 }
@@ -44,6 +46,8 @@ type m interface {
 	Values() *Slice
 }
 
+// Map is a map-like object whose methods are used to perform traversal and mutation operations by key-value pair.
+// Stores Amiibo struct pointers, using the Amiibo ID as the key.
 type Map struct {
 	lexicon *lexicon.Lexicon
 }

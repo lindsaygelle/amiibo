@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 func GetAmiiboMap(URI ...string) (*Map, error) {
@@ -13,7 +14,7 @@ func GetAmiiboMap(URI ...string) (*Map, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewMapFromRaw(r.Amiibo), nil
+	return NewMapFromResponse(r), nil
 }
 
 func GetAmiiboSlice(URI ...string) (*Slice, error) {
@@ -21,7 +22,7 @@ func GetAmiiboSlice(URI ...string) (*Slice, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewSliceFromRaw(r.Amiibo), nil
+	return NewSliceFromResponse(r), nil
 }
 
 func GetAmiiboSet(URI ...string) (*Set, error) {
@@ -29,11 +30,11 @@ func GetAmiiboSet(URI ...string) (*Set, error) {
 	if err != nil {
 		return nil, err
 	}
-	return NewSetFromRaw(r.Amiibo), nil
+	return NewSetFromResponse(r), nil
 }
 
 func GetRawAmiibo(URI ...string) (*RawResponse, error) {
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s", URL), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s?%s", URL, strings.Join(URI, "&")), nil)
 	if err != nil {
 		return nil, err
 	}

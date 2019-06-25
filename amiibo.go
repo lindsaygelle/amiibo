@@ -12,6 +12,7 @@ func newAmiibo() *Amiibo {
 	return &Amiibo{}
 }
 
+// NewAmiibo returns a formatted Amiibo.
 func NewAmiibo(character, game, head, image, name, series, tail, t, AU, EU, JP, NA string) *Amiibo {
 	return &Amiibo{
 		Character: character,
@@ -27,7 +28,8 @@ func NewAmiibo(character, game, head, image, name, series, tail, t, AU, EU, JP, 
 		URL:       "https://www.amiiboapi.com/api/amiibo/?id=" + head + tail}
 }
 
-func NewAmiiboFromRaw(r *RawAmiibo) *Amiibo {
+// NewAmiiboFromRawAmiibo returns a formatted Amiibo from a RawAmiibo struct.
+func NewAmiiboFromRawAmiibo(r *RawAmiibo) *Amiibo {
 	return NewAmiibo(
 		r.Character,
 		r.Game,
@@ -47,6 +49,7 @@ type amiibo interface {
 	String() string
 }
 
+// Amiibo contains the parsed and formatted data fetched from the Amiibo API raw JSON response.
 type Amiibo struct {
 	Character string   `json:"character"`
 	Game      string   `json:"game"`

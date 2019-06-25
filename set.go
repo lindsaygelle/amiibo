@@ -15,10 +15,10 @@ func NewSet(amiibo ...*Amiibo) *Set {
 	return newSet().Assign(amiibo...)
 }
 
-func NewSetFromRaw(r *RawSlice) *Set {
+func NewSetFromResponse(r *RawResponse) *Set {
 	set := newSet()
-	for _, r := range *r {
-		set.Add(NewAmiiboFromRaw(r))
+	for _, r := range *r.Amiibo {
+		set.Add(NewAmiiboFromRawAmiibo(r))
 	}
 	return set
 }

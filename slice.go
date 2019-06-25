@@ -18,10 +18,10 @@ func NewSlice(amiibo ...*Amiibo) *Slice {
 	return newSlice().Assign(amiibo...)
 }
 
-func NewSliceFromRaw(rawSlice *RawSlice) *Slice {
+func NewSliceFromResponse(r *RawResponse) *Slice {
 	slice := newSlice()
-	for _, r := range *rawSlice {
-		slice.Append(NewAmiiboFromRaw(r))
+	for _, r := range *r.Amiibo {
+		slice.Append(NewAmiiboFromRawAmiibo(r))
 	}
 	return slice
 }

@@ -6,6 +6,7 @@ func newRawAmiibo() *RawAmiibo {
 	return &RawAmiibo{}
 }
 
+// NewRawAmiibo returns a RawAmiibo.
 func NewRawAmiibo(amiibo, character, game, head, image, name, tail, t, AU, EU, JP, NA string) *RawAmiibo {
 	return &RawAmiibo{
 		Amiibo:    amiibo,
@@ -19,6 +20,11 @@ func NewRawAmiibo(amiibo, character, game, head, image, name, tail, t, AU, EU, J
 		Type:      t}
 }
 
+type rawAmiibo interface {
+	String() string
+}
+
+// RawAmiibo is the struct representation of the Amiibo JSON returned from the Amiibo API endpoint.
 type RawAmiibo struct {
 	Amiibo    string      `json:"amiiboSeries"`
 	Character string      `json:"character"`

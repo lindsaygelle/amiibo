@@ -1,5 +1,9 @@
 package amiibo
 
+var (
+	_ rawRelease = (*RawRelease)(nil)
+)
+
 func newRawRelease() *RawRelease {
 	return &RawRelease{}
 }
@@ -11,6 +15,8 @@ func NewRawRelease(AU, EU, JP, NA string) *RawRelease {
 		JP: JP,
 		NA: NA}
 }
+
+type rawRelease interface{}
 
 type RawRelease struct {
 	AU string `json:"AU"`
