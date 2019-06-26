@@ -1,4 +1,6 @@
-package main
+package amiibo
+
+import "fmt"
 
 var (
 	_ rawAmiibo = (*RawAmiibo)(nil)
@@ -6,6 +8,7 @@ var (
 
 type rawAmiibo interface{}
 
+// A RawAmiibo type represents a Nintendo Amiibo JSON object found in the raw Nintendo XHR HTTP response.
 type RawAmiibo struct {
 	AmiiboName          *RawAmiiboName        `json:"amiiboName"`
 	AmiiboPage          *RawAmiiboURL         `json:"amiiboPage"`
@@ -26,4 +29,8 @@ type RawAmiibo struct {
 	Type                string                `json:"type"`
 	UnixTimestamp       *RawAmiiboUnix        `json:"unixTimestamp"`
 	UPC                 string                `json:"upc"`
+}
+
+func (r *RawAmiibo) String() string {
+	return fmt.Sprintf("%v", r.AmiiboName)
 }

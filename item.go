@@ -1,6 +1,10 @@
-package main
+package amiibo
 
 import "time"
+
+func NewAmiiboItem(rawAmiiboItem *RawAmiiboItem) *AmiiboItem {
+	return &AmiiboItem{}
+}
 
 var (
 	_ amiiboItem = (*AmiiboItem)(nil)

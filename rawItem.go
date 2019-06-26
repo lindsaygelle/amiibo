@@ -1,10 +1,14 @@
-package main
+package amiibo
+
+import "fmt"
 
 var (
 	_ rawAmiiboItem = (*RawAmiiboItem)(nil)
 )
 
-type rawAmiiboItem interface{}
+type rawAmiiboItem interface {
+	String() string
+}
 
 type RawAmiiboItem struct {
 	Description  string         `json:"description"`
@@ -12,4 +16,8 @@ type RawAmiiboItem struct {
 	Path         *RawAmiiboURL  `json:"path"`
 	Title        string         `json:"title"`
 	URL          *RawAmiiboURL  `json:"url"`
+}
+
+func (r *RawAmiiboItem) String() string {
+	return fmt.Sprintf("%s", r.Title)
 }

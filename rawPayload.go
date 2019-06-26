@@ -1,4 +1,4 @@
-package main
+package amiibo
 
 var (
 	_ rawPayload = (*RawPayload)(nil)

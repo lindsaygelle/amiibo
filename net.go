@@ -1,14 +1,13 @@
-package main
+package amiibo
 
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
 
-func getNintendoXHR() (*RawPayload, error) {
+func GetRawPayload() (*RawPayload, error) {
 	req, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
@@ -30,14 +29,4 @@ func getNintendoXHR() (*RawPayload, error) {
 		return nil, err
 	}
 	return r, nil
-}
-
-func main() {
-	r, err := getNintendoXHR()
-	if err != nil {
-		panic(err)
-	}
-	r.AmiiboList.Each(func(i int, r *RawAmiibo) {
-		fmt.Println(r.BoxArtURL.String())
-	})
 }

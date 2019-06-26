@@ -1,4 +1,6 @@
-package main
+package amiibo
+
+import "time"
 
 var (
 	_ rawAmiiboReleaseDate = (*RawAmiiboReleaseDate)(nil)
@@ -7,3 +9,7 @@ var (
 type rawAmiiboReleaseDate interface{}
 
 type RawAmiiboReleaseDate string
+
+func (r *RawAmiiboReleaseDate) Time() time.Time {
+	return time.Now()
+}
