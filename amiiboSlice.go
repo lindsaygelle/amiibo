@@ -6,6 +6,18 @@ import (
 	"github.com/gellel/slice"
 )
 
+func newAmiiboSlice() *AmiiboSlice {
+	return &AmiiboSlice{slice: &slice.Slice{}}
+}
+
+func NewAmiiboSlice(r ...*RawAmiibo) *AmiiboSlice {
+	slice := newAmiiboSlice()
+	for _, r := range r {
+		slice.Append(NewAmiibo(r))
+	}
+	return slice
+}
+
 var (
 	_ amiiboSlice = (*AmiiboSlice)(nil)
 )

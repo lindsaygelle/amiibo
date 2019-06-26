@@ -8,7 +8,7 @@ import (
 )
 
 // NewAmiibo returns a new Amiibo struct from a RawAmiibo.
-func NewAmiibo(r *RawAmiibo, i *RawAmiiboItem) *Amiibo {
+func NewAmiibo(r *RawAmiibo) *Amiibo {
 	return &Amiibo{
 		Available:   r.IsReleased,
 		Code:        r.GameCode,
@@ -16,7 +16,7 @@ func NewAmiibo(r *RawAmiibo, i *RawAmiiboItem) *Amiibo {
 		Franchise:   r.Franchise,
 		Hex:         r.HexCode,
 		Images:      NewAmiiboImage(r.BoxArtURL, r.FigureURL),
-		Item:        NewAmiiboItem(i),
+		Item:        nil,
 		Name:        r.AmiiboName.String(),
 		Page:        r.DetailsURL.String(),
 		Path:        r.DetailsPath.String(),
