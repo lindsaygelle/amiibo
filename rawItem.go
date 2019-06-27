@@ -10,6 +10,7 @@ type rawAmiiboItem interface {
 	String() string
 }
 
+// A RawAmiiboItem type represents a Item JSON object found in the raw Nintendo XHR HTTP response.
 type RawAmiiboItem struct {
 	Description  string         `json:"description"`
 	LastModified *RawAmiiboUnix `json:"lastModified"`

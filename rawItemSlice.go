@@ -12,6 +12,7 @@ type rawAmiiboItemSlice interface {
 	String() string
 }
 
+// A RawAmiiboItemSlice type represents a collection of RawAmiibo pointers.
 type RawAmiiboItemSlice []*RawAmiiboItem
 
 func (r *RawAmiiboItemSlice) Each(f func(i int, r *RawAmiiboItem)) *RawAmiiboItemSlice {

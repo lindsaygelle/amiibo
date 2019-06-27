@@ -11,8 +11,12 @@ var (
 	_ rawAmiiboURL = (*RawAmiiboURL)(nil)
 )
 
-type rawAmiiboURL interface{}
+type rawAmiiboURL interface {
+	String() string
+}
 
+// A RawAmiiboURL string represents a Nintendo URI fragment found in a RawAmiibo or
+// RawAmiiboItem within in the Nintendo XHR HTTP response.
 type RawAmiiboURL string
 
 func (r *RawAmiiboURL) String() string {
