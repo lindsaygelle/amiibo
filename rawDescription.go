@@ -42,7 +42,8 @@ func (r *RawAmiiboDescription) parseGoQuery() *goquery.Document {
 }
 
 func (r *RawAmiiboDescription) strip() string {
-	return regexp.MustCompile(`(\n\t|\s{2,})`).ReplaceAllString(r.parseHTMLTextNode(), "")
+	s := regexp.MustCompile(`(\n\t)`).ReplaceAllString(r.parseHTMLTextNode(), "")
+	return strings.TrimSpace(regexp.MustCompile(`\s{1,}`).ReplaceAllString(s, " "))
 }
 
 func (r *RawAmiiboDescription) String() string {
