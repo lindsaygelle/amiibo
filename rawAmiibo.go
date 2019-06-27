@@ -6,7 +6,9 @@ var (
 	_ rawAmiibo = (*RawAmiibo)(nil)
 )
 
-type rawAmiibo interface{}
+type rawAmiibo interface {
+	String() string
+}
 
 // A RawAmiibo type represents a Nintendo Amiibo JSON object found in the raw Nintendo XHR HTTP response.
 type RawAmiibo struct {
