@@ -18,6 +18,14 @@ func NewAmiiboItemSlice(r ...*RawAmiiboItem) *AmiiboItemSlice {
 	return slice
 }
 
+func NewAmiiboItemSliceFromRawSlice(r *RawAmiiboItemSlice) *AmiiboItemSlice {
+	slice := newAmiiboItemSlice()
+	r.Each(func(_ int, r *RawAmiiboItem) {
+		slice.Append(NewAmiiboItem(r))
+	})
+	return slice
+}
+
 var (
 	_ amiiboItemSlice = (*AmiiboItemSlice)(nil)
 )
