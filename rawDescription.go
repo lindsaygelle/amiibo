@@ -22,7 +22,7 @@ type rawAmiiboDescription interface {
 }
 
 // A RawAmiiboDescription string represents the HTML content found in the overviewDescription property
-// found in a RawAmiibo within in the Nintendo XHR HTTP response.
+// that sits inside a RawAmiibo within in the Nintendo XHR HTTP response.
 type RawAmiiboDescription string
 
 func (r *RawAmiiboDescription) parseHTMLNode() (*html.Node, error) {
