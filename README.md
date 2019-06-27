@@ -1,1 +1,3 @@
 # Amiibo
+
+Go package. Handles the collection, parsing and normalization of the Amiibo JSON content found on the Nintendo Amiibo URI. Parses the raw response into a set of normalized fields that can be wrapped by any Go program. Offers two variations of the Amiibo data - the `amiibo.RawAmiibo` and the `amiibo.Amiibo`. The raw variation represents the fluid-state endpoint response that is provided as-is from the Nintendo URI and is subject to change at any time. The normalized struct attempts to handle the potential volitility.
