@@ -2,6 +2,7 @@ package amiibo
 
 import "fmt"
 
+// NewRawAmiiboURL returns a new RawAmiiboURL string pointer.
 func NewRawAmiiboURL(URI string) *RawAmiiboURL {
 	r := RawAmiiboURL(URI)
 	return &r
