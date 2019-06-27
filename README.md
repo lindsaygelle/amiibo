@@ -17,10 +17,9 @@ import (
 )
 ```
 
-
 ## Usage
 
-Getting the raw URI payload from the Nintendo URI.
+Getting the raw Amiibo payload from the Nintendo URI.
 
 ```go
 package main
@@ -39,6 +38,25 @@ func main() {
         panic(err) // something went wrong fetching the API response.
     } else {
         fmt.Println(rawPayload)
+    }
+}
+```
+
+Getting the normalized Amiibo from the Nintendo URI.
+
+```go
+package main
+
+import (
+    "fmt"
+
+    "github.com/gellel/amiibo"
+)
+
+func main() {
+
+    if payload, err := amiibo.GetPayload(); err == nil {
+        fmt.Println(payload.Amiibo)
     }
 }
 ```
