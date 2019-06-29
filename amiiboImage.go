@@ -2,8 +2,7 @@ package amiibo
 
 import "fmt"
 
-// NewAmiiboImage returns a new AmiiboImage pointer.
-func NewAmiiboImage(boxArtURL, figureURL *RawAmiiboURL) *AmiiboImage {
+func newAmiiboImage(boxArtURL, figureURL *RawAmiiboURL) *AmiiboImage {
 	return &AmiiboImage{
 		Box:    boxArtURL.String(),
 		Figure: figureURL.String()}

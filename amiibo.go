@@ -7,6 +7,10 @@ import (
 	"golang.org/x/text/currency"
 )
 
+func newAmiibo() *Amiibo {
+	return &Amiibo{}
+}
+
 // NewAmiibo returns a new Amiibo struct from a RawAmiibo.
 func NewAmiibo(r *RawAmiibo) *Amiibo {
 	return &Amiibo{
@@ -15,13 +19,13 @@ func NewAmiibo(r *RawAmiibo) *Amiibo {
 		Description: r.OverviewDescription.String(),
 		Franchise:   r.Franchise,
 		Hex:         r.HexCode,
-		Images:      NewAmiiboImage(r.BoxArtURL, r.FigureURL),
+		Images:      newAmiiboImage(r.BoxArtURL, r.FigureURL),
 		Item:        nil,
 		Name:        r.AmiiboName.String(),
 		Page:        r.DetailsURL.String(),
 		Path:        r.DetailsPath.String(),
 		Presenter:   r.PresentedBy.String(),
-		Price:       NewAmiiboPrice(r.Price),
+		Price:       r.Price.Currency(),
 		Release:     r.ReleaseDateMask.Time(),
 		Series:      r.Series,
 		Slug:        r.Slug,

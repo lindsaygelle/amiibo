@@ -2,6 +2,14 @@ package amiibo
 
 import "fmt"
 
+func newRawAmiibo() *RawAmiibo {
+	return &RawAmiibo{}
+}
+
+func NewRawAmiibo() *RawAmiibo {
+	return &RawAmiibo{}
+}
+
 var (
 	_ rawAmiibo = (*RawAmiibo)(nil)
 )

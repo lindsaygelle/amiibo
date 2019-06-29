@@ -5,11 +5,6 @@ import (
 	"time"
 )
 
-func NewRawAmiiboUnix(unix int64) *RawAmiiboUnix {
-	r := RawAmiiboUnix(unix)
-	return &r
-}
-
 var (
 	_ rawAmiiboUnix = (*RawAmiiboUnix)(nil)
 )
@@ -27,6 +22,7 @@ func (r *RawAmiiboUnix) String() string {
 	return fmt.Sprintf("%v", string(*r))
 }
 
+// Time returns a parsed time.Time struct from the datetime string value.
 func (r *RawAmiiboUnix) Time() time.Time {
 	return time.Unix(int64(*r), 0).UTC()
 }

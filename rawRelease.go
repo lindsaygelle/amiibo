@@ -5,11 +5,6 @@ import (
 	"time"
 )
 
-func NewRawAmiiboReleaseDate(s string) *RawAmiiboReleaseDate {
-	r := RawAmiiboReleaseDate(s)
-	return &r
-}
-
 var (
 	_ rawAmiiboReleaseDate = (*RawAmiiboReleaseDate)(nil)
 )
