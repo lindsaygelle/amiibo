@@ -6,6 +6,8 @@ var (
 	_ rawAmiiboItem = (*RawAmiiboItem)(nil)
 )
 
+func newRawAmiiboItem() {}
+
 type rawAmiiboItem interface {
 	String() string
 }

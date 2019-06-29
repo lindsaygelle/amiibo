@@ -22,6 +22,7 @@ func (r *RawAmiiboReleaseDate) String() string {
 	return fmt.Sprintf("%v", *r)
 }
 
+// Time parses the raw Amiibo release date mask into a time.Time struct.
 func (r *RawAmiiboReleaseDate) Time() time.Time {
 	t, _ := time.Parse("01/02/2006", r.String())
 	return t
