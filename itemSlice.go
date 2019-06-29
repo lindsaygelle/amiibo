@@ -6,160 +6,144 @@ import (
 	"github.com/gellel/slice"
 )
 
-func newAmiiboItemSlice() *AmiiboItemSlice {
-	return &AmiiboItemSlice{slice: &slice.Slice{}}
-}
-
-func NewAmiiboItemSlice(r ...*RawAmiiboItem) *AmiiboItemSlice {
-	slice := newAmiiboItemSlice()
-	for _, r := range r {
-		slice.Append(NewAmiiboItem(r))
-	}
-	return slice
-}
-
-func NewAmiiboItemSliceFromRawSlice(r *RawAmiiboItemSlice) *AmiiboItemSlice {
-	slice := newAmiiboItemSlice()
-	r.Each(func(_ int, r *RawAmiiboItem) {
-		slice.Append(NewAmiiboItem(r))
-	})
-	return slice
+func newItemSlice() *ItemSlice {
+	return new(ItemSlice)
 }
 
 var (
-	_ amiiboItemSlice = (*AmiiboItemSlice)(nil)
+	_ itemSlice = (*ItemSlice)(nil)
 )
 
-type amiiboItemSlice interface {
-	Append(amiiboItem *AmiiboItem) *AmiiboItemSlice
-	Assign(amiiboItem ...*AmiiboItem) *AmiiboItemSlice
+type itemSlice interface {
+	Append(item *Item) *ItemSlice
+	Assign(item ...*Item) *ItemSlice
 	Bounds(i int) bool
-	Concatenate(amiiboItemSlice *AmiiboItemSlice) *AmiiboItemSlice
-	Each(f func(i int, amiiboItem *AmiiboItem)) *AmiiboItemSlice
+	Concatenate(itemSlice *ItemSlice) *ItemSlice
+	Each(f func(i int, item *Item)) *ItemSlice
 	Empty() bool
-	Fetch(i int) *AmiiboItem
-	Get(i int) (*AmiiboItem, bool)
+	Fetch(i int) *Item
+	Get(i int) (*Item, bool)
 	Len() int
-	Map(func(i int, amiiboItem *AmiiboItem) *AmiiboItem) *AmiiboItemSlice
-	Poll() *AmiiboItem
-	Pop() *AmiiboItem
-	Preassign(amiiboItem ...*AmiiboItem) *AmiiboItemSlice
-	Precatenate(amiiboItemSlice *AmiiboItemSlice) *AmiiboItemSlice
-	Prepend(amiiboItem *AmiiboItem) *AmiiboItemSlice
-	Push(amiiboItem *AmiiboItem) int
-	Replace(i int, amiiboItem *AmiiboItem) bool
-	Slice(start, end int) *AmiiboItemSlice
-	Splice(start, end int) *AmiiboItemSlice
+	Map(func(i int, item *Item) *Item) *ItemSlice
+	Poll() *Item
+	Pop() *Item
+	Preassign(item ...*Item) *ItemSlice
+	Precatenate(itemSlice *ItemSlice) *ItemSlice
+	Prepend(item *Item) *ItemSlice
+	Push(item *Item) int
+	Replace(i int, item *Item) bool
+	Slice(start, end int) *ItemSlice
+	Splice(start, end int) *ItemSlice
 	String() string
 }
 
-type AmiiboItemSlice struct {
+type ItemSlice struct {
 	slice *slice.Slice
 }
 
-func (pointer *AmiiboItemSlice) Append(amiiboItem *AmiiboItem) *AmiiboItemSlice {
-	pointer.slice.Append(amiiboItem)
+func (pointer *ItemSlice) Append(item *Item) *ItemSlice {
+	pointer.slice.Append(item)
 	return pointer
 }
 
-func (pointer *AmiiboItemSlice) Assign(amiiboItem ...*AmiiboItem) *AmiiboItemSlice {
-	for _, amiiboItem := range amiiboItem {
-		pointer.Append(amiiboItem)
+func (pointer *ItemSlice) Assign(item ...*Item) *ItemSlice {
+	for _, item := range item {
+		pointer.Append(item)
 	}
 	return pointer
 }
 
-func (pointer *AmiiboItemSlice) Bounds(i int) bool {
+func (pointer *ItemSlice) Bounds(i int) bool {
 	return pointer.slice.Bounds(i)
 }
 
-func (pointer *AmiiboItemSlice) Concatenate(amiiboItemSlice *AmiiboItemSlice) *AmiiboItemSlice {
-	pointer.slice.Concatenate(amiiboItemSlice.slice)
+func (pointer *ItemSlice) Concatenate(itemSlice *ItemSlice) *ItemSlice {
+	pointer.slice.Concatenate(itemSlice.slice)
 	return pointer
 }
 
-func (pointer *AmiiboItemSlice) Each(f func(i int, amiiboItem *AmiiboItem)) *AmiiboItemSlice {
+func (pointer *ItemSlice) Each(f func(i int, item *Item)) *ItemSlice {
 	pointer.slice.Each(func(i int, value interface{}) {
-		f(i, value.(*AmiiboItem))
+		f(i, value.(*Item))
 	})
 	return pointer
 }
 
-func (pointer *AmiiboItemSlice) Empty() bool {
+func (pointer *ItemSlice) Empty() bool {
 	return pointer.slice.Empty()
 }
 
-func (pointer *AmiiboItemSlice) Fetch(i int) *AmiiboItem {
+func (pointer *ItemSlice) Fetch(i int) *Item {
 	amiibo, _ := pointer.Get(i)
 	return amiibo
 }
 
-func (pointer *AmiiboItemSlice) Get(i int) (*AmiiboItem, bool) {
+func (pointer *ItemSlice) Get(i int) (*Item, bool) {
 	value, ok := pointer.slice.Get(i)
 	if ok {
-		return value.(*AmiiboItem), ok
+		return value.(*Item), ok
 	}
 	return nil, ok
 }
 
-func (pointer *AmiiboItemSlice) Len() int {
+func (pointer *ItemSlice) Len() int {
 	return pointer.slice.Len()
 }
 
-func (pointer *AmiiboItemSlice) Map(f func(i int, amiiboItem *AmiiboItem) *AmiiboItem) *AmiiboItemSlice {
+func (pointer *ItemSlice) Map(f func(i int, item *Item) *Item) *ItemSlice {
 	pointer.slice.Map(func(i int, value interface{}) interface{} {
-		return f(i, value.(*AmiiboItem))
+		return f(i, value.(*Item))
 	})
 	return pointer
 }
 
-func (pointer *AmiiboItemSlice) Poll() *AmiiboItem {
+func (pointer *ItemSlice) Poll() *Item {
 	if value := pointer.slice.Poll(); value != nil {
-		return value.(*AmiiboItem)
+		return value.(*Item)
 	}
 	return nil
 }
 
-func (pointer *AmiiboItemSlice) Pop() *AmiiboItem {
+func (pointer *ItemSlice) Pop() *Item {
 	if value := pointer.slice.Pop(); value != nil {
-		return value.(*AmiiboItem)
+		return value.(*Item)
 	}
 	return nil
 }
 
-func (pointer *AmiiboItemSlice) Preassign(amiiboItem ...*AmiiboItem) *AmiiboItemSlice {
-	for _, amiiboItem := range amiiboItem {
-		pointer.Prepend(amiiboItem)
+func (pointer *ItemSlice) Preassign(item ...*Item) *ItemSlice {
+	for _, item := range item {
+		pointer.Prepend(item)
 	}
 	return pointer
 }
 
-func (pointer *AmiiboItemSlice) Precatenate(amiiboItemSlice *AmiiboItemSlice) *AmiiboItemSlice {
-	pointer.slice.Precatenate(amiiboItemSlice.slice)
+func (pointer *ItemSlice) Precatenate(itemSlice *ItemSlice) *ItemSlice {
+	pointer.slice.Precatenate(itemSlice.slice)
 	return pointer
 }
 
-func (pointer *AmiiboItemSlice) Prepend(amiiboItem *AmiiboItem) *AmiiboItemSlice {
-	pointer.slice.Prepend(amiiboItem)
+func (pointer *ItemSlice) Prepend(item *Item) *ItemSlice {
+	pointer.slice.Prepend(item)
 	return pointer
 }
 
-func (pointer *AmiiboItemSlice) Push(amiiboItem *AmiiboItem) int {
-	return pointer.slice.Push(amiiboItem)
+func (pointer *ItemSlice) Push(item *Item) int {
+	return pointer.slice.Push(item)
 }
 
-func (pointer *AmiiboItemSlice) Replace(i int, amiiboItem *AmiiboItem) bool {
-	return pointer.slice.Replace(i, amiiboItem)
+func (pointer *ItemSlice) Replace(i int, item *Item) bool {
+	return pointer.slice.Replace(i, item)
 }
 
-func (pointer *AmiiboItemSlice) Slice(start, end int) *AmiiboItemSlice {
-	return &AmiiboItemSlice{slice: pointer.slice.Slice(start, end)}
+func (pointer *ItemSlice) Slice(start, end int) *ItemSlice {
+	return &ItemSlice{slice: pointer.slice.Slice(start, end)}
 }
 
-func (pointer *AmiiboItemSlice) Splice(start, end int) *AmiiboItemSlice {
-	return &AmiiboItemSlice{slice: pointer.slice.Splice(start, end)}
+func (pointer *ItemSlice) Splice(start, end int) *ItemSlice {
+	return &ItemSlice{slice: pointer.slice.Splice(start, end)}
 }
 
-func (pointer *AmiiboItemSlice) String() string {
+func (pointer *ItemSlice) String() string {
 	return fmt.Sprintf("%v", pointer.slice)
 }

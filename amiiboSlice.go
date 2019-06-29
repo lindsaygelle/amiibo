@@ -7,23 +7,7 @@ import (
 )
 
 func newAmiiboSlice() *AmiiboSlice {
-	return &AmiiboSlice{slice: &slice.Slice{}}
-}
-
-func NewAmiiboSlice(r ...*RawAmiibo) *AmiiboSlice {
-	slice := newAmiiboSlice()
-	for _, r := range r {
-		slice.Append(NewAmiibo(r))
-	}
-	return slice
-}
-
-func NewAmiiboSliceFromRawSlice(r *RawAmiiboSlice) *AmiiboSlice {
-	slice := newAmiiboSlice()
-	r.Each(func(i int, r *RawAmiibo) {
-		slice.Append(NewAmiibo(r))
-	})
-	return slice
+	return new(AmiiboSlice)
 }
 
 var (

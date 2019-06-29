@@ -10,7 +10,9 @@ var (
 	_ rawAmiiboPrice = (*RawAmiiboPrice)(nil)
 )
 
-type rawAmiiboPrice interface{}
+type rawAmiiboPrice interface {
+	String() string
+}
 
 // A RawAmiiboPrice string represents the cost of an Amiibo (in USD) found in RawAmiibo within the Nintendo XHR HTTP response.
 type RawAmiiboPrice string

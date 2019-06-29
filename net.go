@@ -9,14 +9,6 @@ import (
 	"path/filepath"
 )
 
-func GetPayload() (*Payload, error) {
-	r, err := GetRawPayload()
-	if err != nil {
-		return nil, err
-	}
-	return NewPayload(r), nil
-}
-
 func GetRawPayload() (*RawPayload, error) {
 	req, err := http.NewRequest("GET", URL, nil)
 	if err != nil {

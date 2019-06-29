@@ -3,24 +3,26 @@ package amiibo
 import "fmt"
 
 var (
-	_ rawAmiiboItem = (*RawAmiiboItem)(nil)
+	_ rawItem = (*RawItem)(nil)
 )
 
-func newRawAmiiboItem() {}
+func newRawItem() *RawItem {
+	return new(RawItem)
+}
 
-type rawAmiiboItem interface {
+type rawItem interface {
 	String() string
 }
 
-// A RawAmiiboItem type represents a Item JSON object found in the raw Nintendo XHR HTTP response.
-type RawAmiiboItem struct {
-	Description  string         `json:"description"`
-	LastModified *RawAmiiboUnix `json:"lastModified"`
-	Path         *RawAmiiboURL  `json:"path"`
-	Title        string         `json:"title"`
-	URL          *RawAmiiboURL  `json:"url"`
+// A RawItem type represents a Item JSON object found in the raw Nintendo XHR HTTP response.
+type RawItem struct {
+	Description  string         `json:"description"`  // null
+	LastModified *RawAmiiboUnix `json:"lastModified"` // 1554418285473
+	Path         *RawAmiiboURL  `json:"path"`         // "/content/noa/en_US/amiibo/detail/wolf-link-amiibo"
+	Title        string         `json:"title"`        // "Wolf Link"
+	URL          *RawAmiiboURL  `json:"url"`          // "/amiibo/detail/wolf-link-amiibo"
 }
 
-func (r *RawAmiiboItem) String() string {
+func (r *RawItem) String() string {
 	return fmt.Sprintf("%s", r.Title)
 }

@@ -51,7 +51,7 @@ type Amiibo struct {
 	Franchise   string           `json:"franchise"`   // RawAmiibo.Franchise
 	Hex         string           `json:"hex"`         // RawAmiibo.HexCode
 	Images      *AmiiboImage     `json:"images"`      // RawAmiibo.BoxArtURL && RawAmiibo.FigureURL
-	Item        *AmiiboItem      `json:"item"`        //
+	Item        *Item            `json:"item"`        //
 	Name        string           `json:"name"`        // RawAmiibo.Name
 	Page        string           `json:"page"`        // RawAmiibo.DetailsURL
 	Path        string           `json:"path"`        // RawAmiibo.DetailsPath

@@ -1,21 +1,30 @@
 package amiibo
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
-func NewAmiiboItem(rawAmiiboItem *RawAmiiboItem) *AmiiboItem {
-	return &AmiiboItem{}
+func newItem() *Item {
+	return new(Item)
 }
 
 var (
-	_ amiiboItem = (*AmiiboItem)(nil)
+	_ item = (*Item)(nil)
 )
 
-type amiiboItem interface{}
+type item interface {
+	String() string
+}
 
-type AmiiboItem struct {
-	Description string    `json:"description"` // RawAmiiboItem.Description
-	Path        string    `json:"path"`        // RawAmiiboItem.Path
-	Name        string    `json:"name"`        // RawAmiiboItem.Title
-	Timestamp   time.Time `json:"timestamp"`   // RawAmiiboItem.LastModified
-	URL         string    `json:"url"`         // RawAmiiboItem.URL
+type Item struct {
+	Description string    `json:"description"` // RawItem.Description
+	Path        string    `json:"path"`        // RawItem.Path
+	Name        string    `json:"name"`        // RawItem.Title
+	Timestamp   time.Time `json:"timestamp"`   // RawItem.LastModified
+	URL         string    `json:"url"`         // RawItem.URL
+}
+
+func (pointer *Item) String() string {
+	return fmt.Sprintf("%s", pointer.Name)
 }
