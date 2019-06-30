@@ -9,7 +9,9 @@ var (
 	_ rawAmiiboPresentedBy = (*RawAmiiboPresentedBy)(nil)
 )
 
-type rawAmiiboPresentedBy interface{}
+type rawAmiiboPresentedBy interface {
+	String() string
+}
 
 // A RawAmiiboPresentedBy string represents the publisher of the Amiibo figure.
 type RawAmiiboPresentedBy string
