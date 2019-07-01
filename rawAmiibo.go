@@ -83,6 +83,15 @@ func writeRawAmiibo(rawAmiibo *RawAmiibo) error {
 	return ioutil.WriteFile(filepath, content, 0644)
 }
 
+func newRawAmiibo(r *json.RawMessage) *RawAmiibo {
+	rawAmiibo := &RawAmiibo{}
+	err := json.Unmarshal(*r, rawAmiibo)
+	if err != nil {
+		return nil
+	}
+	return rawAmiibo
+}
+
 type rawAmiibo interface {
 	String() string
 }

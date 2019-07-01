@@ -1,6 +1,8 @@
 package amiibo
 
-import "github.com/gellel/slice"
+import (
+	"github.com/gellel/slice"
+)
 
 var (
 	_ amiiboSlice = (*AmiiboSlice)(nil)

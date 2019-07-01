@@ -18,12 +18,12 @@ func unmarshallRawPayload(content *[]byte) (*RawPayload, error) {
 type rawPayload interface{}
 
 type RawPayload struct {
-	AmiiboList           []*RawAmiibo `json:"amiiboList"`
-	ComponentPath        string       `json:"componentPath"`
-	DateFormatString     string       `json:"dateFormatString"`
-	Items                []*RawItem   `json:"items"`
-	LinkItems            bool         `json:"linkItems"`
-	ShowDescription      bool         `json:"showDescription"`
-	ShowModificationDate bool         `json:"showModificationDate"`
-	Type                 string       `json:":type:"`
+	AmiiboList           []*json.RawMessage `json:"amiiboList"`
+	ComponentPath        string             `json:"componentPath"`
+	DateFormatString     string             `json:"dateFormatString"`
+	Items                []*json.RawMessage `json:"items"`
+	LinkItems            bool               `json:"linkItems"`
+	ShowDescription      bool               `json:"showDescription"`
+	ShowModificationDate bool               `json:"showModificationDate"`
+	Type                 string             `json:":type:"`
 }
