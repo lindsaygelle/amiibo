@@ -5,6 +5,16 @@ import (
 	"github.com/gellel/slice"
 )
 
+var (
+	_ rawAmiiboMap = (*RawAmiiboMap)(nil)
+)
+
+func newRawAmiiboMap() *RawAmiiboMap {
+	return &RawAmiiboMap{lexicon: &lexicon.Lexicon{}}
+}
+
+type rawAmiiboMap interface{}
+
 type RawAmiiboMap struct {
 	lexicon *lexicon.Lexicon
 }
