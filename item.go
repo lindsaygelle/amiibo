@@ -3,6 +3,10 @@ package amiibo
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -10,16 +14,49 @@ var (
 	_ item = (*Item)(nil)
 )
 
-func deleteItem() bool {
-	return false
+func deleteItem(item *Item) error {
+	return os.Remove(filepath.Join(storepathItem(), fmt.Sprintf("%s.json", item.Name)))
 }
 
-func getItem() *Item {
-	return nil
+func getItem(ID string) *Item {
+	if ok := strings.HasSuffix(ID, ".json"); !ok {
+		ID = fmt.Sprintf("%s.json", ID)
+	}
+	b, err := openItem(ID)
+	if err != nil {
+		return nil
+	}
+	amiibo, err := unmarshallItem(b)
+	if err != nil {
+		return nil
+	}
+	return amiibo
 }
 
-func writeItem(item *Item) bool {
-	return false
+func marshallItem(item *Item) ([]byte, error) {
+	content, err := json.Marshal(item)
+	if err != nil {
+		return nil, err
+	}
+	return content, nil
+}
+
+func openItem(name string) (*[]byte, error) {
+	filepath := filepath.Join(storepathItem(), name)
+	reader, err := os.Open(filepath)
+	if err != nil {
+		return nil, err
+	}
+	content, err := ioutil.ReadAll(reader)
+	defer reader.Close()
+	if err != nil {
+		return nil, err
+	}
+	return &content, nil
+}
+
+func storepathItem() string {
+	return filepath.Join(rootpath, "item")
 }
 
 func unmarshallItem(content *[]byte) (*Item, error) {
@@ -31,13 +68,26 @@ func unmarshallItem(content *[]byte) (*Item, error) {
 	return r, nil
 }
 
+func writeItem(item *Item) error {
+	err := os.MkdirAll(storepathItem(), 0644)
+	if err != nil {
+		return err
+	}
+	content, err := marshallItem(item)
+	if err != nil {
+		return err
+	}
+	filepath := filepath.Join(storepathItem(), fmt.Sprintf("%s.json", item.Name))
+	return ioutil.WriteFile(filepath, content, 0644)
+}
+
 func newItem(r *RawItem) *Item {
 	return &Item{
 		Description: r.Description,
 		Name:        (reStripName.ReplaceAllString(r.Title, "")),
 		Path:        r.Path,
 		Timestamp:   (time.Unix(r.LastModified, 0).UTC()),
-		URL:         (nintendo + r.URL)}
+		URL:         (nintendoURL + r.URL)}
 }
 
 type item interface {

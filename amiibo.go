@@ -21,11 +21,11 @@ func deleteAmiibo(amiibo *Amiibo) error {
 	return os.Remove(filepath.Join(storepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex)))
 }
 
-func getAmiibo(hex string) *Amiibo {
-	if ok := strings.HasSuffix(hex, ".json"); !ok {
-		hex = fmt.Sprintf("%s.json", hex)
+func getAmiibo(ID string) *Amiibo {
+	if ok := strings.HasSuffix(ID, ".json"); !ok {
+		ID = fmt.Sprintf("%s.json", ID)
 	}
-	b, err := openAmiibo(hex)
+	b, err := openAmiibo(ID)
 	if err != nil {
 		return nil
 	}
@@ -91,14 +91,14 @@ func newAmiibo(r *RawAmiibo) *Amiibo {
 	)
 	return &Amiibo{
 		Available:   r.IsReleased,
-		Box:         (nintendo + r.BoxArtURL),
+		Box:         (nintendoURL + r.BoxArtURL),
 		Code:        r.GameCode,
 		Description: html.UnescapeString(strings.TrimSpace(desc)),
 		Franchise:   r.Franchise,
-		Figure:      (nintendo + r.FigureURL),
+		Figure:      (nintendoURL + r.FigureURL),
 		Hex:         strings.ToUpper(r.HexCode),
 		Name:        (reStripName.ReplaceAllString(r.AmiiboName, "")),
-		Page:        (nintendo + r.DetailsURL),
+		Page:        (nintendoURL + r.DetailsURL),
 		Path:        r.DetailsPath,
 		Presenter:   (strings.Replace(r.PresentedBy, "noa:publisher/", "", -1)),
 		Price:       new(currency.Amount),
@@ -108,7 +108,7 @@ func newAmiibo(r *RawAmiibo) *Amiibo {
 		Timestamp:   (time.Unix(r.UnixTimestamp, 0).UTC()),
 		Type:        r.Type,
 		UPC:         r.UPC,
-		URL:         (nintendo + r.AmiiboPage)}
+		URL:         (nintendoURL + r.AmiiboPage)}
 }
 
 type amiibo interface {

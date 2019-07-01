@@ -7,7 +7,7 @@ import (
 )
 
 func net() (*[]byte, error) {
-	req, err := http.NewRequest("GET", nintendoURI, nil)
+	req, err := http.NewRequest("GET", amiiboURL, nil)
 	if err != nil {
 		return nil, err
 	}
