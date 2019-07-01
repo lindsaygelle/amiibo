@@ -31,7 +31,7 @@ func getAmiibo() []*Amiibo {
 
 func newAmiibo(r *RawAmiibo) *Amiibo {
 	var (
-		t, _ = time.Parse("01/02/2006", r.ReleaseDateMask)
+		t, _ = time.Parse(timeLayoutRelease, r.ReleaseDateMask)
 		desc = reStripSpaces.ReplaceAllString(reStripHTML.ReplaceAllString(r.OverviewDescription, " "), " ")
 	)
 	return &Amiibo{

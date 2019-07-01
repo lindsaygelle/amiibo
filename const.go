@@ -4,9 +4,10 @@ const (
 	localFile string = "amiibo.json"
 )
 const (
-	nintendo    string = "https://www.nintendo.com/"
-	nintendoURI string = nintendo + "content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json?linkItems=true"
+	nintendo    string = "https://www.nintendo.com"
+	nintendoURI string = nintendo + "/content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json?"
 )
 const (
-	timeLayout string = "2006-01-02T15:04:05.000Z"
+	timeLayoutRelease string = "01/02/2006"
+	timeLayout        string = "2006-01-02T15:04:05.000Z"
 )

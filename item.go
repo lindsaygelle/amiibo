@@ -30,7 +30,7 @@ func newItem(r *RawItem) *Item {
 		Description: r.Description,
 		Name:        (reStripName.ReplaceAllString(r.Title, "")),
 		Path:        r.Path,
-		Timestamp:   time.Unix(r.LastModified, 0),
+		Timestamp:   (time.Unix(r.LastModified, 0).UTC()),
 		URL:         (nintendo + r.URL)}
 }
 
