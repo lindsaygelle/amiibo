@@ -1,12 +1,23 @@
 package amiibo
 
+import "encoding/json"
+
 var (
-	_ rawPayloadChecker = (*rawPayload)(nil)
+	_ rawPayload = (*RawPayload)(nil)
 )
 
-type rawPayloadChecker interface{}
+func unmarshallRawPayload(content *[]byte) (*RawPayload, error) {
+	r := &RawPayload{}
+	err := json.Unmarshal(*content, r)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
 
-type rawPayload struct {
+type rawPayload interface{}
+
+type RawPayload struct {
 	AmiiboList           []*RawAmiibo `json:"amiiboList"`
 	ComponentPath        string       `json:"componentPath"`
 	DateFormatString     string       `json:"dateFormatString"`

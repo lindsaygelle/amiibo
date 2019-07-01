@@ -1,6 +1,7 @@
 package amiibo
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 )
@@ -19,6 +20,15 @@ func getItem() *Item {
 
 func writeItem(item *Item) bool {
 	return false
+}
+
+func unmarshallItem(content *[]byte) (*Item, error) {
+	r := &Item{}
+	err := json.Unmarshal(*content, r)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
 }
 
 func newItem(r *RawItem) *Item {

@@ -1,6 +1,9 @@
 package amiibo
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 var (
 	_ rawAmiibo = (*RawAmiibo)(nil)
@@ -12,6 +15,15 @@ func deleteRawAmiibo() bool {
 
 func getRawAmiibo() *RawAmiibo {
 	return nil
+}
+
+func unmarshallRawAmiibo(content *[]byte) (*RawAmiibo, error) {
+	r := &RawAmiibo{}
+	err := json.Unmarshal(*content, r)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
 }
 
 func writeRawAmiibo(rawAmiibo *RawAmiibo) bool {

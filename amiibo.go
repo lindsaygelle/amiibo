@@ -1,8 +1,12 @@
 package amiibo
 
 import (
+	"encoding/json"
 	"fmt"
 	"html"
+	"io/ioutil"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -13,16 +17,56 @@ var (
 	_ amiibo = (*Amiibo)(nil)
 )
 
-func deleteAmiibo() bool {
-	return false
+func deleteAmiibo(amiibo *Amiibo) error {
+	return os.Remove(filepath.Join(storepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex)))
 }
 
-func getAmiibo() *Amiibo {
-	return nil
+func marshallAmiibo(amiibo *Amiibo) ([]byte, error) {
+	content, err := json.Marshal(amiibo)
+	if err != nil {
+		return nil, err
+	}
+	return content, nil
 }
 
-func writeAmiibo(amiibo *Amiibo) bool {
-	return false
+func openAmiibo(name string) (*[]byte, error) {
+	filepath := filepath.Join(storepathAmiibo(), name)
+	reader, err := os.Open(filepath)
+	if err != nil {
+		return nil, err
+	}
+	content, err := ioutil.ReadAll(reader)
+	defer reader.Close()
+	if err != nil {
+		return nil, err
+	}
+	return &content, nil
+}
+
+func storepathAmiibo() string {
+	return filepath.Join(rootpath, "amiibo")
+}
+
+func unmarshallAmiibo(content *[]byte) (*Amiibo, error) {
+	r := &Amiibo{}
+	err := json.Unmarshal(*content, r)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
+func writeAmiibo(amiibo *Amiibo) error {
+	err := os.MkdirAll(storepathAmiibo(), 0644)
+	if err != nil {
+		return err
+	}
+	content, err := marshallAmiibo(amiibo)
+	if err != nil {
+		return err
+	}
+	filepath := filepath.Join(storepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex))
+	return ioutil.WriteFile(filepath, content, 0644)
 }
 
 func newAmiibo(r *RawAmiibo) *Amiibo {
