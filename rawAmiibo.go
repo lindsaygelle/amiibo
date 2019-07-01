@@ -21,6 +21,9 @@ func getRawAmiibo(ID string) *RawAmiibo {
 	if ok := strings.HasSuffix(ID, ".json"); !ok {
 		ID = fmt.Sprintf("%s.json", ID)
 	}
+	if ok := strings.HasPrefix(ID, "r-"); !ok {
+		ID = fmt.Sprintf("r-%s", ID)
+	}
 	b, err := openRawAmiibo(ID)
 	if err != nil {
 		return nil

@@ -3,18 +3,62 @@ package amiibo
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 var (
 	_ rawItem = (*RawItem)(nil)
 )
 
-func deleteRawItem() bool {
-	return false
+func deleteRawItem(rawItem *RawItem) error {
+	return os.Remove(filepath.Join(storepathRawItem(), fmt.Sprintf("r-%s.json", rawItem.Title)))
 }
 
-func getRawItem() *RawItem {
-	return nil
+func getRawItem(ID string) *RawItem {
+	if ok := strings.HasSuffix(ID, ".json"); !ok {
+		ID = fmt.Sprintf("%s.json", ID)
+	}
+	if ok := strings.HasPrefix(ID, "r-"); !ok {
+		ID = fmt.Sprintf("r-%s", ID)
+	}
+	b, err := openRawItem(ID)
+	if err != nil {
+		return nil
+	}
+	rawItem, err := unmarshallRawItem(b)
+	if err != nil {
+		return nil
+	}
+	return rawItem
+}
+
+func marshallRawItem(rawItem *RawItem) ([]byte, error) {
+	content, err := json.Marshal(rawItem)
+	if err != nil {
+		return nil, err
+	}
+	return content, nil
+}
+
+func openRawItem(name string) (*[]byte, error) {
+	filepath := filepath.Join(storepathRawItem(), name)
+	reader, err := os.Open(filepath)
+	if err != nil {
+		return nil, err
+	}
+	content, err := ioutil.ReadAll(reader)
+	defer reader.Close()
+	if err != nil {
+		return nil, err
+	}
+	return &content, nil
+}
+
+func storepathRawItem() string {
+	return filepath.Join(rootpath, "item")
 }
 
 func unmarshallRawItem(content *[]byte) (*RawItem, error) {
@@ -26,8 +70,17 @@ func unmarshallRawItem(content *[]byte) (*RawItem, error) {
 	return r, nil
 }
 
-func writeRawItem(rawItem *RawItem) bool {
-	return false
+func writeRawItem(rawItem *RawItem) error {
+	err := os.MkdirAll(storepathRawItem(), 0644)
+	if err != nil {
+		return err
+	}
+	content, err := marshallRawItem(rawItem)
+	if err != nil {
+		return err
+	}
+	filepath := filepath.Join(storepathRawItem(), fmt.Sprintf("r-%s.json", rawItem.Title))
+	return ioutil.WriteFile(filepath, content, 0644)
 }
 
 type rawItem interface {
