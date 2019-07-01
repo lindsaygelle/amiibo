@@ -1,7 +1,7 @@
 package amiibo
 
 const (
-	localFile string = "amiibo.json"
+	localFile string = "local-amiibo.json"
 )
 const (
 	amiiboURL   string = (nintendoURL + "/content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json")
