@@ -9,6 +9,18 @@ var (
 	_ amiiboMap = (*AmiiboMap)(nil)
 )
 
+func getAmiiboMap(content *[]byte) *AmiiboMap {
+	rawPayload, err := unmarshallRawPayload(content)
+	if err != nil {
+		panic(err)
+	}
+	amiiboMap := newAmiiboMap()
+	for _, rawMessage := range rawPayload.AmiiboList {
+		amiiboMap.Add(newAmiibo(newRawAmiibo(rawMessage)))
+	}
+	return amiiboMap
+}
+
 func newAmiiboMap() *AmiiboMap {
 	return &AmiiboMap{lexicon: &lexicon.Lexicon{}}
 }

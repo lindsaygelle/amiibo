@@ -8,6 +8,10 @@ var (
 	_ amiiboSlice = (*AmiiboSlice)(nil)
 )
 
+func getAmiiboSlice() *AmiiboSlice {
+	return newAmiiboSlice()
+}
+
 func newAmiiboSlice() *AmiiboSlice {
 	return &AmiiboSlice{slice: &slice.Slice{}}
 }

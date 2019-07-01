@@ -4,11 +4,7 @@ import (
 	"github.com/gellel/slice"
 )
 
-func getRawAmiiboSlice() *RawAmiiboSlice {
-	content, err := net()
-	if err != nil {
-		panic(err)
-	}
+func getRawAmiiboSlice(content *[]byte) *RawAmiiboSlice {
 	rawPayload, err := unmarshallRawPayload(content)
 	if err != nil {
 		panic(err)

@@ -96,7 +96,7 @@ func newAmiibo(r *RawAmiibo) *Amiibo {
 		Description: html.UnescapeString(strings.TrimSpace(desc)),
 		Franchise:   r.Franchise,
 		Figure:      (nintendoURL + r.FigureURL),
-		Hex:         strings.ToUpper(r.HexCode),
+		Hex:         strings.ToUpper(strings.Replace(r.HexCode, "#", "", 1)),
 		Name:        (reStripName.ReplaceAllString(r.AmiiboName, "")),
 		Page:        (nintendoURL + r.DetailsURL),
 		Path:        r.DetailsPath,
