@@ -1,0 +1,3 @@
+package amiibo
+
+func marshall() {}

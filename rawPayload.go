@@ -1,13 +1,12 @@
 package amiibo
 
 var (
-	_ rawPayload = (*RawPayload)(nil)
+	_ rawPayloadChecker = (*rawPayload)(nil)
 )
 
-type rawPayload interface{}
+type rawPayloadChecker interface{}
 
-// A RawPayload type represents the XHR HTTP response found on the Nintendo Amiibo line-up URI.
-type RawPayload struct {
+type rawPayload struct {
 	AmiiboList           []*RawAmiibo `json:"amiiboList"`
 	ComponentPath        string       `json:"componentPath"`
 	DateFormatString     string       `json:"dateFormatString"`
