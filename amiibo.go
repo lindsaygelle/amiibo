@@ -21,6 +21,21 @@ func deleteAmiibo(amiibo *Amiibo) error {
 	return os.Remove(filepath.Join(storepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex)))
 }
 
+func getAmiibo(hex string) *Amiibo {
+	if ok := strings.HasSuffix(hex, ".json"); !ok {
+		hex = fmt.Sprintf("%s.json", hex)
+	}
+	b, err := openAmiibo(hex)
+	if err != nil {
+		return nil
+	}
+	amiibo, err := unmarshallAmiibo(b)
+	if err != nil {
+		return nil
+	}
+	return amiibo
+}
+
 func marshallAmiibo(amiibo *Amiibo) ([]byte, error) {
 	content, err := json.Marshal(amiibo)
 	if err != nil {
