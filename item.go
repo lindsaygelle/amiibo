@@ -9,20 +9,16 @@ var (
 	_ item = (*Item)(nil)
 )
 
-func getItems() []*Item {
-	r, err := net()
-	if err != nil {
-		return nil
-	}
-	p, err := unmarshall(r)
-	if err != nil {
-		return nil
-	}
-	items := make([]*Item, len(p.Items))
-	for i, item := range p.Items {
-		items[i] = newItem(item)
-	}
-	return items
+func deleteItem() bool {
+	return false
+}
+
+func getItem() *Item {
+	return nil
+}
+
+func writeItem(item *Item) bool {
+	return false
 }
 
 func newItem(r *RawItem) *Item {

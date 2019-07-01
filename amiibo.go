@@ -13,20 +13,16 @@ var (
 	_ amiibo = (*Amiibo)(nil)
 )
 
-func getAmiibo() []*Amiibo {
-	r, err := net()
-	if err != nil {
-		return nil
-	}
-	p, err := unmarshall(r)
-	if err != nil {
-		return nil
-	}
-	amiibos := make([]*Amiibo, len(p.AmiiboList))
-	for i, amiibo := range p.AmiiboList {
-		amiibos[i] = newAmiibo(amiibo)
-	}
-	return amiibos
+func deleteAmiibo() bool {
+	return false
+}
+
+func getAmiibo() *Amiibo {
+	return nil
+}
+
+func writeAmiibo(amiibo *Amiibo) bool {
+	return false
 }
 
 func newAmiibo(r *RawAmiibo) *Amiibo {

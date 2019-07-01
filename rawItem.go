@@ -6,6 +6,18 @@ var (
 	_ rawItem = (*RawItem)(nil)
 )
 
+func deleteRawItem() bool {
+	return false
+}
+
+func getRawItem() *RawItem {
+	return nil
+}
+
+func writeRawItem(rawItem *RawItem) bool {
+	return false
+}
+
 type rawItem interface {
 	String() string
 }

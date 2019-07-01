@@ -6,6 +6,18 @@ var (
 	_ rawAmiibo = (*RawAmiibo)(nil)
 )
 
+func deleteRawAmiibo() bool {
+	return false
+}
+
+func getRawAmiibo() *RawAmiibo {
+	return nil
+}
+
+func writeRawAmiibo(rawAmiibo *RawAmiibo) bool {
+	return false
+}
+
 type rawAmiibo interface {
 	String() string
 }
