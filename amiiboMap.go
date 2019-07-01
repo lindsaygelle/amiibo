@@ -28,28 +28,28 @@ func (pointer *AmiiboMap) Del(amiibo *Amiibo) bool {
 	return pointer.lexicon.Del(amiibo.Hex)
 }
 
-func (pointer *AmiiboMap) Each(f func(HEX string, amiibo *Amiibo)) *AmiiboMap {
+func (pointer *AmiiboMap) Each(f func(key string, amiibo *Amiibo)) *AmiiboMap {
 	pointer.lexicon.Each(func(key string, value interface{}) {
 		f(key, value.(*Amiibo))
 	})
 	return pointer
 }
 
-func (pointer *AmiiboMap) Fetch(HEX string) *Amiibo {
-	amiibo, _ := pointer.Get(HEX)
+func (pointer *AmiiboMap) Fetch(key string) *Amiibo {
+	amiibo, _ := pointer.Get(key)
 	return amiibo
 }
 
-func (pointer *AmiiboMap) Get(HEX string) (*Amiibo, bool) {
-	value, ok := pointer.lexicon.Get(HEX)
+func (pointer *AmiiboMap) Get(key string) (*Amiibo, bool) {
+	value, ok := pointer.lexicon.Get(key)
 	if ok {
 		return value.(*Amiibo), ok
 	}
 	return nil, ok
 }
 
-func (pointer *AmiiboMap) Has(HEX string) bool {
-	return pointer.lexicon.Has(HEX)
+func (pointer *AmiiboMap) Has(key string) bool {
+	return pointer.lexicon.Has(key)
 }
 
 func (pointer *AmiiboMap) Intersection(amiiboMap *AmiiboMap) *AmiiboMap {
@@ -64,15 +64,15 @@ func (pointer *AmiiboMap) Len() int {
 	return pointer.lexicon.Len()
 }
 
-func (pointer *AmiiboMap) Map(f func(HEX string, amiibo *Amiibo) *Amiibo) *AmiiboMap {
+func (pointer *AmiiboMap) Map(f func(key string, amiibo *Amiibo) *Amiibo) *AmiiboMap {
 	pointer.lexicon.Map(func(key string, value interface{}) interface{} {
 		return f(key, value.(*Amiibo))
 	})
 	return pointer
 }
 
-func (pointer *AmiiboMap) Peek(HEX string) string {
-	return pointer.lexicon.Peek(HEX)
+func (pointer *AmiiboMap) Peek(key string) string {
+	return pointer.lexicon.Peek(key)
 }
 
 func (pointer *AmiiboMap) Values() *AmiiboSlice {
