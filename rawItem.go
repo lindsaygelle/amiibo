@@ -83,6 +83,15 @@ func writeRawItem(rawItem *RawItem) error {
 	return ioutil.WriteFile(filepath, content, 0644)
 }
 
+func newRawItem(r *json.RawMessage) *RawItem {
+	rawItem := &RawItem{}
+	err := json.Unmarshal(*r, rawItem)
+	if err != nil {
+		return nil
+	}
+	return rawItem
+}
+
 type rawItem interface {
 	String() string
 }
