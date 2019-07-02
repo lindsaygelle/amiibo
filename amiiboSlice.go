@@ -26,7 +26,26 @@ func newAmiiboSlice() *AmiiboSlice {
 	return &AmiiboSlice{slice: &slice.Slice{}}
 }
 
-type amiiboSlice interface{}
+type amiiboSlice interface {
+	/*Append(amiibo *Amiibo) *AmiiboSlice
+	Assign(amiibo ...*Amiibo) *AmiiboSlice
+	Bounds(i int) bool
+	Concatenate(s *AmiiboSlice) *AmiiboSlice
+	Each(f func(i int, amiibo *Amiibo)) *AmiiboSlice
+	Empty() bool
+	Fetch(i int) *Amiibo
+	Get(i int) (*Amiibo, bool)
+	Len() int
+	Map(func(i int, amiibo *Amiibo) *Amiibo) *AmiiboSlice
+	Poll() *Amiibo
+	Pop() *Amiibo
+	Preassign(amiibo ...*Amiibo) *AmiiboSlice
+	Precatenate(s *AmiiboSlice) *AmiiboSlice
+	Prepend(amiibo *Amiibo) *AmiiboSlice
+	Push(amiibo *Amiibo) int
+	Replace(i int, amiibo *Amiibo) bool
+	*AmiiboSlice() string*/
+}
 
 type AmiiboSlice struct {
 	slice *slice.Slice
