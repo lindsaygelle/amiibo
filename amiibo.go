@@ -1,6 +1,7 @@
 package amiibo
 
 import (
+	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"html"
@@ -88,6 +89,7 @@ func newAmiibo(r *RawAmiibo) *Amiibo {
 	var (
 		t, _ = time.Parse(timeLayoutRelease, r.ReleaseDateMask)
 		desc = reStripSpaces.ReplaceAllString(reStripHTML.ReplaceAllString(r.OverviewDescription, " "), " ")
+		h    = md5.Sum([]byte(r.AmiiboName))
 	)
 	return &Amiibo{
 		Available:   r.IsReleased,
@@ -97,6 +99,7 @@ func newAmiibo(r *RawAmiibo) *Amiibo {
 		Franchise:   r.Franchise,
 		Figure:      (nintendoURL + r.FigureURL),
 		Hex:         strings.ToUpper(strings.Replace(r.HexCode, "#", "", 1)),
+		ID:          fmt.Sprintf("%x", h),
 		Name:        (reStripName.ReplaceAllString(r.AmiiboName, "")),
 		Page:        (nintendoURL + r.DetailsURL),
 		Path:        r.DetailsPath,
@@ -123,6 +126,7 @@ type Amiibo struct {
 	Figure      string           `json:"figure"`      // RawAmiibo.FigureURL
 	Franchise   string           `json:"franchise"`   // RawAmiibo.Franchise
 	Hex         string           `json:"hex"`         // RawAmiibo.HexCode
+	ID          string           `json:"id"`          // Hash.md5
 	Name        string           `json:"name"`        // RawAmiibo.Name
 	Page        string           `json:"page"`        // RawAmiibo.DetailsURL
 	Path        string           `json:"path"`        // RawAmiibo.DetailsPath

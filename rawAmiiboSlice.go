@@ -28,3 +28,10 @@ func (pointer *RawAmiiboSlice) Append(rawAmiibo *RawAmiibo) *RawAmiiboSlice {
 	pointer.slice.Append(rawAmiibo)
 	return pointer
 }
+
+func (pointer *RawAmiiboSlice) Each(f func(i int, rawAmiibo *RawAmiibo)) *RawAmiiboSlice {
+	pointer.slice.Each(func(i int, value interface{}) {
+		f(i, value.(*RawAmiibo))
+	})
+	return pointer
+}

@@ -6,14 +6,13 @@ import (
 )
 
 func TestAmiiboSlice(t *testing.T) {
-
 	b, err := local()
 	if err != nil {
-		t.Fatalf(fmt.Sprintf("%v", err))
+		panic(err)
 	}
-	s := getAmiiboSlice(b)
-	if s == nil {
-		t.Fatalf(fmt.Sprintf("{%v}", s))
-	}
+	slice := getAmiiboSlice(b)
+	slice.Each(func(i int, amiibo *Amiibo) {
 
+		fmt.Println(amiibo.ID)
+	})
 }
