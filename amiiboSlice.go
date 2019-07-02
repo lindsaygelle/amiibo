@@ -32,7 +32,7 @@ type amiiboSlice interface {
 	Append(amiibo *Amiibo) *AmiiboSlice
 	//Assign(amiibo ...*Amiibo) *AmiiboSlice
 	Bounds(i int) bool
-	//Concatenate(s *AmiiboSlice) *AmiiboSlice
+	Concatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice
 	Each(f func(i int, amiibo *Amiibo)) *AmiiboSlice
 	Empty() bool
 	Fetch(i int) *Amiibo
@@ -42,7 +42,7 @@ type amiiboSlice interface {
 	Poll() *Amiibo
 	Pop() *Amiibo
 	//Preassign(amiibo ...*Amiibo) *AmiiboSlice
-	//Precatenate(s *AmiiboSlice) *AmiiboSlice
+	Precatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice
 	Prepend(amiibo *Amiibo) *AmiiboSlice
 	Push(amiibo *Amiibo) int
 	Replace(i int, amiibo *Amiibo) bool
@@ -62,6 +62,11 @@ func (pointer *AmiiboSlice) Append(amiibo *Amiibo) *AmiiboSlice {
 
 func (pointer *AmiiboSlice) Bounds(i int) bool {
 	return pointer.slice.Bounds(i)
+}
+
+func (pointer *AmiiboSlice) Concatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice {
+	pointer.slice.Concatenate(amiiboSlice.slice)
+	return pointer
 }
 
 func (pointer *AmiiboSlice) Each(f func(i int, amiibo *Amiibo)) *AmiiboSlice {
@@ -113,6 +118,11 @@ func (pointer *AmiiboSlice) Pop() *Amiibo {
 		return value.(*Amiibo)
 	}
 	return nil
+}
+
+func (pointer *AmiiboSlice) Precatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice {
+	pointer.slice.Precatenate(amiiboSlice.slice)
+	return pointer
 }
 
 func (pointer *AmiiboSlice) Prepend(amiibo *Amiibo) *AmiiboSlice {
