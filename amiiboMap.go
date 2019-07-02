@@ -32,12 +32,12 @@ type AmiiboMap struct {
 }
 
 func (pointer *AmiiboMap) Add(amiibo *Amiibo) *AmiiboMap {
-	pointer.lexicon.Add(amiibo.Hex, amiibo)
+	pointer.lexicon.Add(amiibo.ID, amiibo)
 	return pointer
 }
 
 func (pointer *AmiiboMap) Del(amiibo *Amiibo) bool {
-	return pointer.lexicon.Del(amiibo.Hex)
+	return pointer.lexicon.Del(amiibo.ID)
 }
 
 func (pointer *AmiiboMap) Each(f func(key string, amiibo *Amiibo)) *AmiiboMap {
