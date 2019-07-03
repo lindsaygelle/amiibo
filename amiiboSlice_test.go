@@ -12,7 +12,6 @@ func TestAmiiboSlice(t *testing.T) {
 	}
 	slice := getAmiiboSlice(b)
 	slice.Each(func(i int, amiibo *Amiibo) {
-
 		fmt.Println(amiibo.ID)
 	})
 }

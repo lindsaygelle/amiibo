@@ -15,6 +15,8 @@ func unmarshallRawPayload(content *[]byte) (*RawPayload, error) {
 	return r, nil
 }
 
+func newRawPayload(r *json.RawMessage) {}
+
 type rawPayload interface{}
 
 type RawPayload struct {

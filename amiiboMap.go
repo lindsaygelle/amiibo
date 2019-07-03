@@ -25,7 +25,11 @@ func newAmiiboMap() *AmiiboMap {
 	return &AmiiboMap{lexicon: &lexicon.Lexicon{}}
 }
 
-type amiiboMap interface{}
+type amiiboMap interface {
+	Add(amiibo *Amiibo) *AmiiboMap
+	Del(amiibo *Amiibo) bool
+	Each(f func(key string, amiibo *Amiibo)) *AmiiboMap
+}
 
 type AmiiboMap struct {
 	lexicon *lexicon.Lexicon
