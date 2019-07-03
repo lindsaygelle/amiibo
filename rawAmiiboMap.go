@@ -1,6 +1,8 @@
 package amiibo
 
 import (
+	"fmt"
+
 	"github.com/gellel/lexicon"
 	"github.com/gellel/slice"
 )
@@ -25,7 +27,21 @@ func newRawAmiiboMap() *RawAmiiboMap {
 	return &RawAmiiboMap{lexicon: &lexicon.Lexicon{}}
 }
 
-type rawAmiiboMap interface{}
+type rawAmiiboMap interface {
+	Add(rawAmiibo *RawAmiibo) *RawAmiiboMap
+	Del(rawAmiibo *RawAmiibo) bool
+	Each(f func(key string, rawAmiibo *RawAmiibo)) *RawAmiiboMap
+	Fetch(key string) *RawAmiibo
+	Get(key string) (*RawAmiibo, bool)
+	Has(key string) bool
+	Intersection(rawAmiiboMap *RawAmiiboMap) *RawAmiiboMap
+	Keys() *slice.String
+	Len() int
+	Map(f func(key string, rawAmiibo *RawAmiibo) *RawAmiibo) *RawAmiiboMap
+	Peek(key string) string
+	String() string
+	Values() *RawAmiiboSlice
+}
 
 type RawAmiiboMap struct {
 	lexicon *lexicon.Lexicon
@@ -64,8 +80,8 @@ func (pointer *RawAmiiboMap) Has(key string) bool {
 	return pointer.lexicon.Has(key)
 }
 
-func (pointer *RawAmiiboMap) Intersection(amiiboMap *RawAmiiboMap) *RawAmiiboMap {
-	return &RawAmiiboMap{lexicon: pointer.lexicon.Intersection(amiiboMap.lexicon)}
+func (pointer *RawAmiiboMap) Intersection(rawAmiiboMap *RawAmiiboMap) *RawAmiiboMap {
+	return &RawAmiiboMap{lexicon: pointer.lexicon.Intersection(rawAmiiboMap.lexicon)}
 }
 
 func (pointer *RawAmiiboMap) Keys() *slice.String {
@@ -87,6 +103,10 @@ func (pointer *RawAmiiboMap) Peek(key string) string {
 	return pointer.lexicon.Peek(key)
 }
 
-func (pointer *RawAmiiboMap) Values() *AmiiboSlice {
-	return &AmiiboSlice{slice: pointer.lexicon.Values()}
+func (pointer *RawAmiiboMap) String() string {
+	return fmt.Sprintf("%v", pointer.lexicon)
+}
+
+func (pointer *RawAmiiboMap) Values() *RawAmiiboSlice {
+	return &RawAmiiboSlice{slice: pointer.lexicon.Values()}
 }
