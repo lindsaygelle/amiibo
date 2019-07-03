@@ -29,6 +29,15 @@ type amiiboMap interface {
 	Add(amiibo *Amiibo) *AmiiboMap
 	Del(amiibo *Amiibo) bool
 	Each(f func(key string, amiibo *Amiibo)) *AmiiboMap
+	Fetch(key string) *Amiibo
+	Get(key string) (*Amiibo, bool)
+	Has(key string) bool
+	Intersection(amiiboMap *AmiiboMap) *AmiiboMap
+	Keys() *slice.String
+	Len() int
+	Map(f func(key string, amiibo *Amiibo) *Amiibo) *AmiiboMap
+	Peek(key string) string
+	Values() *AmiiboSlice
 }
 
 type AmiiboMap struct {
