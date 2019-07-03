@@ -1,6 +1,8 @@
 package amiibo
 
 import (
+	"fmt"
+
 	"github.com/gellel/lexicon"
 	"github.com/gellel/slice"
 )
@@ -37,6 +39,7 @@ type amiiboMap interface {
 	Len() int
 	Map(f func(key string, amiibo *Amiibo) *Amiibo) *AmiiboMap
 	Peek(key string) string
+	String() string
 	Values() *AmiiboSlice
 }
 
@@ -98,6 +101,10 @@ func (pointer *AmiiboMap) Map(f func(key string, amiibo *Amiibo) *Amiibo) *Amiib
 
 func (pointer *AmiiboMap) Peek(key string) string {
 	return pointer.lexicon.Peek(key)
+}
+
+func (pointer *AmiiboMap) String() string {
+	return fmt.Sprintf("%v", pointer.lexicon)
 }
 
 func (pointer *AmiiboMap) Values() *AmiiboSlice {
