@@ -1,8 +1,14 @@
 package amiibo
 
 import (
+	"fmt"
+
 	"github.com/gellel/lexicon"
 	"github.com/gellel/slice"
+)
+
+var (
+	_ rawItemMap = (*RawItemMap)(nil)
 )
 
 func getRawItemMap(content *[]byte) *RawItemMap {
@@ -95,6 +101,10 @@ func (pointer *RawItemMap) Map(f func(key string, rawItem *RawItem) *RawItem) *R
 
 func (pointer *RawItemMap) Peek(key string) string {
 	return pointer.lexicon.Peek(key)
+}
+
+func (pointer *RawItemMap) String() string {
+	return fmt.Sprintf("%v", pointer.lexicon)
 }
 
 func (pointer *RawItemMap) Values() *RawItemSlice {
