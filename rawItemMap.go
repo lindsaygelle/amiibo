@@ -81,3 +81,26 @@ func (pointer *RawItemMap) Intersection(rawItemMap *RawItemMap) *RawItemMap {
 func (pointer *RawItemMap) Keys() *slice.String {
 	return pointer.lexicon.Keys()
 }
+
+func (pointer *RawItemMap) Len() int {
+	return pointer.lexicon.Len()
+}
+
+func (pointer *RawItemMap) Map(f func(key string, rawItem *RawItem) *RawItem) *RawItemMap {
+	pointer.lexicon.Map(func(key string, value interface{}) interface{} {
+		return f(key, value.(*RawItem))
+	})
+	return pointer
+}
+
+func (pointer *RawItemMap) Peek(key string) string {
+	return pointer.lexicon.Peek(key)
+}
+
+func (pointer *RawItemMap) Values() *RawItemSlice {
+	slice := newRawItemSlice()
+	pointer.Each(func(key string, rawItem *RawItem) {
+		slice.Append(rawItem)
+	})
+	return slice
+}

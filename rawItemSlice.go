@@ -13,3 +13,8 @@ type rawItemSlice interface{}
 type RawItemSlice struct {
 	slice *slice.Slice
 }
+
+func (pointer *RawItemSlice) Append(rawItem *RawItem) *RawItemSlice {
+	pointer.slice.Append(rawItem)
+	return pointer
+}
