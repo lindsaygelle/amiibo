@@ -1,7 +1,6 @@
 package amiibo
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -11,7 +10,7 @@ func TestAmiiboSlice(t *testing.T) {
 		panic(err)
 	}
 	slice := getAmiiboSlice(b)
-	slice.Each(func(i int, amiibo *Amiibo) {
-		fmt.Println(amiibo.ID)
-	})
+	if ok := slice.Len() > 0; !ok {
+		t.Fatalf("amiibo.getAmiiboSlice(content []byte) returned an empty slice")
+	}
 }

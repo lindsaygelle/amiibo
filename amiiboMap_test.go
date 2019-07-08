@@ -15,5 +15,4 @@ func TestAmiiboMap(t *testing.T) {
 	if m == nil {
 		t.Fatalf("{nil}")
 	}
-	fmt.Println(m.Keys().Sort())
 }
