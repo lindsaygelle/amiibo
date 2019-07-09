@@ -72,7 +72,7 @@ func unmarshallAmiibo(content *[]byte) (*Amiibo, error) {
 	return r, nil
 }
 
-func writeAmiibo(amiibo *Amiibo) error {
+func writeAmiibo(fullpath string, amiibo *Amiibo) error {
 	err := os.MkdirAll(storepathAmiibo(), 0644)
 	if err != nil {
 		return err
@@ -118,6 +118,9 @@ type amiibo interface {
 	String() string
 }
 
+// An Amiibo struct represents the organised classification of Nintendo's toys-to-life platform.
+// A populated Amiibo instances contains the normalized information collected from the RawAmiibo
+// data found in the Nintendo Amiibo-list XHR HTTP response.
 type Amiibo struct {
 	Available   bool             `json:"available"`   // RawAmiibo.IsReleased
 	Box         string           `json:"box"`         // RawAmiibo.BoxArtURL
