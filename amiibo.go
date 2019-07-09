@@ -118,9 +118,9 @@ type amiibo interface {
 	String() string
 }
 
-// An Amiibo struct represents the organised classification of Nintendo's toys-to-life platform.
-// A populated Amiibo instances contains the normalized information collected from the RawAmiibo
-// data found in the Nintendo Amiibo-list XHR HTTP response.
+// An Amiibo struct represents the character classification of Nintendo's toys-to-life platform, Amiibo.
+// A normalized Amiibo instance contains the formatted and cleaned information collected from the raw Amiibo
+// data that exists in the Nintendo Amiibo list XHR HTTP response.
 type Amiibo struct {
 	Available   bool             `json:"available"`   // RawAmiibo.IsReleased
 	Box         string           `json:"box"`         // RawAmiibo.BoxArtURL
