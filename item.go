@@ -1,6 +1,7 @@
 package amiibo
 
 import (
+	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -84,6 +85,7 @@ func writeItem(item *Item) error {
 func newItem(r *RawItem) *Item {
 	return &Item{
 		Description: r.Description,
+		ID:          fmt.Sprintf("%x", md5.Sum([]byte(r.Title))),
 		Name:        (reStripName.ReplaceAllString(r.Title, "")),
 		Path:        r.Path,
 		Timestamp:   (time.Unix(r.LastModified, 0).UTC()),
@@ -96,6 +98,7 @@ type item interface {
 
 type Item struct {
 	Description string    `json:"description"` // RawItem.Description
+	ID          string    `json:"id"`          // Hash.MD5
 	Name        string    `json:"name"`        // RawItem.Title
 	Path        string    `json:"path"`        // RawItem.Path
 	Timestamp   time.Time `json:"timestamp"`   // RawItem.LastModified

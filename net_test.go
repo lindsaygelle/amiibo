@@ -28,7 +28,7 @@ func TestNet(t *testing.T) {
 
 	methodsPermitted := strings.Replace(resp.Header.Get("Allow"), ",", " ", -1)
 
-	if ok := strings.Contains(methodsPermitted, http.MethodGet); ok {
-		t.Fatalf(fmt.Sprintf("%s does not permit required HTTP method; only supports \"%v\"", amiiboURL, methodsPermitted))
+	if ok := strings.Contains(methodsPermitted, http.MethodGet); ok != true {
+		t.Fatalf(fmt.Sprintf("%s does not permit required HTTP method %s; only supports \"%v\"", amiiboURL, http.MethodGet, methodsPermitted))
 	}
 }
