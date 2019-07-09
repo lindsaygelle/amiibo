@@ -96,6 +96,7 @@ type rawAmiibo interface {
 	String() string
 }
 
+// A RawAmiibo struct contains the as-is provided data found in the scraped Nintendo Amiibo XHR HTTP response.
 type RawAmiibo struct {
 	AmiiboName          string `json:"amiiboName"`          // "Toon Link - The Wind Waker"
 	AmiiboPage          string `json:"amiiboPage"`          // "/amiibo/detail/toon-link…30th-anniversary-series"
