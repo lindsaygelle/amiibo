@@ -96,6 +96,9 @@ type item interface {
 	String() string
 }
 
+// An Item struct represents the shortform data about upcoming Amiibo items from Nintendo.
+// An normalized Item instance contains the formatted and cleaned information collected from the raw Item
+// data that exists in the Nintendo Amiibo XHR HTTP response.
 type Item struct {
 	Description string    `json:"description"` // RawItem.Description
 	ID          string    `json:"id"`          // Hash.MD5
