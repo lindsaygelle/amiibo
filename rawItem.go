@@ -96,8 +96,9 @@ type rawItem interface {
 	String() string
 }
 
-// A RawItem struct represents the ordered short-form information that describes the core URI's of a Raw Amiibo.
+// A RawItem struct represents the marshalled contents for a Nintendo Amiibo Item.
 // A raw Item instance contains the raw data package that is parsed within the Nintendo Amiibo XHR HTTP response.
+// Raw Item's may contain references to Amiibo's in development those that contain unfinished literaray content.
 type RawItem struct {
 	Description  string `json:"description"`  // null
 	LastModified int64  `json:"lastModified"` // 1554418285473
