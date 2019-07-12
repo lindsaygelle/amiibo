@@ -43,6 +43,11 @@ type amiiboMap interface {
 	Values() *AmiiboSlice
 }
 
+// An AmiiboMap is a map-like struct whose methods are used to peform traversal and mutation operations by key-value pair.
+// Each Amiibo Map contains 0 to N number of normalized Amiibo, using the Amiibo's ID field as the Amiibo Map's
+// key-value pairing mechanism. The Amiibo Map contains a private Lexicon, with each method performing a mutation
+// operation to this property. This struct is protected to prevent incorrect data assignment as the Lexicon permits
+// any data interface to be assigned to the Amiibo Map.
 type AmiiboMap struct {
 	lexicon *lexicon.Lexicon
 }
