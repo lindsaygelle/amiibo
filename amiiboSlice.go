@@ -51,6 +51,11 @@ type amiiboSlice interface {
 	String() string
 }
 
+// An AmiiboSlice is a slice-like struct whose methods are used to perform insertion, mutation and iteration operations on an
+// unordered collection of Amiibo pointers. Each Amiibo slice can contain 0 to N number of normalized Amiibo, with each
+// Amiibo pointer being held in a private slice field. All exposed methods for the Amiibo slice perform a corresponding
+// operation for this internal field. This property is protected to prevent incorrect data assignment as the slice permits
+// any data interface to be assigned to the Amiibo slice.
 type AmiiboSlice struct {
 	slice *slice.Slice
 }
