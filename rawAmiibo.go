@@ -97,9 +97,11 @@ type rawAmiibo interface {
 }
 
 // A RawAmiibo struct contains the as-is provided data found in the scraped Nintendo Amiibo XHR HTTP response.
+// A generated raw Amiibo a unique Nintendo Amiibo statue that is in development or circulation and can be found
+// on the Nintendo Amiibo URL (https://nintendo.com/amiibo) under the amiibo collection list.
 // Raw Amiibo are non a standardized data structure, relying on the data being provided openly by Nintendo.
 // As a result, it is possible and probably that the fields are subject to change. For developing
-// custom implementations using this package, it is recommended to use the normalized Amiibo. 
+// custom implementations using this package, it is recommended to use the normalized Amiibo.
 type RawAmiibo struct {
 	AmiiboName          string `json:"amiiboName"`          // "Toon Link - The Wind Waker"
 	AmiiboPage          string `json:"amiiboPage"`          // "/amiibo/detail/toon-link…30th-anniversary-series"
