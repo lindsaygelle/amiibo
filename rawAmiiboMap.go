@@ -43,6 +43,11 @@ type rawAmiiboMap interface {
 	Values() *RawAmiiboSlice
 }
 
+// A RawAmiiboMap is a map-like struct whose methods are used to perform traversal and mutation operations by key-value pair.
+// Each raw Amiibo map contains 0 to N number of raw Amiibo, using the raw Amiibo's ID property as the raw Amiibo maps
+// key-value pairing mechanism. The raw Amiibo map contains a private Lexicon, with each method performing a mutation
+// operation to this property. This struct is protected to prevent incorrect data assignment as the Lexicon permits
+// any data interface to be assigned to the raw Amiibo map.
 type RawAmiiboMap struct {
 	lexicon *lexicon.Lexicon
 }
