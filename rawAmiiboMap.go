@@ -11,6 +11,13 @@ var (
 	_ rawAmiiboMap = (*RawAmiiboMap)(nil)
 )
 
+// NewRawAmiiboMap returns a new raw Amiibo map pointer. A raw Amiibo map pointer can be built
+// from a cached XHR payload or directly from the Nintendo Amiibo source. To create from source
+// parse in the optional byte code pointer, otherwise leave empty and it will be collected from
+// the Nintendo XHR HTTP response.
+func NewRawAmiiboMap(b ...byte) {}
+
+// getRawAmiiboMap returns a populated raw Amiibo map from a parsed Nintendo XHR HTTP response.
 func getRawAmiiboMap(content *[]byte) *RawAmiiboMap {
 	rawPayload, err := unmarshallRawPayload(content)
 	if err != nil {
