@@ -23,11 +23,12 @@ func getRawAmiiboMap(content *[]byte) *RawAmiiboMap {
 	return rawAmiiboMap
 }
 
+// newRawAmiiboMap returns a new empty raw Amiibo map.
 func newRawAmiiboMap() *RawAmiiboMap {
 	return &RawAmiiboMap{lexicon: &lexicon.Lexicon{}}
 }
 
-// rawAmiiboMap defines the RawAmiiboMap struct.
+// rawAmiiboMap defines the required methods for the raw Amiibo map struct.
 type rawAmiiboMap interface {
 	Add(rawAmiibo *RawAmiibo) *RawAmiiboMap
 	Del(rawAmiibo *RawAmiibo) bool
