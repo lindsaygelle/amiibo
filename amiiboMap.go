@@ -31,6 +31,7 @@ type amiiboMap interface {
 	Add(amiibo *Amiibo) *AmiiboMap
 	Del(amiibo *Amiibo) bool
 	Each(f func(key string, amiibo *Amiibo)) *AmiiboMap
+	Empty() bool
 	Fetch(key string) *Amiibo
 	Get(key string) (*Amiibo, bool)
 	Has(key string) bool
@@ -52,20 +53,27 @@ type AmiiboMap struct {
 	lexicon *lexicon.Lexicon
 }
 
+// Add adds an Amiibo to the Amiibo map and returns the modified Amiibo map.
 func (pointer *AmiiboMap) Add(amiibo *Amiibo) *AmiiboMap {
 	pointer.lexicon.Add(amiibo.ID, amiibo)
 	return pointer
 }
 
+// Del deletes an Amiibo from the Amiibo map and returns the modified Amiibo map.
 func (pointer *AmiiboMap) Del(amiibo *Amiibo) bool {
 	return pointer.lexicon.Del(amiibo.ID)
 }
 
+// Each method executes a provided function for each Amiibo struct in the Amiibo map.
 func (pointer *AmiiboMap) Each(f func(key string, amiibo *Amiibo)) *AmiiboMap {
 	pointer.lexicon.Each(func(key string, value interface{}) {
 		f(key, value.(*Amiibo))
 	})
 	return pointer
+}
+
+func (pointer *AmiiboMap) Empty() bool {
+	return pointer.lexicon.Empty()
 }
 
 func (pointer *AmiiboMap) Fetch(key string) *Amiibo {
