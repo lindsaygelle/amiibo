@@ -116,7 +116,7 @@ func (pointer *RawAmiiboMap) Keys() *slice.String {
 	return pointer.lexicon.Keys()
 }
 
-// Len method returns the number of keys in the raw Amiibo map.
+// Len method returns the number of raw Amiibo in the raw Amiibo map.
 func (pointer *RawAmiiboMap) Len() int {
 	return pointer.lexicon.Len()
 }
