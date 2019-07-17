@@ -97,18 +97,22 @@ func (pointer *AmiiboMap) Has(key string) bool {
 	return pointer.lexicon.Has(key)
 }
 
+// Intersection returns a new Amiibo map containing the shared Amiibo between the two raw Amiibo maps.
 func (pointer *AmiiboMap) Intersection(amiiboMap *AmiiboMap) *AmiiboMap {
 	return &AmiiboMap{lexicon: pointer.lexicon.Intersection(amiiboMap.lexicon)}
 }
 
+// Keys method returns a slice.String of the Amiibo map's own property names, in the same order as we get with a normal loop.
 func (pointer *AmiiboMap) Keys() *slice.String {
 	return pointer.lexicon.Keys()
 }
 
+// Len method returns the number of Amiibo in the Amiibo map.
 func (pointer *AmiiboMap) Len() int {
 	return pointer.lexicon.Len()
 }
 
+// Map executes a provided function once for each Amiibo pointer and sets the returned Amiibo to the current key.
 func (pointer *AmiiboMap) Map(f func(key string, amiibo *Amiibo) *Amiibo) *AmiiboMap {
 	pointer.lexicon.Map(func(key string, value interface{}) interface{} {
 		return f(key, value.(*Amiibo))
@@ -116,6 +120,7 @@ func (pointer *AmiiboMap) Map(f func(key string, amiibo *Amiibo) *Amiibo) *Amiib
 	return pointer
 }
 
+// Peek returns the string value of the Amiibo assigned to the argument key.
 func (pointer *AmiiboMap) Peek(key string) string {
 	return pointer.lexicon.Peek(key)
 }
@@ -124,6 +129,7 @@ func (pointer *AmiiboMap) String() string {
 	return fmt.Sprintf("%v", pointer.lexicon)
 }
 
+// Values method returns a Amiibo slice pointer of the Amiibo maps own enumerable property values.
 func (pointer *AmiiboMap) Values() *AmiiboSlice {
 	return &AmiiboSlice{slice: pointer.lexicon.Values()}
 }
