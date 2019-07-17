@@ -106,7 +106,7 @@ func (pointer *RawAmiiboMap) Has(key string) bool {
 	return pointer.lexicon.Has(key)
 }
 
-// Intersection returns a new raw Amiibo map containing the shared raw Amibo between the two raw Amiibo maps.
+// Intersection returns a new raw Amiibo map containing the shared raw Amiibo between the two raw Amiibo maps.
 func (pointer *RawAmiiboMap) Intersection(rawAmiiboMap *RawAmiiboMap) *RawAmiiboMap {
 	return &RawAmiiboMap{lexicon: pointer.lexicon.Intersection(rawAmiiboMap.lexicon)}
 }
