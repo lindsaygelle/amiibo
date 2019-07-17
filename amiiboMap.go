@@ -72,15 +72,18 @@ func (pointer *AmiiboMap) Each(f func(key string, amiibo *Amiibo)) *AmiiboMap {
 	return pointer
 }
 
+// Empty returns a boolean indicating whether the Amiibo map contains zero values.
 func (pointer *AmiiboMap) Empty() bool {
 	return pointer.lexicon.Empty()
 }
 
+// Fetch retrieves the Amiibo pointer held by the argument key. Returns nil if Amiibo does not exist.
 func (pointer *AmiiboMap) Fetch(key string) *Amiibo {
 	amiibo, _ := pointer.Get(key)
 	return amiibo
 }
 
+// Get returns the Amiibo pointer held at the argument key and a boolean indicating if it was successfully retrieved.
 func (pointer *AmiiboMap) Get(key string) (*Amiibo, bool) {
 	value, ok := pointer.lexicon.Get(key)
 	if ok {
@@ -89,6 +92,7 @@ func (pointer *AmiiboMap) Get(key string) (*Amiibo, bool) {
 	return nil, ok
 }
 
+// Has method checks that a given key exists in the Amiibo map.
 func (pointer *AmiiboMap) Has(key string) bool {
 	return pointer.lexicon.Has(key)
 }
