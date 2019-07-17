@@ -11,6 +11,13 @@ var (
 	_ amiiboMap = (*AmiiboMap)(nil)
 )
 
+// NewAmiiboMap returns a new Amiibo map pointer. A Amiibo map pointer can be built
+// from a cached XHR payload or directly from the Nintendo Amiibo source. To create from source
+// parse in the optional byte code pointer, otherwise leave empty and it will be collected from
+// the Nintendo XHR HTTP response.
+func NewAmiiboMap(b ...byte) {}
+
+// getAmiiboMap returns a populated Amiibo map from a parsed and normalized Nintendo XHR HTTP response.
 func getAmiiboMap(content *[]byte) *AmiiboMap {
 	rawPayload, err := unmarshallRawPayload(content)
 	if err != nil {
@@ -23,10 +30,12 @@ func getAmiiboMap(content *[]byte) *AmiiboMap {
 	return amiiboMap
 }
 
+// newAmiiboMap returns an empty Amiibo map pointer.
 func newAmiiboMap() *AmiiboMap {
 	return &AmiiboMap{lexicon: &lexicon.Lexicon{}}
 }
 
+// amiiboMap defines the Amiibo map struct.
 type amiiboMap interface {
 	Add(amiibo *Amiibo) *AmiiboMap
 	Del(amiibo *Amiibo) bool
