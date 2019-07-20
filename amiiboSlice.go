@@ -87,6 +87,7 @@ func (pointer *AmiiboSlice) Concatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice {
 	return pointer
 }
 
+// Each executes a provided function once for each element in the Amiibo slice.
 func (pointer *AmiiboSlice) Each(f func(i int, amiibo *Amiibo)) *AmiiboSlice {
 	pointer.slice.Each(func(i int, value interface{}) {
 		f(i, value.(*Amiibo))
@@ -94,6 +95,7 @@ func (pointer *AmiiboSlice) Each(f func(i int, amiibo *Amiibo)) *AmiiboSlice {
 	return pointer
 }
 
+// Empty returns a boolean indicating whether the Amiibo slice contains zero values.
 func (pointer *AmiiboSlice) Empty() bool {
 	return pointer.slice.Empty()
 }
