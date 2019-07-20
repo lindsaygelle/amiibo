@@ -99,12 +99,13 @@ func (pointer *AmiiboSlice) Each(f func(i int, amiibo *Amiibo)) *AmiiboSlice {
 func (pointer *AmiiboSlice) Empty() bool {
 	return pointer.slice.Empty()
 }
-
+// Fetch retrieves the Amiibo pointer held at the argument index. Returns nil if index exceeds Amiibo slice length.
 func (pointer *AmiiboSlice) Fetch(i int) *Amiibo {
 	amiibo, _ := pointer.Get(i)
 	return amiibo
 }
 
+// Get returns the Amiibo pointer held at the argument index and a boolean indicating if it was successfully retrieved.
 func (pointer *AmiiboSlice) Get(i int) (*Amiibo, bool) {
 	value, ok := pointer.slice.Get(i)
 	if ok {
@@ -113,6 +114,7 @@ func (pointer *AmiiboSlice) Get(i int) (*Amiibo, bool) {
 	return nil, ok
 }
 
+// Len method returns the number of elements in the Amiibo slice.
 func (pointer *AmiiboSlice) Len() int {
 	return pointer.slice.Len()
 }
