@@ -92,6 +92,7 @@ func newRawAmiibo(r *json.RawMessage) *RawAmiibo {
 	return rawAmiibo
 }
 
+// rawAmiibo defines the raw Amiibo struct.
 type rawAmiibo interface {
 	String() string
 }
@@ -124,6 +125,7 @@ type RawAmiibo struct {
 	UPC                 string `json:"upc"`                 // "045496893064"
 }
 
+// Strign returns the string value of the raw Amiibo pointer.
 func (pointer *RawAmiibo) String() string {
 	return fmt.Sprintf("%s", pointer.AmiiboName)
 }

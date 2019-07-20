@@ -145,6 +145,7 @@ type Amiibo struct {
 	URL         string           `json:"url"`         // RawAmiibo.AmiiboPage
 }
 
+// Strign returns the string value of the Amiibo pointer.
 func (pointer *Amiibo) String() string {
 	return fmt.Sprintf("%s", pointer.Name)
 }
