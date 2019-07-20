@@ -24,10 +24,12 @@ func getAmiiboSlice(content *[]byte) *AmiiboSlice {
 	return amiiboSlice
 }
 
+// newAmiiboSlice instantiates a new Amiibo slice pointer.
 func newAmiiboSlice() *AmiiboSlice {
 	return &AmiiboSlice{slice: &slice.Slice{}}
 }
 
+// amiiboSlice defines the interface for an Amiibo slice pointer.
 type amiiboSlice interface {
 	Append(amiibo *Amiibo) *AmiiboSlice
 	Assign(amiibo ...*Amiibo) *AmiiboSlice
@@ -60,11 +62,13 @@ type AmiiboSlice struct {
 	slice *slice.Slice
 }
 
+// Append adds a new Amiibo to the end of Amiibo slice and returns the modified Amiibo slice.
 func (pointer *AmiiboSlice) Append(amiibo *Amiibo) *AmiiboSlice {
 	pointer.slice.Append(amiibo)
 	return pointer
 }
 
+// Assign adds N Amiibo to the end Amiibo slice and returns the modified Amiibo slice.
 func (pointer *AmiiboSlice) Assign(amiibo ...*Amiibo) *AmiiboSlice {
 	for _, amiibo := range amiibo {
 		pointer.Append(amiibo)
@@ -72,10 +76,12 @@ func (pointer *AmiiboSlice) Assign(amiibo ...*Amiibo) *AmiiboSlice {
 	return pointer
 }
 
+// Bounds checks an integer value safely sits within the range of accessible values for the Amiibo slice.
 func (pointer *AmiiboSlice) Bounds(i int) bool {
 	return pointer.slice.Bounds(i)
 }
 
+// Concatenate merges two Amiibo slices into a single Amiibo slice.
 func (pointer *AmiiboSlice) Concatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice {
 	pointer.slice.Concatenate(amiiboSlice.slice)
 	return pointer

@@ -134,7 +134,11 @@ func (pointer *AmiiboMap) Peek(key string) string {
 	return pointer.lexicon.Peek(key)
 }
 
+<<<<<<< HEAD
 // String returns the string value of the Amiibo map.
+=======
+// String returns the string representation of the Amiibo map.
+>>>>>>> b7b80ee20406e70893f28bde078eafe3df5a87d9
 func (pointer *AmiiboMap) String() string {
 	return fmt.Sprintf("%v", pointer.lexicon)
 }
