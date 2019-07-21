@@ -120,6 +120,7 @@ func (pointer *AmiiboSlice) Len() int {
 	return pointer.slice.Len()
 }
 
+// Map method executes a provided function once for each Amiibo slice element and sets the returned value to the current index.
 func (pointer *AmiiboSlice) Map(f func(i int, amiibo *Amiibo) *Amiibo) *AmiiboSlice {
 	pointer.slice.Map(func(i int, value interface{}) interface{} {
 		return f(i, value.(*Amiibo))
@@ -127,6 +128,7 @@ func (pointer *AmiiboSlice) Map(f func(i int, amiibo *Amiibo) *Amiibo) *AmiiboSl
 	return pointer
 }
 
+// Poll method removes the first Amiibo pointer from the Amiibo slice and returns that removed Amiibo.
 func (pointer *AmiiboSlice) Poll() *Amiibo {
 	value := pointer.slice.Poll()
 	if value != nil {
