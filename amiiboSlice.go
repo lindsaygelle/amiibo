@@ -10,6 +10,7 @@ var (
 	_ amiiboSlice = (*AmiiboSlice)(nil)
 )
 
+// getAmiiboSlice returns a new Amiibo slice pointer using the argument bytes as the initial entries.
 func getAmiiboSlice(content *[]byte) *AmiiboSlice {
 	rawPayload, err := unmarshallRawPayload(content)
 	if err != nil {
@@ -175,6 +176,7 @@ func (pointer *AmiiboSlice) Splice(start, end int) *AmiiboSlice {
 	return &AmiiboSlice{slice: pointer.slice.Splice(start, end)}
 }
 
+// String returns the string value of the Amiibo slice.
 func (pointer *AmiiboSlice) String() string {
 	return fmt.Sprintf("%v", *pointer)
 }
