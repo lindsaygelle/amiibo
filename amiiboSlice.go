@@ -10,6 +10,7 @@ var (
 	_ amiiboSlice = (*AmiiboSlice)(nil)
 )
 
+// getAmiiboSlice returns a new Amiibo slice pointer using the argument bytes as the initial entries.
 func getAmiiboSlice(content *[]byte) *AmiiboSlice {
 	rawPayload, err := unmarshallRawPayload(content)
 	if err != nil {
@@ -121,7 +122,7 @@ func (pointer *AmiiboSlice) Len() int {
 	return pointer.slice.Len()
 }
 
-// Map method executes a provided function once for each Amiibo pointer and sets the returned Amiibo to the current index.
+// Map method executes a provided function once for each Amiibo slice element and sets the returned value to the current index.
 func (pointer *AmiiboSlice) Map(f func(i int, amiibo *Amiibo) *Amiibo) *AmiiboSlice {
 	pointer.slice.Map(func(i int, value interface{}) interface{} {
 		return f(i, value.(*Amiibo))
