@@ -181,7 +181,7 @@ func (pointer *AmiiboSlice) Replace(i int, amiibo *Amiibo) bool {
 func (pointer *AmiiboSlice) Set() *AmiiboSlice {
 	amiiboSlice := newAmiiboSlice()
 	m := map[string]bool{}
-	pointer.slice.Each(func(_ int, amiibo *Amiibo) {
+	pointer.Each(func(_ int, amiibo *Amiibo) {
 		if _, ok := m[amiibo.ID]; !ok {
 			m[amiibo.ID] = true
 			amiiboSlice.Append(amiibo)
