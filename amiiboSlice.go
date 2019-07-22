@@ -10,6 +10,12 @@ var (
 	_ amiiboSlice = (*AmiiboSlice)(nil)
 )
 
+// NewAmiiboSlice returns a new Amiibo slice pointer. A Amiibo slice pointer can be built
+// from a cached XHR payload or directly from the Nintendo Amiibo source. To create from source
+// parse in the optional byte code pointer, otherwise leave empty and it will be collected from
+// the Nintendo XHR HTTP response.
+func NewAmiiboSlice(b ...byte) {}
+
 // getAmiiboSlice returns a new Amiibo slice pointer using the argument bytes as the initial entries.
 func getAmiiboSlice(content *[]byte) *AmiiboSlice {
 	rawPayload, err := unmarshallRawPayload(content)
