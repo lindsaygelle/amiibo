@@ -46,6 +46,7 @@ type RawPayload struct {
 	Type                 string             `json:":type:"`
 }
 
+// String returns the string value of the raw Payload.
 func (pointer *RawPayload) String() string {
 	return fmt.Sprintf("%v", pointer)
 }
