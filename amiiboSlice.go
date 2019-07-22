@@ -48,6 +48,7 @@ type amiiboSlice interface {
 	Prepend(amiibo *Amiibo) *AmiiboSlice
 	Push(amiibo *Amiibo) int
 	Replace(i int, amiibo *Amiibo) bool
+	Set() *AmiiboSlice
 	Slice(start, end int) *AmiiboSlice
 	Splice(start, end int) *AmiiboSlice
 	String() string
@@ -99,6 +100,7 @@ func (pointer *AmiiboSlice) Each(f func(i int, amiibo *Amiibo)) *AmiiboSlice {
 func (pointer *AmiiboSlice) Empty() bool {
 	return pointer.slice.Empty()
 }
+
 // Fetch retrieves the Amiibo pointer held at the argument index. Returns nil if index exceeds Amiibo slice length.
 func (pointer *AmiiboSlice) Fetch(i int) *Amiibo {
 	amiibo, _ := pointer.Get(i)
@@ -119,6 +121,7 @@ func (pointer *AmiiboSlice) Len() int {
 	return pointer.slice.Len()
 }
 
+// Map method executes a provided function once for each Amiibo pointer and sets the returned Amiibo to the current index.
 func (pointer *AmiiboSlice) Map(f func(i int, amiibo *Amiibo) *Amiibo) *AmiiboSlice {
 	pointer.slice.Map(func(i int, value interface{}) interface{} {
 		return f(i, value.(*Amiibo))
@@ -126,6 +129,7 @@ func (pointer *AmiiboSlice) Map(f func(i int, amiibo *Amiibo) *Amiibo) *AmiiboSl
 	return pointer
 }
 
+// Poll method removes the first element from the Amiibo slice and returns that removed Amiibo.
 func (pointer *AmiiboSlice) Poll() *Amiibo {
 	value := pointer.slice.Poll()
 	if value != nil {
@@ -134,6 +138,7 @@ func (pointer *AmiiboSlice) Poll() *Amiibo {
 	return nil
 }
 
+// Pop method removes the last Amiibo from the Amiibo slice and returns that Amiibo.
 func (pointer *AmiiboSlice) Pop() *Amiibo {
 	value := pointer.slice.Pop()
 	if value != nil {
@@ -142,6 +147,7 @@ func (pointer *AmiiboSlice) Pop() *Amiibo {
 	return nil
 }
 
+// Preassign method adds zero or more Amiib pointers to the beginning of the Amiibo slice and returns the modified Amiibo slice.
 func (pointer *AmiiboSlice) Preassign(amiibo ...*Amiibo) *AmiiboSlice {
 	for _, amiibo := range amiibo {
 		pointer.Prepend(amiibo)
@@ -149,32 +155,55 @@ func (pointer *AmiiboSlice) Preassign(amiibo ...*Amiibo) *AmiiboSlice {
 	return pointer
 }
 
+// Precatenate merges two Amiibo slices, prepending the argument Amiibo slice to the beginning of the receiver Amiibo slice.
 func (pointer *AmiiboSlice) Precatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice {
 	pointer.slice.Precatenate(amiiboSlice.slice)
 	return pointer
 }
 
+// Prepend method adds one Amiibo to the beginning of the Amiibo sclie and returns the modified Amiibo slice.
 func (pointer *AmiiboSlice) Prepend(amiibo *Amiibo) *AmiiboSlice {
 	pointer.slice.Prepend(amiibo)
 	return pointer
 }
 
+// Push method adds a new Amiibo to the end of the Amiibo slice and returns the length of the modified Amiibo slice.
 func (pointer *AmiiboSlice) Push(amiibo *Amiibo) int {
 	return pointer.slice.Push(amiibo)
 }
 
+// Replace method replaces the Amiibo at the argument index if it is in bounds with the provided argument Amiibo.
 func (pointer *AmiiboSlice) Replace(i int, amiibo *Amiibo) bool {
 	return pointer.slice.Replace(i, amiibo)
 }
 
+// Set method returns a unique Amiibo slice, removing duplicate Amiibo that have the same ID.
+func (pointer *AmiiboSlice) Set() *AmiiboSlice {
+	amiiboSlice := newAmiiboSlice()
+	m := map[string]bool{}
+	pointer.slice.Each(func(_ int, amiibo *Amiibo) {
+		if _, ok := m[amiibo.ID]; !ok {
+			m[amiibo.ID] = true
+			amiiboSlice.Append(amiibo)
+		}
+	})
+	return amiiboSlice
+}
+
+// Slice method returns a shallow copy of a portion of the Amiibo slice into a new Amibo slice.
+// Amiibo slice is selected from begin to end (end not included).
+// The original Amiibo slice will not be modified but all values are shared between the two Amiibo slices.
 func (pointer *AmiiboSlice) Slice(start, end int) *AmiiboSlice {
 	return &AmiiboSlice{slice: pointer.slice.Slice(start, end)}
 }
 
+// Splice method changes the contents of the Amiibo slice by removing existing elements fron i to N.
+// Returns a new Amiibo slice containing the cut values.
 func (pointer *AmiiboSlice) Splice(start, end int) *AmiiboSlice {
 	return &AmiiboSlice{slice: pointer.slice.Splice(start, end)}
 }
 
+// String returns the string value of the Amiibo slice.
 func (pointer *AmiiboSlice) String() string {
 	return fmt.Sprintf("%v", *pointer)
 }
