@@ -155,7 +155,7 @@ func (pointer *AmiiboSlice) Pop() *Amiibo {
 	return nil
 }
 
-// Preassign method adds zero or more Amiib pointers to the beginning of the Amiibo slice and returns the modified Amiibo slice.
+// Preassign method adds zero or more Amiibo pointers to the beginning of the Amiibo slice and returns the modified Amiibo slice.
 func (pointer *AmiiboSlice) Preassign(amiibo ...*Amiibo) *AmiiboSlice {
 	for _, amiibo := range amiibo {
 		pointer.Prepend(amiibo)
