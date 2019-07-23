@@ -129,6 +129,7 @@ func (pointer *RawAmiiboSlice) Map(f func(i int, rawAmiibo *RawAmiibo) *RawAmiib
 	return pointer
 }
 
+// Poll method removes the first raw Amiibo pointer from the raw Amiibo slice and returns that removed pointer.
 func (pointer *RawAmiiboSlice) Poll() *RawAmiibo {
 	value := pointer.slice.Poll()
 	if value != nil {
@@ -137,6 +138,7 @@ func (pointer *RawAmiiboSlice) Poll() *RawAmiibo {
 	return nil
 }
 
+// Pop method removes the last raw Amiibo from the raw Amiibo slice and returns that pointer.
 func (pointer *RawAmiiboSlice) Pop() *RawAmiibo {
 	value := pointer.slice.Poll()
 	if value != nil {
@@ -145,6 +147,7 @@ func (pointer *RawAmiiboSlice) Pop() *RawAmiibo {
 	return nil
 }
 
+// Preassign method adds zero or more raw Amiibo pointers to the beginning of the raw Amiibo slice and returns the modified raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Preassign(rawAmiibo ...*RawAmiibo) *RawAmiiboSlice {
 	for _, rawAmiibo := range rawAmiibo {
 		pointer.Prepend(rawAmiibo)
@@ -152,32 +155,55 @@ func (pointer *RawAmiiboSlice) Preassign(rawAmiibo ...*RawAmiibo) *RawAmiiboSlic
 	return pointer
 }
 
+// Precatenate merges two raw Amiibo slices, prepending the argument raw Amiibo slice to the beginning of the receiver raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Precatenate(rawAmiiboSlice *RawAmiiboSlice) *RawAmiiboSlice {
 	pointer.slice.Precatenate(rawAmiiboSlice.slice)
 	return pointer
 }
 
+// Prepend method adds one raw Amiibo to the beginning of the raw Amiibo sclie and returns the modified raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Prepend(rawAmiibo *RawAmiibo) *RawAmiiboSlice {
 	pointer.slice.Prepend(rawAmiibo)
 	return pointer
 }
 
+// Push method adds a new raw Amiibo to the end of the raw Amiibo slice and returns the length of the modified raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Push(rawAmiibo *RawAmiibo) int {
 	return pointer.slice.Push(rawAmiibo)
 }
 
+// Replace method replaces the raw Amiibo at the argument index if it is in bounds with the provided argument raw Amiibo.
 func (pointer *RawAmiiboSlice) Replace(i int, rawAmiibo *RawAmiibo) bool {
 	return pointer.slice.Replace(i, rawAmiibo)
 }
 
+// Set method returns a unique raw Amiibo slice, removing duplicate raw Amiibo that have the same name.
+func (pointer *RawAmiiboSlice) Set() *RawAmiiboSlice {
+	rawAmiiboSlice := newRawAmiiboSlice()
+	m := map[string]bool{}
+	pointer.Each(func(_ int, rawAmiibo *RawAmiibo) {
+		if _, ok := m[rawAmiibo.AmiiboName]; !ok {
+			m[rawAmiibo.AmiiboName] = true
+			rawAmiiboSlice.Append(rawAmiibo)
+		}
+	})
+	return rawAmiiboSlice
+}
+
+// Slice method returns a shallow copy of a portion of the raw Amiibo slice into a new raw Amiibo slice.
+// Raw Amiibo slice is selected from begin to end (end not included).
+// The original raw Amiibo slice will not be modified but all values are shared between the two raw Amiibo slices.
 func (pointer *RawAmiiboSlice) Slice(start, end int) *RawAmiiboSlice {
 	return &RawAmiiboSlice{slice: pointer.slice.Slice(start, end)}
 }
 
+// Splice method changes the contents of the raw Amiibo slice by removing existing elements fron i to N.
+// Returns a new raw Amiibo slice containing the cut values.
 func (pointer *RawAmiiboSlice) Splice(start, end int) *RawAmiiboSlice {
 	return &RawAmiiboSlice{slice: pointer.slice.Splice(start, end)}
 }
 
+// String returns the string value of the raw Amiibo slice.
 func (pointer *RawAmiiboSlice) String() string {
 	return fmt.Sprintf("%v", pointer.slice)
 }
