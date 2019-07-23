@@ -62,11 +62,13 @@ type RawAmiiboSlice struct {
 	slice *slice.Slice
 }
 
+// Append adds a new raw Amiibo to the end of raw Amiibo slice and returns the modified raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Append(rawAmiibo *RawAmiibo) *RawAmiiboSlice {
 	pointer.slice.Append(rawAmiibo)
 	return pointer
 }
 
+// Assign adds N raw Amiibo to the end raw Amiibo slice and returns the modified raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Assign(rawAmiibo ...*RawAmiibo) *RawAmiiboSlice {
 	for _, rawAmiibo := range rawAmiibo {
 		pointer.Append(rawAmiibo)
@@ -74,15 +76,18 @@ func (pointer *RawAmiiboSlice) Assign(rawAmiibo ...*RawAmiibo) *RawAmiiboSlice {
 	return pointer
 }
 
+// Bounds checks an integer value safely sits within the range of accessible values for the raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Bounds(i int) bool {
 	return pointer.slice.Bounds(i)
 }
 
+// Concatenate merges two raw Amiibo slices into a single raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Concatenate(rawAmiiboSlice *RawAmiiboSlice) *RawAmiiboSlice {
 	pointer.slice.Concatenate(rawAmiiboSlice.slice)
 	return pointer
 }
 
+// Each executes a provided function once for each element in the raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Each(f func(i int, rawAmiibo *RawAmiibo)) *RawAmiiboSlice {
 	pointer.slice.Each(func(i int, value interface{}) {
 		f(i, value.(*RawAmiibo))
@@ -90,15 +95,18 @@ func (pointer *RawAmiiboSlice) Each(f func(i int, rawAmiibo *RawAmiibo)) *RawAmi
 	return pointer
 }
 
+// Empty returns a boolean indicating whether the raw Amiibo slice contains zero values.
 func (pointer *RawAmiiboSlice) Empty() bool {
 	return pointer.slice.Empty()
 }
 
+// Fetch retrieves the raw Amiibo pointer held at the argument index. Returns nil if index exceeds raw Amiibo slice length.
 func (pointer *RawAmiiboSlice) Fetch(i int) *RawAmiibo {
 	rawAmiibo, _ := pointer.Get(i)
 	return rawAmiibo
 }
 
+// Get returns the raw Amiibo pointer held at the argument index and a boolean indicating if it was successfully retrieved.
 func (pointer *RawAmiiboSlice) Get(i int) (*RawAmiibo, bool) {
 	value, ok := pointer.slice.Get(i)
 	if ok {
@@ -107,10 +115,13 @@ func (pointer *RawAmiiboSlice) Get(i int) (*RawAmiibo, bool) {
 	return nil, ok
 }
 
+// Len method returns the number of elements in the raw Amiibo slice.
 func (pointer *RawAmiiboSlice) Len() int {
 	return pointer.slice.Len()
 }
 
+// Map method executes a provided function once for each raw Amiibo pointer in the raw Amiibo slice
+// and sets the returned value to the current index.
 func (pointer *RawAmiiboSlice) Map(f func(i int, rawAmiibo *RawAmiibo) *RawAmiibo) *RawAmiiboSlice {
 	pointer.slice.Map(func(i int, value interface{}) interface{} {
 		return f(i, value.(*RawAmiibo))
