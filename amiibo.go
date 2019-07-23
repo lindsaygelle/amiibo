@@ -85,6 +85,10 @@ func writeAmiibo(fullpath string, amiibo *Amiibo) error {
 	return ioutil.WriteFile(filepath, content, 0644)
 }
 
+// NewAmiibo returns a new Amiibo pointer from a raw Amiibo pointer. Normalizes the raw Amiibo fields into
+// predictable patterns as well as cleans the input data. Does not modify the raw Amiibo allowing
+// the original content to be accessed. Assumes that the argument raw Amiibo pointer has been
+// successfully marshalled and contains all provided fields.
 func newAmiibo(r *RawAmiibo) *Amiibo {
 	var (
 		t, _ = time.Parse(timeLayoutRelease, r.ReleaseDateMask)

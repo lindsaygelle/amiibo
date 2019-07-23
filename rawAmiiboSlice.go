@@ -10,6 +10,7 @@ var (
 	_ rawAmiiboSlice = (*RawAmiiboSlice)(nil)
 )
 
+// getRawAmiiboSlice returns a new raw Amiibo slice pointer using the argument bytes as the initial entries.
 func getRawAmiiboSlice(content *[]byte) *RawAmiiboSlice {
 	rawPayload, err := unmarshallRawPayload(content)
 	if err != nil {
@@ -22,10 +23,12 @@ func getRawAmiiboSlice(content *[]byte) *RawAmiiboSlice {
 	return rawAmiiboSlice
 }
 
+// newRawAmiiboSlice instantiates a new raw Amiibo slice pointer.
 func newRawAmiiboSlice() *RawAmiiboSlice {
 	return &RawAmiiboSlice{slice: &slice.Slice{}}
 }
 
+// rawAmiiboSlice defines the interface for a raw Amiibo slice pointer.
 type rawAmiiboSlice interface {
 	Append(rawAmiibo *RawAmiibo) *RawAmiiboSlice
 	Assign(rawAmiibo ...*RawAmiibo) *RawAmiiboSlice
@@ -49,6 +52,12 @@ type rawAmiiboSlice interface {
 	String() string
 }
 
+// An RawAmiiboSlice is a slice-like struct whose methods are used to perform insertion, mutation and iteration operations on an
+// unordered collection of raw Amiibo pointers. Each raw Amiibo slice can contain 0 to N number of raw Amiibo, with each
+// raw Amiibo pointer being held in a private slice field. All exposed methods for the raw Amiibo slice perform a corresponding
+// operation for this internal field. This property is protected to prevent incorrect data assignment as the slice permits
+// any data interface to be assigned to the raw Amiibo slice. Raw Amiibo slices contain the as-is provided
+// raw Amiibo collected from the Nintendo XHR HTTP response.
 type RawAmiiboSlice struct {
 	slice *slice.Slice
 }
