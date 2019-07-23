@@ -198,7 +198,7 @@ func (pointer *AmiiboSlice) Set() *AmiiboSlice {
 	return amiiboSlice
 }
 
-// Slice method returns a shallow copy of a portion of the Amiibo slice into a new Amibo slice.
+// Slice method returns a shallow copy of a portion of the Amiibo slice into a new Amiibo slice.
 // Amiibo slice is selected from begin to end (end not included).
 // The original Amiibo slice will not be modified but all values are shared between the two Amiibo slices.
 func (pointer *AmiiboSlice) Slice(start, end int) *AmiiboSlice {
