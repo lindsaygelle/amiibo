@@ -11,6 +11,13 @@ var (
 	_ itemMap = (*ItemMap)(nil)
 )
 
+// NewItemMap returns a new Item map pointer. A Item map pointer can be built
+// from a cached XHR payload or directly from the Nintendo Amiibo source. To create from source
+// parse in the optional byte code pointer, otherwise leave empty and it will be collected from
+// the Nintendo XHR HTTP response.
+func NewItemMap(b ...byte) {}
+
+// getItemMap returns a populated Item map from a parsed Nintendo XHR HTTP response.
 func getItemMap(content *[]byte) *ItemMap {
 	rawPayload, err := unmarshallRawPayload(content)
 	if err != nil {
@@ -25,6 +32,7 @@ func getItemMap(content *[]byte) *ItemMap {
 	return itemMap
 }
 
+// newItemMap returns a new empty Item map pointer.
 func newItemMap() *ItemMap {
 	return &ItemMap{lexicon: &lexicon.Lexicon{}}
 }
