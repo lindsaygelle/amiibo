@@ -103,22 +103,27 @@ func (pointer *ItemMap) Get(key string) (*Item, bool) {
 	return nil, ok
 }
 
+// Has method checks that a given key exists in the Item map.
 func (pointer *ItemMap) Has(key string) bool {
 	return pointer.lexicon.Has(key)
 }
 
+// Intersection returns a new Item map containing the shared Item pointers between the two Item maps.
 func (pointer *ItemMap) Intersection(itemMap *ItemMap) *ItemMap {
 	return &ItemMap{lexicon: pointer.lexicon.Intersection(itemMap.lexicon)}
 }
 
+// Keys method returns a slice.String of the Item map's own property names, in the same order as we get with a normal loop.
 func (pointer *ItemMap) Keys() *slice.String {
 	return pointer.lexicon.Keys()
 }
 
+// Len method returns the number of Item pointer in the Item map.
 func (pointer *ItemMap) Len() int {
 	return pointer.lexicon.Len()
 }
 
+// Map executes a provided function once for each Item pointer and sets the returned Item pointer to the current key.
 func (pointer *ItemMap) Map(f func(key string, item *Item) *Item) *ItemMap {
 	pointer.lexicon.Map(func(key string, value interface{}) interface{} {
 		return f(key, value.(*Item))
@@ -126,6 +131,7 @@ func (pointer *ItemMap) Map(f func(key string, item *Item) *Item) *ItemMap {
 	return pointer
 }
 
+// Peek returns the string value of the Item pointer assigned to the argument key.
 func (pointer *ItemMap) Peek(key string) string {
 	return pointer.lexicon.Peek(key)
 }
