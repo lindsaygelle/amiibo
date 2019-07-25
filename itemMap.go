@@ -42,6 +42,7 @@ type itemMap interface {
 	Add(item *Item) *ItemMap
 	Del(item *Item) bool
 	Each(f func(key string, item *Item)) *ItemMap
+	Empty() bool
 	Fetch(key string) *Item
 	Get(key string) (*Item, bool)
 	Has(key string) bool
@@ -74,6 +75,7 @@ func (pointer *ItemMap) Del(item *Item) bool {
 	return pointer.lexicon.Del(item.ID)
 }
 
+// Each method executes a provided function for each Item struct in the Item map.
 func (pointer *ItemMap) Each(f func(key string, item *Item)) *ItemMap {
 	pointer.lexicon.Each(func(key string, value interface{}) {
 		f(key, value.(*Item))
@@ -81,11 +83,18 @@ func (pointer *ItemMap) Each(f func(key string, item *Item)) *ItemMap {
 	return pointer
 }
 
+// Empty returns a boolean indicating whether the raw Amiibo map contains zero values.
+func (pointer *ItemMap) Empty() bool {
+	return pointer.lexicon.Empty()
+}
+
+// Fetch retrieves the Item pointer held by the argument key. Returns nil if Item does not exist.
 func (pointer *ItemMap) Fetch(key string) *Item {
 	item, _ := pointer.Get(key)
 	return item
 }
 
+// Get returns the Item pointer held at the argument key and a boolean indicating if it was successfully retrieved.
 func (pointer *ItemMap) Get(key string) (*Item, bool) {
 	value, ok := pointer.lexicon.Get(key)
 	if ok {
