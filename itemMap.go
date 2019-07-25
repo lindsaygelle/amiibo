@@ -136,14 +136,12 @@ func (pointer *ItemMap) Peek(key string) string {
 	return pointer.lexicon.Peek(key)
 }
 
+// String returns the string value of the Item map.
 func (pointer *ItemMap) String() string {
 	return fmt.Sprintf("%v", pointer.lexicon)
 }
 
+// Values method returns a Item slice pointer of the Item maps own enumerable property values.
 func (pointer *ItemMap) Values() *ItemSlice {
-	slice := newItemSlice()
-	pointer.Each(func(key string, item *Item) {
-		slice.Append(item)
-	})
-	return slice
+	return &ItemSlice{slice: pointer.lexicon.Values()}
 }
