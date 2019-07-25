@@ -55,19 +55,21 @@ type itemMap interface {
 }
 
 // An ItemMap is a map-like struct whose methods are used to peform traversal and mutation operations by key-value pair.
-// Each Item Map contains 0 to N number of normalized Item pointers, using the Item's ID field as the Item Map's
-// key-value pairing mechanism. The Item Map contains a private Lexicon, with each method performing a mutation
+// Each Item map contains 0 to N number of normalized Item pointers, using the Item's ID field as the Item map's
+// key-value pairing mechanism. The Item map contains a private Lexicon, with each method performing a mutation
 // operation to this property. This struct is protected to prevent incorrect data assignment as the Lexicon permits
-// any data interface to be assigned to the Item Map.
+// any data interface to be assigned to the Item map.
 type ItemMap struct {
 	lexicon *lexicon.Lexicon
 }
 
+// Add adds a Item pointer to the Item map and returns the modified map.
 func (pointer *ItemMap) Add(item *Item) *ItemMap {
 	pointer.lexicon.Add(item.ID, item)
 	return pointer
 }
 
+// Del deletes a Item pointer from the Item map and returns the modified map.
 func (pointer *ItemMap) Del(item *Item) bool {
 	return pointer.lexicon.Del(item.ID)
 }
