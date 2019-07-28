@@ -11,6 +11,7 @@ var (
 	_ rawItemMap = (*RawItemMap)(nil)
 )
 
+// getRawItemMap returns a populated raw Item map from a parsed Nintendo XHR HTTP response.
 func getRawItemMap(content *[]byte) *RawItemMap {
 	rawPayload, err := unmarshallRawPayload(content)
 	if err != nil {
@@ -23,10 +24,12 @@ func getRawItemMap(content *[]byte) *RawItemMap {
 	return rawItemMap
 }
 
+// newRawItem map returns a new raw Item map pointer.
 func newRawItemMap() *RawItemMap {
 	return &RawItemMap{lexicon: &lexicon.Lexicon{}}
 }
 
+// rawItemMap defines the methods for the RawItemMap struct.
 type rawItemMap interface {
 	Add(rawItem *RawItem) *RawItemMap
 	Del(rawItem *RawItem) bool
@@ -84,10 +87,12 @@ func (pointer *RawItemMap) Intersection(rawItemMap *RawItemMap) *RawItemMap {
 	return &RawItemMap{lexicon: pointer.lexicon.Intersection(rawItemMap.lexicon)}
 }
 
+// Keys method returns a slice.String of the raw Item maps own property names, in the same order as we get with a normal loop.
 func (pointer *RawItemMap) Keys() *slice.String {
 	return pointer.lexicon.Keys()
 }
 
+// Len method returns the number of raw Item pointers in the raw Item map.
 func (pointer *RawItemMap) Len() int {
 	return pointer.lexicon.Len()
 }
@@ -103,6 +108,7 @@ func (pointer *RawItemMap) Peek(key string) string {
 	return pointer.lexicon.Peek(key)
 }
 
+// String returns the string value for the raw Item map.
 func (pointer *RawItemMap) String() string {
 	return fmt.Sprintf("%v", pointer.lexicon)
 }
