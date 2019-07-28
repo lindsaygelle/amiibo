@@ -48,5 +48,5 @@ type RawPayload struct {
 
 // String returns the string value of the raw Payload.
 func (pointer *RawPayload) String() string {
-	return fmt.Sprintf("%v", pointer)
+	return fmt.Sprintf("%v", *pointer)
 }
