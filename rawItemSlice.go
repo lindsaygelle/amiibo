@@ -26,6 +26,7 @@ func newRawItemSlice() *RawItemSlice {
 	return &RawItemSlice{slice: &slice.Slice{}}
 }
 
+// rawItemSlice defines the interface for an raw Item slice pointer.
 type rawItemSlice interface {
 	Append(rawItem *RawItem) *RawItemSlice
 	Assign(rawItem ...*RawItem) *RawItemSlice
@@ -49,6 +50,12 @@ type rawItemSlice interface {
 	String() string
 }
 
+// An RawItemSlice is a slice-like struct whose methods are used to perform insertion, mutation and iteration operations on an
+// unordered collection of raw Item pointers. Each raw Item slice can contain 0 to N number of raw Items, with each
+// raw Item pointer being held in a private slice field. All exposed methods for the raw Item slice perform a corresponding
+// operation for this internal field. This property is protected to prevent incorrect data assignment as the slice permits
+// any data interface to be assigned to the raw Item slice. Raw Item slices contain the as-is provided
+// raw Item collected from the Nintendo XHR HTTP response.
 type RawItemSlice struct {
 	slice *slice.Slice
 }
