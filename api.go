@@ -21,6 +21,7 @@ type API struct {
 	rawPayload *RawPayload
 }
 
+// Get retrieves the Nintendo Amiibo XHR HTTP response and stores the cached content in the API struct.
 func (pointer *API) Get() error {
 	if pointer.rawPayload == nil {
 		b, err := net()
