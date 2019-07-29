@@ -45,6 +45,7 @@ type rawItemSlice interface {
 	Prepend(rawItem *RawItem) *RawItemSlice
 	Push(rawItem *RawItem) int
 	Replace(i int, rawItem *RawItem) bool
+	Set() *RawItemSlice
 	Slice(start, end int) *RawItemSlice
 	Splice(start, end int) *RawItemSlice
 	String() string
@@ -173,6 +174,19 @@ func (pointer *RawItemSlice) Push(rawItem *RawItem) int {
 // Replace method replaces the raw Item at the argument index if it is in bounds with the provided argument raw Item.
 func (pointer *RawItemSlice) Replace(i int, rawItem *RawItem) bool {
 	return pointer.slice.Replace(i, rawItem)
+}
+
+// Set method returns a unique raw Item slice, removing duplicate raw Item pointers that have the same title.
+func (pointer *RawItemSlice) Set() *RawItemSlice {
+	rawItemSlice := newRawItemSlice()
+	m := map[string]bool{}
+	pointer.Each(func(_ int, rawItem *RawItem) {
+		if _, ok := m[rawItem.Title]; !ok {
+			m[rawItem.Title] = true
+			rawItemSlice.Append(rawItem)
+		}
+	})
+	return rawItemSlice
 }
 
 // Slice method returns a shallow copy of a portion of the raw Item slice into a new raw Item slice.
