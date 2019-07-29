@@ -10,6 +10,9 @@ var (
 	_ rawItemSlice = (*RawItemSlice)(nil)
 )
 
+func NewRawItemSlice(b ...byte) {}
+
+// getRawItemSlice returns a new raw Item slice pointer using the argument bytes as the initial entries.
 func getRawItemSlice(content *[]byte) *RawItemSlice {
 	rawPayload, err := unmarshallRawPayload(content)
 	if err != nil {
@@ -22,6 +25,7 @@ func getRawItemSlice(content *[]byte) *RawItemSlice {
 	return rawItemSlice
 }
 
+// newRawItemSlice instantiates a new raw Item slice pointer.
 func newRawItemSlice() *RawItemSlice {
 	return &RawItemSlice{slice: &slice.Slice{}}
 }
