@@ -92,6 +92,7 @@ func newItem(r *RawItem) *Item {
 		URL:         (nintendoURL + r.URL)}
 }
 
+// item defines the interface for a Item struct.
 type item interface {
 	String() string
 }
@@ -108,6 +109,7 @@ type Item struct {
 	URL         string    `json:"url"`         // RawItem.URL
 }
 
+// String returns the string value for the Item pointer.
 func (pointer *Item) String() string {
 	return fmt.Sprintf("%s", pointer.Name)
 }

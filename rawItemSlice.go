@@ -10,6 +10,10 @@ var (
 	_ rawItemSlice = (*RawItemSlice)(nil)
 )
 
+// NewRawItemSlice returns a new raw Item map pointer. A raw Item map pointer can be built
+// from a cached XHR payload or directly from the Nintendo Amiibo source. To create from source
+// parse in the optional byte code pointer, otherwise leave empty and it will be collected from
+// the Nintendo XHR HTTP response.
 func NewRawItemSlice(b ...byte) {}
 
 // getRawItemSlice returns a new raw Item slice pointer using the argument bytes as the initial entries.

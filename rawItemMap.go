@@ -34,6 +34,7 @@ type rawItemMap interface {
 	Add(rawItem *RawItem) *RawItemMap
 	Del(rawItem *RawItem) bool
 	Each(f func(key string, rawItem *RawItem)) *RawItemMap
+	Empty() bool
 	Fetch(key string) *RawItem
 	Get(key string) (*RawItem, bool)
 	Has(key string) bool
@@ -66,11 +67,18 @@ func (pointer *RawItemMap) Each(f func(key string, rawItem *RawItem)) *RawItemMa
 	return pointer
 }
 
+// Empty returns a boolean indicating whether the raw Item map contains zero values.
+func (pointer *RawItemMap) Empty() bool {
+	return pointer.lexicon.Empty()
+}
+
+// Fetch retrieves the raw Item pointer held by the argument key. Returns nil if raw Item does not exist.
 func (pointer *RawItemMap) Fetch(key string) *RawItem {
 	rawItem, _ := pointer.Get(key)
 	return rawItem
 }
 
+// Get returns the raw Item pointer held at the argument key and a boolean indicating if it was successfully retrieved.
 func (pointer *RawItemMap) Get(key string) (*RawItem, bool) {
 	value, ok := pointer.lexicon.Get(key)
 	if ok {
@@ -79,10 +87,14 @@ func (pointer *RawItemMap) Get(key string) (*RawItem, bool) {
 	return nil, ok
 }
 
+// Has method checks that a given key exists in the raw Item map.
 func (pointer *RawItemMap) Has(key string) bool {
 	return pointer.lexicon.Has(key)
 }
 
+// Intersection returns a new raw Item map containing the shared raw Item pointers between the two raw Item maps.
+// Mutations made to the raw Item pointers within the new raw Item map are reflected in the receiver and argument
+// raw Item map.
 func (pointer *RawItemMap) Intersection(rawItemMap *RawItemMap) *RawItemMap {
 	return &RawItemMap{lexicon: pointer.lexicon.Intersection(rawItemMap.lexicon)}
 }
@@ -97,6 +109,7 @@ func (pointer *RawItemMap) Len() int {
 	return pointer.lexicon.Len()
 }
 
+// Map executes a provided function once for each raw Item pointer and sets the returned raw Item pointer to the current key.
 func (pointer *RawItemMap) Map(f func(key string, rawItem *RawItem) *RawItem) *RawItemMap {
 	pointer.lexicon.Map(func(key string, value interface{}) interface{} {
 		return f(key, value.(*RawItem))
@@ -104,6 +117,7 @@ func (pointer *RawItemMap) Map(f func(key string, rawItem *RawItem) *RawItem) *R
 	return pointer
 }
 
+// Peek returns the string value of the raw Item pointer assigned to the argument key.
 func (pointer *RawItemMap) Peek(key string) string {
 	return pointer.lexicon.Peek(key)
 }
@@ -113,10 +127,7 @@ func (pointer *RawItemMap) String() string {
 	return fmt.Sprintf("%v", pointer.lexicon)
 }
 
+// Values method returns a raw Item slice pointer of the raw Itme maps own enumerable property values.
 func (pointer *RawItemMap) Values() *RawItemSlice {
-	slice := newRawItemSlice()
-	pointer.Each(func(key string, rawItem *RawItem) {
-		slice.Append(rawItem)
-	})
-	return slice
+	return &RawItemSlice{slice: pointer.lexicon.Values()}
 }
