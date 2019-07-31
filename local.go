@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 )
 
+// Local attempts to read a previously cached Nintendo Amiibo XHR HTTP response.
 func local() (*[]byte, error) {
 	filepath := filepath.Join(rootpath, localFile)
 	reader, err := os.Open(filepath)

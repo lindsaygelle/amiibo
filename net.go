@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// Net attempts to fetch a new Nintendo XHR HTTP response from the Nintendo Amiibo URL.
 func net() (*[]byte, error) {
 	req, err := http.NewRequest("GET", amiiboURL, nil)
 	if err != nil {
