@@ -47,19 +47,27 @@ type rawItemMap interface {
 	Values() *RawItemSlice
 }
 
+// A RawItemMap is a map-like struct whose methods are used to perform traversal and mutation operations by key-value pair.
+// Each raw Item map contains 0 to N number of raw Item pointers, using the raw Item's title property as the raw Item maps
+// key-value pairing mechanism. The raw Item map contains a private Lexicon, with each method performing a mutation
+// operation to this property. This struct is protected to prevent incorrect data assignment as the Lexicon permits
+// any data interface to be assigned to the raw Item map.
 type RawItemMap struct {
 	lexicon *lexicon.Lexicon
 }
 
+// Add adds a raw Item to the raw Item map and returns the modified map.
 func (pointer *RawItemMap) Add(rawItem *RawItem) *RawItemMap {
 	pointer.lexicon.Add(rawItem.Title, rawItem)
 	return pointer
 }
 
+// Del deletes a raw Item pointer from the raw Item map and returns the modified map.
 func (pointer *RawItemMap) Del(rawItem *RawItem) bool {
 	return pointer.lexicon.Del(rawItem.Title)
 }
 
+// Each method executes a provided function for each raw Item pointer in the raw Item map.
 func (pointer *RawItemMap) Each(f func(key string, rawItem *RawItem)) *RawItemMap {
 	pointer.lexicon.Each(func(key string, value interface{}) {
 		f(key, value.(*RawItem))
