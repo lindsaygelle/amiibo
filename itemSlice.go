@@ -57,6 +57,7 @@ type itemSlice interface {
 	Slice(start, end int) *ItemSlice
 	Splice(start, end int) *ItemSlice
 	String() string
+	Swap(i, j int) *ItemSlice
 }
 
 // An ItemSlice is a slice-like struct whose methods are used to perform insertion, mutation and iteration operations on an
@@ -213,4 +214,11 @@ func (pointer *ItemSlice) Splice(start, end int) *ItemSlice {
 // String returns the string value of the Item slice.
 func (pointer *ItemSlice) String() string {
 	return fmt.Sprintf("%v", *pointer)
+}
+
+// Swap swaps the Item pointer held at i to j and vice versa. Does not swap the Item slice
+// pointers if either i or j is out of bounds.
+func (pointer *ItemSlice) Swap(i, j int) *ItemSlice {
+	pointer.slice.Swap(i, j)
+	return pointer
 }
