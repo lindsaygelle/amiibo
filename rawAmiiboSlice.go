@@ -47,9 +47,11 @@ type rawAmiiboSlice interface {
 	Prepend(rawAmiibo *RawAmiibo) *RawAmiiboSlice
 	Push(rawAmiibo *RawAmiibo) int
 	Replace(i int, rawAmiibo *RawAmiibo) bool
+	Set() *RawAmiiboSlice
 	Slice(start, end int) *RawAmiiboSlice
 	Splice(start, end int) *RawAmiiboSlice
 	String() string
+	Swap(i, j int) *RawAmiiboSlice
 }
 
 // An RawAmiiboSlice is a slice-like struct whose methods are used to perform insertion, mutation and iteration operations on an
@@ -206,4 +208,11 @@ func (pointer *RawAmiiboSlice) Splice(start, end int) *RawAmiiboSlice {
 // String returns the string value of the raw Amiibo slice.
 func (pointer *RawAmiiboSlice) String() string {
 	return fmt.Sprintf("%v", pointer.slice)
+}
+
+// Swap swaps the raw Amiibo pointer held at i to j and vice versa. Does not swap the raw Amiibo
+// pointers if either i or j is out of bounds.
+func (pointer *RawAmiiboSlice) Swap(i, j int) *RawAmiiboSlice {
+	pointer.slice.Swap(i, j)
+	return pointer
 }
