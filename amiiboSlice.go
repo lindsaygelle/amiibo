@@ -43,6 +43,7 @@ type amiiboSlice interface {
 	Bounds(i int) bool
 	Concatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice
 	Each(f func(i int, amiibo *Amiibo)) *AmiiboSlice
+	EachReverse(f func(i int, amiibo *Amiibo)) *AmiiboSlice
 	Empty() bool
 	Fetch(i int) *Amiibo
 	Get(i int) (*Amiibo, bool)
@@ -99,6 +100,14 @@ func (pointer *AmiiboSlice) Concatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice {
 // Each executes a provided function once for each element in the Amiibo slice.
 func (pointer *AmiiboSlice) Each(f func(i int, amiibo *Amiibo)) *AmiiboSlice {
 	pointer.slice.Each(func(i int, value interface{}) {
+		f(i, value.(*Amiibo))
+	})
+	return pointer
+}
+
+// EachReverse execute a provided function once for each Amiibo slice in the reverse order found in the Amiibo slice.
+func (pointer *AmiiboSlice) EachReverse(f func(i int, amiibo *Amiibo)) *AmiiboSlice {
+	pointer.slice.EachReverse(func(i int, value interface{}) {
 		f(i, value.(*Amiibo))
 	})
 	return pointer
