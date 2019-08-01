@@ -126,6 +126,8 @@ func (pointer *ItemSlice) Len() int {
 	return pointer.slice.Len()
 }
 
+// Map method executes a provided function once for each Item pointer in the Item slice
+// and sets the returned value to the current index.
 func (pointer *ItemSlice) Map(f func(i int, item *Item) *Item) *ItemSlice {
 	pointer.slice.Map(func(i int, value interface{}) interface{} {
 		return f(i, value.(*Item))
@@ -133,6 +135,7 @@ func (pointer *ItemSlice) Map(f func(i int, item *Item) *Item) *ItemSlice {
 	return pointer
 }
 
+// Poll method removes the first element from the Item slice and returns that removed Item.
 func (pointer *ItemSlice) Poll() *Item {
 	value := pointer.slice.Poll()
 	if value != nil {
@@ -141,6 +144,7 @@ func (pointer *ItemSlice) Poll() *Item {
 	return nil
 }
 
+// Pop method removes the last Item from the Item slice and returns that Item.
 func (pointer *ItemSlice) Pop() *Item {
 	value := pointer.slice.Pop()
 	if value != nil {
@@ -149,6 +153,7 @@ func (pointer *ItemSlice) Pop() *Item {
 	return nil
 }
 
+// Preassign method adds zero or more Item pointers to the beginning of the Item slice and returns the modified Item slice.
 func (pointer *ItemSlice) Preassign(item ...*Item) *ItemSlice {
 	for _, item := range item {
 		pointer.Prepend(item)
@@ -156,20 +161,24 @@ func (pointer *ItemSlice) Preassign(item ...*Item) *ItemSlice {
 	return pointer
 }
 
+// Precatenate merges two Item slices, prepending the argument Item slice to the beginning of the receiver Item slice.
 func (pointer *ItemSlice) Precatenate(itemSlice *ItemSlice) *ItemSlice {
 	pointer.slice.Precatenate(itemSlice.slice)
 	return pointer
 }
 
+// Prepend method adds one Item to the beginning of the Item slice and returns the modified Item slice.
 func (pointer *ItemSlice) Prepend(item *Item) *ItemSlice {
 	pointer.slice.Prepend(item)
 	return pointer
 }
 
+// Push method adds a new Item to the end of the Item slice and returns the length of the modified Item slice.
 func (pointer *ItemSlice) Push(item *Item) int {
 	return pointer.slice.Push(item)
 }
 
+// Replace method replaces the Item at the argument index if it is in bounds with the provided argument Item.
 func (pointer *ItemSlice) Replace(i int, item *Item) bool {
 	return pointer.slice.Replace(i, item)
 }
