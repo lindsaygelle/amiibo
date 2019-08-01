@@ -68,11 +68,13 @@ type ItemSlice struct {
 	slice *slice.Slice
 }
 
+// Append adds a new Item struct pointer to the end of Item slice and returns the modified Item slice.
 func (pointer *ItemSlice) Append(item *Item) *ItemSlice {
 	pointer.slice.Append(item)
 	return pointer
 }
 
+// Assign adds N Item struct pointers to the end Item slice and returns the modified Item slice.
 func (pointer *ItemSlice) Assign(item ...*Item) *ItemSlice {
 	for _, item := range item {
 		pointer.Append(item)
@@ -80,15 +82,18 @@ func (pointer *ItemSlice) Assign(item ...*Item) *ItemSlice {
 	return pointer
 }
 
+// Bounds checks an integer value safely sits within the range of accessible values for the Item slice.
 func (pointer *ItemSlice) Bounds(i int) bool {
 	return pointer.slice.Bounds(i)
 }
 
+// Concatenate merges two Item slices into a single Item slice.
 func (pointer *ItemSlice) Concatenate(itemSlice *ItemSlice) *ItemSlice {
 	pointer.slice.Concatenate(itemSlice.slice)
 	return pointer
 }
 
+// Each executes a provided function once for each Item struct pointer in the Item slice in the same order in a for-each loop.
 func (pointer *ItemSlice) Each(f func(i int, item *Item)) *ItemSlice {
 	pointer.slice.Each(func(i int, value interface{}) {
 		f(i, value.(*Item))
@@ -96,15 +101,18 @@ func (pointer *ItemSlice) Each(f func(i int, item *Item)) *ItemSlice {
 	return pointer
 }
 
+// Empty returns a boolean indicating whether the Item slice contains zero values.
 func (pointer *ItemSlice) Empty() bool {
 	return pointer.slice.Empty()
 }
 
+// Fetch retrieves the Item pointer held at the argument index. Returns nil if index exceeds Item slice length.
 func (pointer *ItemSlice) Fetch(i int) *Item {
 	item, _ := pointer.Get(i)
 	return item
 }
 
+// Get returns the Item pointer held at the argument index and a boolean indicating if it was successfully retrieved.
 func (pointer *ItemSlice) Get(i int) (*Item, bool) {
 	value, ok := pointer.slice.Get(i)
 	if ok {
@@ -113,6 +121,7 @@ func (pointer *ItemSlice) Get(i int) (*Item, bool) {
 	return nil, ok
 }
 
+// Len method returns the number of elements in the Item slice.
 func (pointer *ItemSlice) Len() int {
 	return pointer.slice.Len()
 }
