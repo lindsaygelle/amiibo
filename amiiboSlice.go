@@ -169,7 +169,7 @@ func (pointer *AmiiboSlice) Precatenate(amiiboSlice *AmiiboSlice) *AmiiboSlice {
 	return pointer
 }
 
-// Prepend method adds one Amiibo to the beginning of the Amiibo sclie and returns the modified Amiibo slice.
+// Prepend method adds one Amiibo to the beginning of the Amiibo slice and returns the modified Amiibo slice.
 func (pointer *AmiiboSlice) Prepend(amiibo *Amiibo) *AmiiboSlice {
 	pointer.slice.Prepend(amiibo)
 	return pointer
