@@ -59,6 +59,7 @@ type amiiboSlice interface {
 	Slice(start, end int) *AmiiboSlice
 	Splice(start, end int) *AmiiboSlice
 	String() string
+	Swap(i, j int) *AmiiboSlice
 }
 
 // An AmiiboSlice is a slice-like struct whose methods are used to perform insertion, mutation and iteration operations on an
@@ -214,4 +215,11 @@ func (pointer *AmiiboSlice) Splice(start, end int) *AmiiboSlice {
 // String returns the string value of the Amiibo slice.
 func (pointer *AmiiboSlice) String() string {
 	return fmt.Sprintf("%v", *pointer)
+}
+
+// Swap swaps the Amiibo pointer held at i to j and vice versa. Does not swap the Amiibo slice
+// pointers if either i or j is out of bounds.
+func (pointer *AmiiboSlice) Swap(i, j int) *AmiiboSlice {
+	pointer.slice.Swap(i, j)
+	return pointer
 }
