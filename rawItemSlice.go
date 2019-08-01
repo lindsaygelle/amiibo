@@ -57,6 +57,7 @@ type rawItemSlice interface {
 	Slice(start, end int) *RawItemSlice
 	Splice(start, end int) *RawItemSlice
 	String() string
+	Swap(i, j int) *RawItemSlice
 }
 
 // An RawItemSlice is a slice-like struct whose methods are used to perform insertion, mutation and iteration operations on an
@@ -213,4 +214,11 @@ func (pointer *RawItemSlice) Splice(start, end int) *RawItemSlice {
 // String returns the string value of the raw Item slice.
 func (pointer *RawItemSlice) String() string {
 	return fmt.Sprintf("%v", pointer.slice)
+}
+
+// Swap swaps the raw Item pointer held at i to j and vice versa. Does not swap the raw Item
+// pointers if either i or j is out of bounds.
+func (pointer *RawItemSlice) Swap(i, j int) *RawItemSlice {
+	pointer.slice.Swap(i, j)
+	return pointer
 }
