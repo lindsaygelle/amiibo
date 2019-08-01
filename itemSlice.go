@@ -197,14 +197,20 @@ func (pointer *ItemSlice) Set() *ItemSlice {
 	return itemSlice
 }
 
+// Slice method returns a shallow copy of a portion of the Item slice into a new Item slice.
+// Item slice is selected from begin to end (end not included).
+// The original Item slice will not be modified but all values are shared between the two Item slices.
 func (pointer *ItemSlice) Slice(start, end int) *ItemSlice {
 	return &ItemSlice{slice: pointer.slice.Slice(start, end)}
 }
 
+// Splice method changes the contents of the Item slice by removing existing elements fron i to N.
+// Returns a new Item slice containing the cut values.
 func (pointer *ItemSlice) Splice(start, end int) *ItemSlice {
 	return &ItemSlice{slice: pointer.slice.Splice(start, end)}
 }
 
+// String returns the string value of the Item slice.
 func (pointer *ItemSlice) String() string {
 	return fmt.Sprintf("%v", *pointer)
 }
