@@ -53,6 +53,7 @@ type itemSlice interface {
 	Prepend(item *Item) *ItemSlice
 	Push(item *Item) int
 	Replace(i int, item *Item) bool
+	Set() *ItemSlice
 	Slice(start, end int) *ItemSlice
 	Splice(start, end int) *ItemSlice
 	String() string
@@ -181,6 +182,19 @@ func (pointer *ItemSlice) Push(item *Item) int {
 // Replace method replaces the Item at the argument index if it is in bounds with the provided argument Item.
 func (pointer *ItemSlice) Replace(i int, item *Item) bool {
 	return pointer.slice.Replace(i, item)
+}
+
+// Set method returns a unique Item slice, removing duplicate Item pointers that have the same ID.
+func (pointer *ItemSlice) Set() *ItemSlice {
+	itemSlice := newItemSlice()
+	m := map[string]bool{}
+	pointer.Each(func(_ int, item *Item) {
+		if _, ok := m[item.ID]; !ok {
+			m[item.ID] = true
+			itemSlice.Append(item)
+		}
+	})
+	return itemSlice
 }
 
 func (pointer *ItemSlice) Slice(start, end int) *ItemSlice {
