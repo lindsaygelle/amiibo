@@ -58,6 +58,12 @@ type itemSlice interface {
 	String() string
 }
 
+// An ItemSlice is a slice-like struct whose methods are used to perform insertion, mutation and iteration operations on an
+// unordered collection of Item pointers. Each Item slice can contain 0 to N number of normalized Items, with each
+// Item pointer being held in a private slice field. All exposed methods for the Item slice perform a corresponding
+// operation for this internal field. This property is protected to prevent incorrect data assignment as the slice permits
+// any data interface to be assigned to the Item slice. For direct access to each Item struct pointer within
+// the Item slice, a normal Go provided slice or array declaration should be used over the ItemSlice struct.
 type ItemSlice struct {
 	slice *slice.Slice
 }
