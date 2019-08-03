@@ -15,4 +15,6 @@ func TestAmiiboMap(t *testing.T) {
 	if m == nil {
 		t.Fatalf("{nil}")
 	}
+
+	fmt.Println(NewAmiiboMap(*b...))
 }
