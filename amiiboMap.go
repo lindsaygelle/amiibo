@@ -1,6 +1,7 @@
 package amiibo
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/gellel/lexicon"
@@ -15,7 +16,20 @@ var (
 // from a cached XHR payload or directly from the Nintendo Amiibo source. To create from source
 // parse in the optional byte code pointer, otherwise leave empty and it will be collected from
 // the Nintendo XHR HTTP response.
-func NewAmiiboMap(b ...byte) {}
+func NewAmiiboMap(b ...byte) *AmiiboMap {
+	if len(b) != 0 {
+		return getAmiiboMap(&b)
+	}
+	x, err := net()
+	if err != nil {
+		return newAmiiboMap()
+	}
+	r, err := unmarshallRawPayload(x)
+	if err != nil {
+		return newAmiiboMap()
+	}
+	return unmarshallRawToAmiiboMap(r.AmiiboList)
+}
 
 // getAmiiboMap returns a populated Amiibo map from a parsed and normalized Nintendo XHR HTTP response.
 func getAmiiboMap(content *[]byte) *AmiiboMap {
@@ -33,6 +47,14 @@ func getAmiiboMap(content *[]byte) *AmiiboMap {
 // newAmiiboMap returns an empty Amiibo map pointer.
 func newAmiiboMap() *AmiiboMap {
 	return &AmiiboMap{lexicon: &lexicon.Lexicon{}}
+}
+
+func unmarshallRawToAmiiboMap(r []*json.RawMessage) *AmiiboMap {
+	amiiboMap := newAmiiboMap()
+	for _, rawMessage := range r {
+		amiiboMap.Add(newAmiibo(newRawAmiibo(rawMessage)))
+	}
+	return amiiboMap
 }
 
 // amiiboMap defines the Amiibo map struct.
