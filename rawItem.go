@@ -83,6 +83,7 @@ func writeRawItem(rawItem *RawItem) error {
 	return ioutil.WriteFile(filepath, content, 0644)
 }
 
+// newRawItem instantiates a new raw Item pointer.
 func newRawItem(r *json.RawMessage) *RawItem {
 	rawItem := &RawItem{}
 	err := json.Unmarshal(*r, rawItem)
@@ -92,6 +93,7 @@ func newRawItem(r *json.RawMessage) *RawItem {
 	return rawItem
 }
 
+// rawItem defines the interface for the Raw item struct.
 type rawItem interface {
 	String() string
 }
@@ -107,6 +109,7 @@ type RawItem struct {
 	URL          string `json:"url"`          // "/amiibo/detail/wolf-link-amiibo"
 }
 
+// String returns the string value for a raw Item pointer.
 func (pointer *RawItem) String() string {
 	return fmt.Sprintf("%s", pointer.Title)
 }
