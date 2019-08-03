@@ -92,7 +92,7 @@ func newItem(r *RawItem) *Item {
 		URL:         (nintendoURL + r.URL)}
 }
 
-// item defines the interface for a Item struct.
+// item defines the interface for a Item struct pointer.
 type item interface {
 	String() string
 }

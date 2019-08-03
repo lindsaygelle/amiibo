@@ -92,7 +92,7 @@ func newRawAmiibo(r *json.RawMessage) *RawAmiibo {
 	return rawAmiibo
 }
 
-// rawAmiibo defines the raw Amiibo struct.
+// rawAmiibo defines the interface for a raw Amiibo struct pointer.
 type rawAmiibo interface {
 	String() string
 }
