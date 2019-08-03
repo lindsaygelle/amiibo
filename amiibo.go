@@ -118,7 +118,7 @@ func newAmiibo(r *RawAmiibo) *Amiibo {
 		URL:         (nintendoURL + r.AmiiboPage)}
 }
 
-// amiibo defines the Amiibo struct.
+// amiibo defines the interface for the Amiibo struct pointer.
 type amiibo interface {
 	String() string
 }
