@@ -15,7 +15,7 @@ var (
 // from a cached XHR payload or directly from the Nintendo Amiibo source. To create from source
 // parse in the optional byte code pointer, otherwise leave empty and it will be collected from
 // the Nintendo XHR HTTP response.
-func NewAmiiboSlice(b ...byte) {
+func NewAmiiboSlice(b ...byte) *AmiiboSlice {
 	if len(b) != 0 {
 		return getAmiiboSlice(&b)
 	}
