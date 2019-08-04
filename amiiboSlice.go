@@ -1,6 +1,7 @@
 package amiibo
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/gellel/slice"
@@ -14,7 +15,11 @@ var (
 // from a cached XHR payload or directly from the Nintendo Amiibo source. To create from source
 // parse in the optional byte code pointer, otherwise leave empty and it will be collected from
 // the Nintendo XHR HTTP response.
-func NewAmiiboSlice(b ...byte) {}
+func NewAmiiboSlice(b ...byte) {
+	if len(b) != 0 {
+
+	}
+}
 
 // getAmiiboSlice returns a new Amiibo slice pointer using the argument bytes as the initial entries.
 func getAmiiboSlice(content *[]byte) *AmiiboSlice {
@@ -34,6 +39,15 @@ func getAmiiboSlice(content *[]byte) *AmiiboSlice {
 // newAmiiboSlice instantiates a new Amiibo slice pointer.
 func newAmiiboSlice() *AmiiboSlice {
 	return &AmiiboSlice{slice: &slice.Slice{}}
+}
+
+// unmarshallRawToAmiiboSlice returns a Amiibo slice from the raw bytes contained within the Nintendo XHR HTTP response.
+func unmarshallRawToAmiiboSlice(r []*json.RawMessage) *AmiiboSlice {
+	amiiboSlice := newAmiiboSlice()
+	for _, rawMessage := range r {
+		amiiboSlice.Append(newAmiibo(newRawAmiibo(rawMessage)))
+	}
+	return amiiboSlice
 }
 
 // amiiboSlice defines the interface for an Amiibo slice pointer.
