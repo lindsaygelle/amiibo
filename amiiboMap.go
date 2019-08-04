@@ -49,7 +49,7 @@ func newAmiiboMap() *AmiiboMap {
 	return &AmiiboMap{lexicon: &lexicon.Lexicon{}}
 }
 
-// unmarshallRawToAmiiboMap returns a Amiibo map from the raw Amiibo bytes contained within the Nintendo XHR HTTP response.
+// unmarshallRawToAmiiboMap returns a Amiibo map from the raw bytes contained within the Nintendo XHR HTTP response.
 func unmarshallRawToAmiiboMap(r []*json.RawMessage) *AmiiboMap {
 	amiiboMap := newAmiiboMap()
 	for _, rawMessage := range r {
