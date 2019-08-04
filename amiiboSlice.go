@@ -17,8 +17,17 @@ var (
 // the Nintendo XHR HTTP response.
 func NewAmiiboSlice(b ...byte) {
 	if len(b) != 0 {
-
+		return getAmiiboSlice(&b)
 	}
+	x, err := net()
+	if err != nil {
+		return newAmiiboSlice()
+	}
+	r, err := unmarshallRawPayload(x)
+	if err != nil {
+		return newAmiiboSlice()
+	}
+	return unmarshallRawToAmiiboSlice(r.AmiiboList)
 }
 
 // getAmiiboSlice returns a new Amiibo slice pointer using the argument bytes as the initial entries.
