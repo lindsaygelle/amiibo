@@ -1,5 +1,14 @@
 package amiibo_test
 
-import "testing"
+import (
+	"fmt"
+	"testing"
 
-func TestRawAmiibo(t *testing.T) {}
+	"github.com/gellel/amiibo"
+)
+
+func TestRawAmiibo(t *testing.T) {
+	b := []byte(rawAmiiboDefault)
+	rawAmiibo := amiibo.NewRawAmiibo(&b)
+	fmt.Println(rawAmiibo)
+}
