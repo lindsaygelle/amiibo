@@ -13,6 +13,16 @@ var (
 	_ rawAmiibo = (*RawAmiibo)(nil)
 )
 
+// NewRawAmiibo instantiates a new raw Amiibo struct pointer.
+func NewRawAmiibo(b *[]byte) *RawAmiibo {
+	r := new(RawAmiibo)
+	err := json.Unmarshal(*b, r)
+	if err != nil {
+		panic(err)
+	}
+	return r
+}
+
 func deleteRawAmiibo(rawAmiibo *RawAmiibo) error {
 	return os.Remove(filepath.Join(storepathRawAmiibo(), fmt.Sprintf("%s.json", rawAmiibo.HexCode)))
 }
