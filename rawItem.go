@@ -13,8 +13,7 @@ var (
 	_ rawItem = (*RawItem)(nil)
 )
 
-
-// NewRawAmiibo instantiates a new raw Item struct pointer.
+// NewRawItem instantiates a new raw Item struct pointer.
 func NewRawItem(b *[]byte) *RawItem {
 	r := new(RawItem)
 	err := json.Unmarshal(*b, r)
