@@ -21,4 +21,11 @@ const (
 		"type": "Figure",
 		"unixTimestamp": 1480636800,
 		"upc": "045496893064"}`
+
+	rawItemDefault string = `{
+		"description": null,
+		"lastModified": 1554418285473,
+		"path": "/content/noa/en_US/amiibo/detail/wolf-link-amiibo",
+		"title": "Wolf Link",
+		"url": "/amiibo/detail/wolf-link-amiibo"}`
 )
