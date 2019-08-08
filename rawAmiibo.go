@@ -93,6 +93,7 @@ func writeRawAmiibo(rawAmiibo *RawAmiibo) error {
 	return ioutil.WriteFile(filepath, content, 0644)
 }
 
+// NewRawAmiibo returns a new raw Amiibo pointer. Requires a valid JSON message to be marshalled into the structs declared fields. Returns a nil if an unmarshalling error occurs.
 func newRawAmiibo(r *json.RawMessage) *RawAmiibo {
 	rawAmiibo := &RawAmiibo{}
 	err := json.Unmarshal(*r, rawAmiibo)
