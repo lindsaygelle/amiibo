@@ -71,6 +71,7 @@ func storepathRawAmiibo() string {
 	return filepath.Join(rootpath, "amiibo")
 }
 
+// UnmarshallRawAmiibo attempts to read and unmarshall a byte slice to a raw Amiibo. Returns a new raw Amiib pointer if the byte sequence is successfully deconstructed, otherwise returns nil and a corresponding error.
 func unmarshallRawAmiibo(content *[]byte) (*RawAmiibo, error) {
 	r := &RawAmiibo{}
 	err := json.Unmarshal(*content, r)
