@@ -80,6 +80,7 @@ func unmarshallRawAmiibo(content *[]byte) (*RawAmiibo, error) {
 	return r, nil
 }
 
+// WriteRawAmiibo writes a single raw Amiibo pointer to a nominated destination on the running operation system. Returns nil if raw Amiibo is successfully marshalled to JSON, otherwise returns a corresponding error.
 func writeRawAmiibo(rawAmiibo *RawAmiibo) error {
 	err := os.MkdirAll(storepathRawAmiibo(), 0644)
 	if err != nil {
