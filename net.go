@@ -6,9 +6,9 @@ import (
 	"net/http"
 )
 
-// Net attempts to fetch a new Nintendo XHR HTTP response from the Nintendo Amiibo URL.
+// Net performs a HTTP GET to the Nintendo Amiibo URL. Returns the HTTP response body after HTTP status is OK. Returns nil if a HTTP or IO error occurs.
 func net() (*[]byte, error) {
-	req, err := http.NewRequest("GET", amiiboURL, nil)
+	req, err := http.NewRequest(http.MethodGet, amiiboURL, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16,7 +16,7 @@ func net() (*[]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	if resp.StatusCode != 200 {
+	if resp.StatusCode != http.StatusOK {
 		return nil, errors.New(resp.Status)
 	}
 	defer resp.Body.Close()
