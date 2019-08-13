@@ -23,10 +23,12 @@ func NewRawItem(b *[]byte) *RawItem {
 	return r
 }
 
+// DeleteRawItem deletes the raw Item from the operating system if it is writtens. Returns an error if the raw Item is unable to be deleted or another file system issue occurs.
 func deleteRawItem(rawItem *RawItem) error {
 	return os.Remove(filepath.Join(storepathRawItem(), fmt.Sprintf("r-%s.json", rawItem.Title)))
 }
 
+// GetRawItem unmarshalls a raw Item struct from the operating system if it written to the disc. Returns nil if no corresponding raw Item is found or a unmarshalling error occurs.
 func getRawItem(ID string) *RawItem {
 	if ok := strings.HasSuffix(ID, ".json"); !ok {
 		ID = fmt.Sprintf("%s.json", ID)
