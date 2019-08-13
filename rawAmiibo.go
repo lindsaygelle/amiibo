@@ -23,6 +23,7 @@ func NewRawAmiibo(b *[]byte) *RawAmiibo {
 	return r
 }
 
+// DeleteRawAmibbo deletes the raw Amiibo from the operating system if it is writtens. Returns an error if the raw Amiibo is unable to be deleted or another file system issue occurs.
 func deleteRawAmiibo(rawAmiibo *RawAmiibo) error {
 	return os.Remove(filepath.Join(storepathRawAmiibo(), fmt.Sprintf("%s.json", rawAmiibo.HexCode)))
 }
