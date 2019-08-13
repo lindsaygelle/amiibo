@@ -45,6 +45,7 @@ func getRawItem(ID string) *RawItem {
 	return rawItem
 }
 
+// MarshallRawItem marshalls a raw Item pointer into a byte slice and returns the byte slice value.
 func marshallRawItem(rawItem *RawItem) ([]byte, error) {
 	content, err := json.Marshal(rawItem)
 	if err != nil {
@@ -53,6 +54,7 @@ func marshallRawItem(rawItem *RawItem) ([]byte, error) {
 	return content, nil
 }
 
+// OpenRawItem returns the byte pointer for a written raw Item struct by its storage name.
 func openRawItem(name string) (*[]byte, error) {
 	filepath := filepath.Join(storepathRawItem(), name)
 	reader, err := os.Open(filepath)
