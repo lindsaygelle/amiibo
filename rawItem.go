@@ -67,10 +67,12 @@ func openRawItem(name string) (*[]byte, error) {
 	return &content, nil
 }
 
+// StorepathRawItem returns the default absolute path for raw Item struct being written to the operating system.
 func storepathRawItem() string {
 	return filepath.Join(rootpath, "item")
 }
 
+// UnmarshallRawItem attempts to read and unmarshall a byte slice to a raw Item. Returns a new raw Item pointer if the byte sequence is successfully deconstructed, otherwise returns nil and a corresponding error.
 func unmarshallRawItem(content *[]byte) (*RawItem, error) {
 	r := &RawItem{}
 	err := json.Unmarshal(*content, r)
@@ -80,6 +82,7 @@ func unmarshallRawItem(content *[]byte) (*RawItem, error) {
 	return r, nil
 }
 
+// WriteRawItem writes a single raw Item pointer to a nominated destination on the running operating system. Returns nil if raw Item is successfully marshalled to JSON, otherwise returns a corresponding error.
 func writeRawItem(rawItem *RawItem) error {
 	err := os.MkdirAll(storepathRawItem(), 0644)
 	if err != nil {
