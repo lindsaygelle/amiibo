@@ -27,6 +27,7 @@ func deleteRawAmiibo(rawAmiibo *RawAmiibo) error {
 	return os.Remove(filepath.Join(storepathRawAmiibo(), fmt.Sprintf("%s.json", rawAmiibo.HexCode)))
 }
 
+// GetRawAmiibo unmarshalls a raw Amiibo struct from the operating system if it written to the disc. Returns nil if no corresponding raw Amiibo is found or a unmarshalling error occurs.
 func getRawAmiibo(ID string) *RawAmiibo {
 	if ok := strings.HasSuffix(ID, ".json"); !ok {
 		ID = fmt.Sprintf("%s.json", ID)
@@ -45,6 +46,7 @@ func getRawAmiibo(ID string) *RawAmiibo {
 	return amiibo
 }
 
+// MarshallRawAmiibo marshalls a raw Amiibo pointer into a byte slice and returns the byte slice value.
 func marshallRawAmiibo(rawAmiibo *RawAmiibo) ([]byte, error) {
 	content, err := json.Marshal(rawAmiibo)
 	if err != nil {
