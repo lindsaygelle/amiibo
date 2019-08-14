@@ -1,16 +1,23 @@
 package amiibo
 
 import (
+	"fmt"
+	"reflect"
 	"testing"
 )
 
 func TestAmiibo(t *testing.T) {
 
-	rawAmiibo := &RawAmiibo{}
+	amiibo := newAmiibo(rawAmiiboDefaultStruct)
 
-	newAmiibo(rawAmiibo)
+	if amiibo == nil {
+		t.Fatalf("amiibo.NewAmiibo(r *amiibo.RawAmiibo) *amiibo.Amiibo == nil")
+	}
+	returnType := reflect.TypeOf(amiibo).Elem().String()
 
-	/*writeAmiibo(&Amiibo{Hex: "#ffdc81"})
-	fmt.Println(getAmiibo("#ffdc81"))
-	fmt.Println(deleteAmiibo(&Amiibo{Hex: "#ffdc81"}))*/
+	expectType := reflect.TypeOf(&Amiibo{}).Elem().String()
+
+	if ok := returnType == expectType; ok != true {
+		t.Fatalf(fmt.Sprintf("amiibo.NewAmiibo(r *amiibo.RawAmiibo) %s != %s", returnType, expectType))
+	}
 }
