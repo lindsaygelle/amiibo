@@ -11,7 +11,7 @@ const (
 	defaultGameCode            string = "NVLEAK2A"
 	defaultHexCode             string = "#ffdc81"
 	defaultIsReleased          bool   = true
-	defaultOverviewDescription string = "<p style=\"margin-top: 0;\">This amiibo figure shows Link™ in his toon-shaded incarnation from The Legend of Zelda™: The Wind Waker™ game. Link holds the Wind Waker itself, a wand that allowed him to control the winds.</p>"
+	defaultOverviewDescription string = "<p style='margin-top: 0;'>This amiibo figure shows Link™ in his toon-shaded incarnation from The Legend of Zelda™: The Wind Waker™ game. Link holds the Wind Waker itself, a wand that allowed him to control the winds.</p>"
 	defaultPresentedBy         string = "noa:publisher/nintendo"
 	defaultPrice               string = "24.99"
 	defaultReleaseDateMask     string = "12/02/2016"
@@ -32,32 +32,32 @@ const (
 
 const (
 	rawAmiiboDefault string = `{
-		"amiiboName": 			"Toon Link - The Wind Waker",
-		"amiiboPage": 			"/amiibo/detail/toon-link…30th-anniversary-series",
-		"boxArtURL": 			"/content/dam/noa/en_US/a…nk-WW_30thAnniv_box.png",
-		"detailsPath": 			"/content/noa/en_US/amiib…30th-anniversary-series",
-		"detailsURL": 			"/amiibo/detail/toon-link…30th-anniversary-series",
-		"figureURL": 			"/content/dam/noa/en_US/a…k-WW_30thAnniv_char.png",
-		"franchise": 			"The Legend of Zelda",
-		"gameCode": 			"NVLEAK2A",
-		"hexCode": 				"#ffdc81",
+		"amiiboName": 			"` + defaultAmiiboName + `",
+		"amiiboPage": 			"` + defaultAmiiboPage + `",
+		"boxArtURL": 			"` + defaultBoxArtURL + `",
+		"detailsPath": 			"` + defaultDetailsPath + `",
+		"detailsURL": 			"` + defaultDetailsURL + `",
+		"figureURL": 			"` + defaultFigureURL + `",
+		"franchise": 			"` + defaultFranchise + `",
+		"gameCode": 			"` + defaultGameCode + `",
+		"hexCode": 				"` + defaultHexCode + `",
 		"isReleased": 			true,
-		"overviewDescription": 	"<p style=\"margin-top: 0;\">This amiibo figure shows Link™ in his toon-shaded incarnation from The Legend of Zelda™: The Wind Waker™ game. Link holds the Wind Waker itself, a wand that allowed him to control the winds.</p>",
-		"presentedBy": 			"noa:publisher/nintendo",
-		"price": 				"24.99",
-		"releaseDateMask": 		"12/02/2016",
-		"series": 				"30th anniversary",
-		"slug": 				"toon-link-the-wind-waker…30th-anniversary-series",
-		"type": 				"Figure",
+		"overviewDescription": 	"` + defaultOverviewDescription + `",
+		"presentedBy": 			"` + defaultPresentedBy + `",
+		"price": 				"` + defaultPrice + `",
+		"releaseDateMask": 		"` + defaultReleaseDateMask + `",
+		"series": 				"` + defaultSeries + `",
+		"slug": 				"` + defaultSlug + `",
+		"type": 				"` + defaultType + `",
 		"unixTimestamp": 		1480636800,
-		"upc": 					"045496893064"}`
+		"upc": 					"` + defaultUpc + `"}`
 
 	rawItemDefault string = `{
-		"description": 	null,
+		"description": 	` + defaultDescription + `,
 		"lastModified": 1554418285473,
-		"path": 		"/content/noa/en_US/amiibo/detail/wolf-link-amiibo",
-		"title": 		"Wolf Link",
-		"url": 			"/amiibo/detail/wolf-link-amiibo"}`
+		"path": 		"` + defaultPath + `",
+		"title": 		"` + defaultTitle + `",
+		"url": 			"` + defaultURL + `"}`
 )
 
 var (
