@@ -32,32 +32,32 @@ const (
 
 const (
 	rawAmiiboDefault string = `{
-		"amiiboName": 			"` + defaultAmiiboName + `",
-		"amiiboPage": 			"` + defaultAmiiboPage + `",
-		"boxArtURL": 			"` + defaultBoxArtURL + `",
-		"detailsPath": 			"` + defaultDetailsPath + `",
-		"detailsURL": 			"` + defaultDetailsURL + `",
-		"figureURL": 			"` + defaultFigureURL + `",
-		"franchise": 			"` + defaultFranchise + `",
-		"gameCode": 			"` + defaultGameCode + `",
-		"hexCode": 				"` + defaultHexCode + `",
-		"isReleased": 			true,
-		"overviewDescription": 	"` + defaultOverviewDescription + `",
-		"presentedBy": 			"` + defaultPresentedBy + `",
-		"price": 				"` + defaultPrice + `",
-		"releaseDateMask": 		"` + defaultReleaseDateMask + `",
-		"series": 				"` + defaultSeries + `",
-		"slug": 				"` + defaultSlug + `",
-		"type": 				"` + defaultType + `",
-		"unixTimestamp": 		1480636800,
-		"upc": 					"` + defaultUpc + `"}`
+		"amiiboName": "` + defaultAmiiboName + `",
+		"amiiboPage": "` + defaultAmiiboPage + `",
+		"boxArtURL": "` + defaultBoxArtURL + `",
+		"detailsPath": "` + defaultDetailsPath + `",
+		"detailsURL": "` + defaultDetailsURL + `",
+		"figureURL": "` + defaultFigureURL + `",
+		"franchise": "` + defaultFranchise + `",
+		"gameCode": "` + defaultGameCode + `",
+		"hexCode": "` + defaultHexCode + `",
+		"isReleased": true,
+		"overviewDescription": "` + defaultOverviewDescription + `",
+		"presentedBy": "` + defaultPresentedBy + `",
+		"price": "` + defaultPrice + `",
+		"releaseDateMask": "` + defaultReleaseDateMask + `",
+		"series": "` + defaultSeries + `",
+		"slug": "` + defaultSlug + `",
+		"type": "` + defaultType + `",
+		"unixTimestamp": 1480636800,
+		"upc": "` + defaultUpc + `"}`
 
 	rawItemDefault string = `{
-		"description": 	` + defaultDescription + `,
+		"description": ` + defaultDescription + `,
 		"lastModified": 1554418285473,
-		"path": 		"` + defaultPath + `",
-		"title": 		"` + defaultTitle + `",
-		"url": 			"` + defaultURL + `"}`
+		"path": "` + defaultPath + `",
+		"title": "` + defaultTitle + `",
+		"url": "` + defaultURL + `"}`
 )
 
 var (
