@@ -1,4 +1,4 @@
-package amiibo_test
+package amiibo
 
 const (
 	defaultAmiiboName          string = "Toon Link - The Wind Waker"
@@ -10,7 +10,7 @@ const (
 	defaultFranchise           string = "The Legend of Zelda"
 	defaultGameCode            string = "NVLEAK2A"
 	defaultHexCode             string = "#ffdc81"
-	defaultIsReleased          string = "true"
+	defaultIsReleased          bool   = true
 	defaultOverviewDescription string = "<p style=\"margin-top: 0;\">This amiibo figure shows Link™ in his toon-shaded incarnation from The Legend of Zelda™: The Wind Waker™ game. Link holds the Wind Waker itself, a wand that allowed him to control the winds.</p>"
 	defaultPresentedBy         string = "noa:publisher/nintendo"
 	defaultPrice               string = "24.99"
@@ -18,7 +18,7 @@ const (
 	defaultSeries              string = "30th anniversary"
 	defaultSlug                string = "toon-link-the-wind-waker…30th-anniversary-series"
 	defaultType                string = "Figure"
-	defaultUnixTimestamp       string = "1480636800"
+	defaultUnixTimestamp       int64  = 1480636800
 	defaultUpc                 string = "045496893064"
 )
 
@@ -50,4 +50,27 @@ const (
 		"path": "/content/noa/en_US/amiibo/detail/wolf-link-amiibo",
 		"title": "Wolf Link",
 		"url": "/amiibo/detail/wolf-link-amiibo"}`
+)
+
+var (
+	rawAmiiboDefaultStruct = &RawAmiibo{
+		AmiiboName:          defaultAmiiboName,
+		AmiiboPage:          defaultAmiiboPage,
+		BoxArtURL:           defaultBoxArtURL,
+		DetailsPath:         defaultDetailsPath,
+		DetailsURL:          defaultDetailsURL,
+		FigureURL:           defaultFigureURL,
+		Franchise:           defaultFranchise,
+		GameCode:            defaultGameCode,
+		HexCode:             defaultHexCode,
+		IsReleased:          defaultIsReleased,
+		OverviewDescription: defaultOverviewDescription,
+		PresentedBy:         defaultPresentedBy,
+		Price:               defaultPrice,
+		ReleaseDateMask:     defaultReleaseDateMask,
+		Series:              defaultSeries,
+		Slug:                defaultSlug,
+		Type:                defaultType,
+		UnixTimestamp:       defaultUnixTimestamp,
+		UPC:                 defaultUpc}
 )
