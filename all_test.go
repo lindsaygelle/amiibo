@@ -23,6 +23,14 @@ const (
 )
 
 const (
+	defaultDescription  string = "null"
+	defaultLastModified int64  = 1554418285473
+	defaultPath         string = "/content/noa/en_US/amiibo/detail/wolf-link-amiibo"
+	defaultTitle        string = "Wolf Link"
+	defaultURL          string = "/amiibo/detail/wolf-link-amiibo"
+)
+
+const (
 	rawAmiiboDefault string = `{
 		"amiiboName": 			"Toon Link - The Wind Waker",
 		"amiiboPage": 			"/amiibo/detail/toon-link…30th-anniversary-series",
@@ -74,5 +82,10 @@ var (
 		UnixTimestamp:       defaultUnixTimestamp,
 		UPC:                 defaultUpc}
 
-	rawItemStructDefault = &RawItem{}
+	rawItemStructDefault = &RawItem{
+		Description:  defaultDescription,
+		LastModified: defaultLastModified,
+		Path:         defaultPath,
+		Title:        defaultTitle,
+		URL:          defaultURL}
 )
