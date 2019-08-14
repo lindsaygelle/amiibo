@@ -8,6 +8,7 @@ import (
 
 func TestRawAmiibo(t *testing.T) {
 	b := []byte(rawAmiiboDefault)
+
 	rawAmiibo := NewRawAmiibo(&b)
 
 	if ok := reflect.ValueOf(rawAmiibo).Kind() == reflect.Ptr; ok != true {

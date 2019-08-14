@@ -8,7 +8,7 @@ import (
 
 func TestAmiibo(t *testing.T) {
 
-	amiibo := newAmiibo(rawAmiiboDefaultStruct)
+	amiibo := newAmiibo(rawAmiiboStructDefault)
 
 	if amiibo == nil {
 		t.Fatalf("amiibo.NewAmiibo(r *amiibo.RawAmiibo) *amiibo.Amiibo == nil")
