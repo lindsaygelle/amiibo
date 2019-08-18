@@ -69,6 +69,7 @@ func unmarshallItem(content *[]byte) (*Item, error) {
 	return r, nil
 }
 
+// WriteItem writes a single Item pointer to a nominated destination on the running operating system. Returns nil if Item is successfully marshalled to JSON, otherwise returns a corresponding error.
 func writeItem(item *Item) error {
 	err := os.MkdirAll(storepathItem(), 0644)
 	if err != nil {
