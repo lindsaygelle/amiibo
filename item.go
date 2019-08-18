@@ -19,6 +19,7 @@ func deleteItem(item *Item) error {
 	return os.Remove(filepath.Join(storepathItem(), fmt.Sprintf("%s.json", item.Name)))
 }
 
+// GetItem unmarshalls an Item struct from the operating system if it written to the disc. Returns nil if no corresponding Item is found or a unmarshalling error occurs.
 func getItem(ID string) *Item {
 	if ok := strings.HasSuffix(ID, ".json"); !ok {
 		ID = fmt.Sprintf("%s.json", ID)
@@ -34,6 +35,7 @@ func getItem(ID string) *Item {
 	return amiibo
 }
 
+// MarshallItem marshalls a Item pointer into a byte slice and returns the byte slice value.
 func marshallItem(item *Item) ([]byte, error) {
 	content, err := json.Marshal(item)
 	if err != nil {
@@ -42,6 +44,7 @@ func marshallItem(item *Item) ([]byte, error) {
 	return content, nil
 }
 
+// OpenItem returns the byte pointer for a written Item struct by its storage name.
 func openItem(name string) (*[]byte, error) {
 	filepath := filepath.Join(storepathItem(), name)
 	reader, err := os.Open(filepath)
