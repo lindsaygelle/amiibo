@@ -82,6 +82,10 @@ func writeItem(item *Item) error {
 	return ioutil.WriteFile(filepath, content, 0644)
 }
 
+// NewItem returns a new Item pointer from a raw Item pointer. Normalizes the raw Item fields into
+// predictable patterns as well as cleans the input data. Does not modify the raw Item allowing
+// the original content to be accessed. Assumes that the argument raw Item pointer has been
+// successfully marshalled and contains all provided fields.
 func newItem(r *RawItem) *Item {
 	return &Item{
 		Description: r.Description,
