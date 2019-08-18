@@ -60,6 +60,7 @@ func storepathItem() string {
 	return filepath.Join(rootpath, "item")
 }
 
+// UnmarshallItem attempts to read and unmarshall a byte slice to a Item. Returns a new Item pointer if the byte sequence is successfully deconstructed, otherwise returns nil and a corresponding error.
 func unmarshallItem(content *[]byte) (*Item, error) {
 	r := &Item{}
 	err := json.Unmarshal(*content, r)
