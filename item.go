@@ -56,6 +56,7 @@ func openItem(name string) (*[]byte, error) {
 	return &content, nil
 }
 
+// StorepathItem returns the default absolute path for an Item struct being written to the operating system.
 func storepathItem() string {
 	return filepath.Join(rootpath, "item")
 }
