@@ -15,6 +15,7 @@ var (
 	_ item = (*Item)(nil)
 )
 
+// DeleteItem deletes the Item from the operating system if it is written. Returns an error if the Item is unable to be deleted or another file system issue occurs.
 func deleteItem(item *Item) error {
 	return os.Remove(filepath.Join(storepathItem(), fmt.Sprintf("%s.json", item.Name)))
 }
