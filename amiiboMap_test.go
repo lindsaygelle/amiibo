@@ -1,18 +1,20 @@
 package amiibo
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestAmiiboMap(t *testing.T) {
 
-	b, err := local()
-	if err != nil {
-		t.Fatalf(fmt.Sprintf("%v", err))
+	amiiboMap := newAmiiboMap()
+
+	if testAmiiboStruct == nil {
+		t.Fatalf("amiibo.newAmiiboMap() test cannot run testAmiiboStruct is nil")
 	}
-	m := getAmiiboMap(b)
-	if m == nil {
-		t.Fatalf("{nil}")
+
+	amiiboMap.Add(testAmiiboStruct)
+
+	if _, ok := (*amiiboMap.lexicon)[testAmiiboStruct.ID]; ok != true {
+		t.Fatalf("AmiiboMap.Add(a *Amiibo) *AmiiboMap does not have key where ID = %s", testAmiiboStruct.ID)
 	}
 }

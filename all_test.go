@@ -89,3 +89,7 @@ var (
 		Title:        defaultTitle,
 		URL:          defaultURL}
 )
+
+var (
+	testAmiiboStruct *Amiibo
+)

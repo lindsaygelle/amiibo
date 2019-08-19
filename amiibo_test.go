@@ -8,12 +8,12 @@ import (
 
 func TestAmiibo(t *testing.T) {
 
-	amiibo := newAmiibo(rawAmiiboStructDefault)
+	testAmiiboStruct = newAmiibo(rawAmiiboStructDefault)
 
-	if amiibo == nil {
+	if testAmiiboStruct == nil {
 		t.Fatalf("amiibo.NewAmiibo(r *amiibo.RawAmiibo) *amiibo.Amiibo == nil")
 	}
-	returnType := reflect.TypeOf(amiibo).Elem().String()
+	returnType := reflect.TypeOf(testAmiiboStruct).Elem().String()
 
 	expectType := reflect.TypeOf(&Amiibo{}).Elem().String()
 
