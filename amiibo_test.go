@@ -15,6 +15,8 @@ func TestAmiibo(t *testing.T) {
 		t.Fatalf("amiibo.NewAmiibo(r *amiibo.RawAmiibo) *amiibo.Amiibo == nil")
 	}
 
+	t.Parallel()
+
 	returnType := reflect.TypeOf(testAmiiboStruct).Elem().String()
 
 	expectType := reflect.TypeOf(&Amiibo{}).Elem().String()

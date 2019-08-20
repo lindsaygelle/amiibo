@@ -5,6 +5,7 @@ import (
 )
 
 func TestAmiiboMap(t *testing.T) {
+	t.Parallel()
 
 	amiiboMap := newAmiiboMap()
 
@@ -22,5 +23,9 @@ func TestAmiiboMap(t *testing.T) {
 
 	if _, ok := (*amiiboMap.lexicon)[testAmiiboStruct.ID]; ok != true {
 		t.Fatalf("AmiiboMap.Add(a *Amiibo) *AmiiboMap does not have key where ID = %s", testAmiiboStruct.ID)
+	}
+
+	if m := amiiboMap.Intersection(newAmiiboMap().Add(testAmiiboStruct)); m.Has(testAmiiboStruct.ID) != true {
+		t.Fatalf("AmiiboMap.Intersection(m *AmiiboMap) *AmiiboMap did not share a known intersection between AmiiboMap A and AmiiboMap B")
 	}
 }
