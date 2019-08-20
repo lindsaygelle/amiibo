@@ -92,4 +92,5 @@ var (
 
 var (
 	testAmiiboStruct *Amiibo
+	testAmiiboSlice  *AmiiboSlice
 )

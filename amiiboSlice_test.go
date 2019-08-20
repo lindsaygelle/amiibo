@@ -5,12 +5,21 @@ import (
 )
 
 func TestAmiiboSlice(t *testing.T) {
-	b, err := local()
-	if err != nil {
-		panic(err)
+
+	t.Parallel()
+
+	amiiboSlice := newAmiiboSlice()
+
+	if testAmiiboStruct == nil {
+		t.Fatalf("amiibo.newAmiiboMap() test cannot run testAmiiboStruct is nil")
 	}
-	slice := getAmiiboSlice(b)
-	if ok := slice.Len() > 0; !ok {
-		t.Fatalf("amiibo.getAmiiboSlice(content []byte) returned an empty slice")
+
+	if s := amiiboSlice.Append(testAmiiboStruct); s != amiiboSlice {
+		t.Fatalf("AmiiboSlice.Append(a *Amiibo) *AmiiboSlice != %v", amiiboSlice)
 	}
+
+	if ok := amiiboSlice.Bounds(0); ok != true {
+		t.Fatalf("AmiiboSlice.Bounds(i int) bool != true; index of 0 is in bounds but returned false")
+	}
+
 }

@@ -22,10 +22,10 @@ func TestAmiibo(t *testing.T) {
 	expectType := reflect.TypeOf(&Amiibo{}).Elem().String()
 
 	if ok := returnType == expectType; ok != true {
-		t.Fatalf(fmt.Sprintf("amiibo.NewAmiibo(r *amiibo.RawAmiibo) %s != %s", returnType, expectType))
+		t.Fatalf("amiibo.NewAmiibo(r *amiibo.RawAmiibo) %s != %s", returnType, expectType)
 	}
 
 	if hashMD5 := fmt.Sprintf("%x", md5.Sum([]byte(rawAmiiboStructDefault.AmiiboName))); hashMD5 != testAmiiboStruct.ID {
-		t.Fatalf(fmt.Sprintf("Amiibo.ID != md5.Sum([]byte(RawAmiibo.AmiiboName); %s != %s", testAmiiboStruct.ID, hashMD5))
+		t.Fatalf("Amiibo.ID != md5.Sum([]byte(RawAmiibo.AmiiboName); %s != %s", testAmiiboStruct.ID, hashMD5)
 	}
 }
