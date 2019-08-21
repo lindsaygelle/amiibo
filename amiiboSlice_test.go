@@ -31,4 +31,10 @@ func TestAmiiboSlice(t *testing.T) {
 	if a != testAmiiboStruct {
 		t.Fatalf("AmiiboSlice.Get(i int) (*Amiibo, bool) %v != %v", a, testAmiiboStruct)
 	}
+
+	a = amiiboSlice.Poll()
+
+	if amiiboSlice.Len() != 0 {
+		t.Fatalf("AmiiboSlice.Poll() *Amiibo did not reduce the length of the AmiiboSlice")
+	}
 }
