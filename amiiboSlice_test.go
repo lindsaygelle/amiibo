@@ -37,4 +37,8 @@ func TestAmiiboSlice(t *testing.T) {
 	if amiiboSlice.Len() != 0 {
 		t.Fatalf("AmiiboSlice.Poll() *Amiibo did not reduce the length of the AmiiboSlice")
 	}
+
+	if ok := amiiboSlice.Assign(a).Len() == 1; ok != true {
+		t.Fatalf("AmiiboSlice.Assign(a ...*Amiibo) *AmiiboSlice did not increase the length of the AmiiboSlice")
+	}
 }
