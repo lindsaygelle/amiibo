@@ -22,4 +22,13 @@ func TestAmiiboSlice(t *testing.T) {
 		t.Fatalf("AmiiboSlice.Bounds(i int) bool != true; index of 0 is in bounds but returned false")
 	}
 
+	a, ok := amiiboSlice.Get(0)
+
+	if ok != true {
+		t.Fatalf("AmiiboSlice.Get(i int) (*Amiibo, bool) bool != true")
+	}
+
+	if a != testAmiiboStruct {
+		t.Fatalf("AmiiboSlice.Get(i int) (*Amiibo, bool) %v != %v", a, testAmiiboStruct)
+	}
 }
