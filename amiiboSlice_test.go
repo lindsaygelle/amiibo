@@ -1,6 +1,8 @@
 package amiibo
 
 import (
+	"crypto/md5"
+	"fmt"
 	"testing"
 )
 
@@ -42,17 +44,33 @@ func TestAmiiboSlice(t *testing.T) {
 		t.Fatalf("AmiiboSlice.Assign(a ...*Amiibo) *AmiiboSlice did not increase the length of the AmiiboSlice")
 	}
 
-	if n := amiiboSlice.Push(&Amiibo{Name: "Test"}); n != 2 {
+	if n := amiiboSlice.Push(&Amiibo{ID: fmt.Sprintf("%x", md5.Sum([]byte("Test"))), Name: "Test"}); n != 2 {
 		t.Fatalf("AmiiboSlice.Push(a *Amiibo) int did not return the expected length; %v != 2", n)
 	}
 
-	amiiboSlice.Assign(testAmiiboStruct, testAmiiboStruct, &Amiibo{Name: "Test"})
+	amiiboSlice.Assign(testAmiiboStruct, testAmiiboStruct, &Amiibo{ID: fmt.Sprintf("%x", md5.Sum([]byte("Test"))), Name: "Test"})
 
-	previousN := amiiboSlice.Len()
+	N := amiiboSlice.Len()
 
 	amiiboSlice = amiiboSlice.Set()
 
-	if currentN := amiiboSlice.Len(); currentN == previousN {
-		t.Fatalf("AmiiboSlice.Set() *AmiiboSlice did not trim the length of the AmiiboSlice")
+	fmt.Println(amiiboSlice.slice)
+
+	if ok := amiiboSlice.Len() == N; ok != true {
+		t.Fatalf("AmiiboSlice.Set() *AmiiboSlice did not correctly trim the length of the AmiiboSlice")
+	}
+
+	if ok := amiiboSlice.Len() == 2; ok != true {
+		t.Fatalf("AmiiboSlice.Set() *AmiiboSlice did not build the expected AmiiboSlice")
+	}
+
+	a, b := amiiboSlice.Fetch(0), amiiboSlice.Fetch(1)
+
+	amiiboSlice.Swap(0, 1)
+
+	c, d := amiiboSlice.Fetch(0), amiiboSlice.Fetch(1)
+
+	if ok := a == d && b == c; ok != true {
+		t.Fatalf("AmiiboSlice.Swap(i, j int) bool did not swap i to j and j to i")
 	}
 }
