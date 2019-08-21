@@ -41,4 +41,8 @@ func TestAmiiboSlice(t *testing.T) {
 	if ok := amiiboSlice.Assign(a).Len() == 1; ok != true {
 		t.Fatalf("AmiiboSlice.Assign(a ...*Amiibo) *AmiiboSlice did not increase the length of the AmiiboSlice")
 	}
+
+	if n := amiiboSlice.Push(&Amiibo{Name: "Test"}); n != 2 {
+		t.Fatalf("AmiiboSlice.Push(a *Amiibo) int did not return the expected length; %v != 2", n)
+	}
 }
