@@ -54,9 +54,7 @@ func TestAmiiboSlice(t *testing.T) {
 
 	amiiboSlice = amiiboSlice.Set()
 
-	fmt.Println(amiiboSlice.slice)
-
-	if ok := amiiboSlice.Len() == N; ok != true {
+	if ok := amiiboSlice.Len() != N; ok != true {
 		t.Fatalf("AmiiboSlice.Set() *AmiiboSlice did not correctly trim the length of the AmiiboSlice")
 	}
 
@@ -73,4 +71,11 @@ func TestAmiiboSlice(t *testing.T) {
 	if ok := a == d && b == c; ok != true {
 		t.Fatalf("AmiiboSlice.Swap(i, j int) bool did not swap i to j and j to i")
 	}
+
+	n := amiiboSlice.Len()
+	amiiboSlice.EachReverse(func(i int, _ *Amiibo) {
+		if i > n {
+			t.Fatalf("AmiiboSlice.EachReverse(i int, a *Amiibo) *AmiiboSlice does not iterate in reverse order; %v > %v", i, n)
+		}
+	})
 }
