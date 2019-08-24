@@ -22,6 +22,7 @@ func deleteAmiibo(amiibo *Amiibo) error {
 	return os.Remove(filepath.Join(storepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex)))
 }
 
+// GetAmiibo unmarshalls an Amiibo struct from the operating system if it written to the disc. Returns nil if no corresponding Amiibo is found or a unmarshalling error occurs.
 func getAmiibo(ID string) *Amiibo {
 	if ok := strings.HasSuffix(ID, ".json"); !ok {
 		ID = fmt.Sprintf("%s.json", ID)
@@ -37,6 +38,7 @@ func getAmiibo(ID string) *Amiibo {
 	return amiibo
 }
 
+// MarshallAmiibo marshalls an Amiibo pointer into a byte slice and returns the byte slice value.
 func marshallAmiibo(amiibo *Amiibo) ([]byte, error) {
 	content, err := json.Marshal(amiibo)
 	if err != nil {
@@ -45,6 +47,7 @@ func marshallAmiibo(amiibo *Amiibo) ([]byte, error) {
 	return content, nil
 }
 
+// OpenAmiibo returns the byte pointer for a written Amiibo struct by its storage name.
 func openAmiibo(name string) (*[]byte, error) {
 	filepath := filepath.Join(storepathAmiibo(), name)
 	reader, err := os.Open(filepath)
@@ -59,6 +62,7 @@ func openAmiibo(name string) (*[]byte, error) {
 	return &content, nil
 }
 
+// StorepathAmiibo returns the default absolute path for an Amiibo struct being written to the operating system.
 func storepathAmiibo() string {
 	return filepath.Join(rootpath, "amiibo")
 }
