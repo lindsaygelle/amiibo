@@ -63,6 +63,7 @@ func storepathAmiibo() string {
 	return filepath.Join(rootpath, "amiibo")
 }
 
+// UnmarshallAmiibo attempts to read and unmarshall a byte slice to an Amiibo. Returns a new Amiibo pointer if the byte sequence is successfully deconstructed, otherwise returns nil and a corresponding error.
 func unmarshallAmiibo(content *[]byte) (*Amiibo, error) {
 	r := &Amiibo{}
 	err := json.Unmarshal(*content, r)
@@ -72,6 +73,7 @@ func unmarshallAmiibo(content *[]byte) (*Amiibo, error) {
 	return r, nil
 }
 
+// WriteAmiibo writes a single Amiibo pointer to a nominated destination on the running operating system. Returns nil if Amiibo is successfully marshalled to JSON, otherwise returns a corresponding error.
 func writeAmiibo(fullpath string, amiibo *Amiibo) error {
 	err := os.MkdirAll(storepathAmiibo(), 0644)
 	if err != nil {
