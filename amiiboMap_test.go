@@ -28,4 +28,8 @@ func TestAmiiboMap(t *testing.T) {
 	if m := amiiboMap.Intersection(newAmiiboMap().Add(testAmiiboStruct)); m.Has(testAmiiboStruct.ID) != true {
 		t.Fatalf("AmiiboMap.Intersection(m *AmiiboMap) *AmiiboMap did not share a known intersection between AmiiboMap A and AmiiboMap B")
 	}
+
+	if ok := (amiiboMap.Del(testAmiiboStruct) && (amiiboMap.Has(testAmiiboStruct.ID) == false)); ok != true {
+		t.Fatalf("AmiiboMap.Del(a *Amiibo) bool did not delete the assigned Amiibo pointer")
+	}
 }
