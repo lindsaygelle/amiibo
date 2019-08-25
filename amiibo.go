@@ -18,6 +18,7 @@ var (
 	_ amiibo = (*Amiibo)(nil)
 )
 
+// DeleteAmiibo deletes the Amiibo from the operating system if it is written. Returns an error if the Amiibo is unable to be deleted or another file system issue occurs.
 func deleteAmiibo(amiibo *Amiibo) error {
 	return os.Remove(filepath.Join(storepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex)))
 }

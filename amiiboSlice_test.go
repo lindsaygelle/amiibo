@@ -73,6 +73,7 @@ func TestAmiiboSlice(t *testing.T) {
 	}
 
 	n := amiiboSlice.Len()
+
 	amiiboSlice.EachReverse(func(i int, _ *Amiibo) {
 		if i > n {
 			t.Fatalf("AmiiboSlice.EachReverse(i int, a *Amiibo) *AmiiboSlice does not iterate in reverse order; %v > %v", i, n)
