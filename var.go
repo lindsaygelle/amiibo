@@ -8,7 +8,8 @@ import (
 
 var (
 	_, file, _, _ = runtime.Caller(0)
-	rootpath      = filepath.Dir(file)
+	// rootpath is the runtime caller path of the Amiibo Go package.
+	rootpath = filepath.Dir(file)
 )
 
 var (
