@@ -9,7 +9,7 @@ import (
 
 func TestAmiibo(t *testing.T) {
 
-	testAmiiboStruct = newAmiibo(rawAmiiboStructDefault)
+	testAmiiboStruct = NewAmiibo(rawAmiiboStructDefault)
 
 	if testAmiiboStruct == nil {
 		t.Fatalf("amiibo.NewAmiibo(r *amiibo.RawAmiibo) *amiibo.Amiibo == nil")

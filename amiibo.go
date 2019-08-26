@@ -19,20 +19,20 @@ var (
 )
 
 // DeleteAmiibo deletes the Amiibo from the operating system if it is written. Returns an error if the Amiibo is unable to be deleted or another file system issue occurs.
-func deleteAmiibo(amiibo *Amiibo) error {
-	return os.Remove(filepath.Join(storepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex)))
+func DeleteAmiibo(amiibo *Amiibo) error {
+	return os.Remove(filepath.Join(StorepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex)))
 }
 
 // GetAmiibo unmarshalls an Amiibo struct from the operating system if it written to the disc. Returns nil if no corresponding Amiibo is found or a unmarshalling error occurs.
-func getAmiibo(ID string) *Amiibo {
+func GetAmiibo(ID string) *Amiibo {
 	if ok := strings.HasSuffix(ID, ".json"); !ok {
 		ID = fmt.Sprintf("%s.json", ID)
 	}
-	b, err := openAmiibo(ID)
+	b, err := OpenAmiibo(ID)
 	if err != nil {
 		return nil
 	}
-	amiibo, err := unmarshallAmiibo(b)
+	amiibo, err := UnmarshallAmiibo(b)
 	if err != nil {
 		return nil
 	}
@@ -40,7 +40,7 @@ func getAmiibo(ID string) *Amiibo {
 }
 
 // MarshallAmiibo marshalls an Amiibo pointer into a byte slice and returns the byte slice value.
-func marshallAmiibo(amiibo *Amiibo) ([]byte, error) {
+func MarshallAmiibo(amiibo *Amiibo) ([]byte, error) {
 	content, err := json.Marshal(amiibo)
 	if err != nil {
 		return nil, err
@@ -48,55 +48,11 @@ func marshallAmiibo(amiibo *Amiibo) ([]byte, error) {
 	return content, nil
 }
 
-// OpenAmiibo returns the byte pointer for a written Amiibo struct by its storage name.
-func openAmiibo(name string) (*[]byte, error) {
-	filepath := filepath.Join(storepathAmiibo(), name)
-	reader, err := os.Open(filepath)
-	if err != nil {
-		return nil, err
-	}
-	content, err := ioutil.ReadAll(reader)
-	defer reader.Close()
-	if err != nil {
-		return nil, err
-	}
-	return &content, nil
-}
-
-// StorepathAmiibo returns the default absolute path for an Amiibo struct being written to the operating system.
-func storepathAmiibo() string {
-	return filepath.Join(rootpath, "amiibo")
-}
-
-// UnmarshallAmiibo attempts to read and unmarshall a byte slice to an Amiibo. Returns a new Amiibo pointer if the byte sequence is successfully deconstructed, otherwise returns nil and a corresponding error.
-func unmarshallAmiibo(content *[]byte) (*Amiibo, error) {
-	r := &Amiibo{}
-	err := json.Unmarshal(*content, r)
-	if err != nil {
-		return nil, err
-	}
-	return r, nil
-}
-
-// WriteAmiibo writes a single Amiibo pointer to a nominated destination on the running operating system. Returns nil if Amiibo is successfully marshalled to JSON, otherwise returns a corresponding error.
-func writeAmiibo(fullpath string, amiibo *Amiibo) error {
-	err := os.MkdirAll(storepathAmiibo(), 0644)
-	if err != nil {
-		return err
-	}
-	content, err := marshallAmiibo(amiibo)
-	if err != nil {
-		return err
-	}
-	filepath := filepath.Join(storepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex))
-	return ioutil.WriteFile(filepath, content, 0644)
-}
-
 // NewAmiibo returns a new Amiibo pointer from a raw Amiibo pointer. Normalizes the raw Amiibo fields into
 // predictable patterns as well as cleans the input data. Does not modify the raw Amiibo allowing
 // the original content to be accessed. Assumes that the argument raw Amiibo pointer has been
 // successfully marshalled and contains all provided fields.
-func newAmiibo(r *RawAmiibo) *Amiibo {
+func NewAmiibo(r *RawAmiibo) *Amiibo {
 	var (
 		t, _ = time.Parse(timeLayoutRelease, r.ReleaseDateMask)
 		desc = reStripSpaces.ReplaceAllString(reStripHTML.ReplaceAllString(r.OverviewDescription, " "), " ")
@@ -123,6 +79,50 @@ func newAmiibo(r *RawAmiibo) *Amiibo {
 		Type:        r.Type,
 		UPC:         r.UPC,
 		URL:         (nintendoURL + r.AmiiboPage)}
+}
+
+// OpenAmiibo returns the byte pointer for a written Amiibo struct by its storage name.
+func OpenAmiibo(name string) (*[]byte, error) {
+	filepath := filepath.Join(StorepathAmiibo(), name)
+	reader, err := os.Open(filepath)
+	if err != nil {
+		return nil, err
+	}
+	content, err := ioutil.ReadAll(reader)
+	defer reader.Close()
+	if err != nil {
+		return nil, err
+	}
+	return &content, nil
+}
+
+// StorepathAmiibo returns the default absolute path for an Amiibo struct being written to the operating system.
+func StorepathAmiibo() string {
+	return filepath.Join(rootpath, "amiibo")
+}
+
+// UnmarshallAmiibo attempts to read and unmarshall a byte slice to an Amiibo. Returns a new Amiibo pointer if the byte sequence is successfully deconstructed, otherwise returns nil and a corresponding error.
+func UnmarshallAmiibo(content *[]byte) (*Amiibo, error) {
+	r := &Amiibo{}
+	err := json.Unmarshal(*content, r)
+	if err != nil {
+		return nil, err
+	}
+	return r, nil
+}
+
+// WriteAmiibo writes a single Amiibo pointer to a nominated destination on the running operating system. Returns nil if Amiibo is successfully marshalled to JSON, otherwise returns a corresponding error.
+func WriteAmiibo(fullpath string, amiibo *Amiibo) error {
+	err := os.MkdirAll(StorepathAmiibo(), 0644)
+	if err != nil {
+		return err
+	}
+	content, err := MarshallAmiibo(amiibo)
+	if err != nil {
+		return err
+	}
+	filepath := filepath.Join(StorepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex))
+	return ioutil.WriteFile(filepath, content, 0644)
 }
 
 // amiibo defines the interface for the Amiibo struct pointer.
