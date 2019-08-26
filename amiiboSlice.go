@@ -38,8 +38,8 @@ func getAmiiboSlice(content *[]byte) *AmiiboSlice {
 	}
 	amiiboSlice := newAmiiboSlice()
 	for _, rawMessage := range rawPayload.AmiiboList {
-		r := newRawAmiibo(rawMessage)
-		a := newAmiibo(r)
+		r := NewRawAmiiboFromRawMessage(rawMessage)
+		a := NewAmiibo(r)
 		amiiboSlice.Append(a)
 	}
 	return amiiboSlice
@@ -54,7 +54,7 @@ func newAmiiboSlice() *AmiiboSlice {
 func unmarshallRawToAmiiboSlice(r []*json.RawMessage) *AmiiboSlice {
 	amiiboSlice := newAmiiboSlice()
 	for _, rawMessage := range r {
-		amiiboSlice.Append(newAmiibo(newRawAmiibo(rawMessage)))
+		amiiboSlice.Append(NewAmiibo(NewRawAmiiboFromRawMessage(rawMessage)))
 	}
 	return amiiboSlice
 }
