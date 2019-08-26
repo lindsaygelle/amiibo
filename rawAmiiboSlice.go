@@ -18,7 +18,7 @@ func getRawAmiiboSlice(content *[]byte) *RawAmiiboSlice {
 	}
 	rawAmiiboSlice := newRawAmiiboSlice()
 	for _, rawMessage := range rawPayload.AmiiboList {
-		rawAmiiboSlice.Append(newRawAmiibo(rawMessage))
+		rawAmiiboSlice.Append(NewRawAmiiboFromRawMessage(rawMessage))
 	}
 	return rawAmiiboSlice
 }

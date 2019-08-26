@@ -25,7 +25,7 @@ func getRawAmiiboMap(content *[]byte) *RawAmiiboMap {
 	}
 	rawAmiiboMap := newRawAmiiboMap()
 	for _, rawMessage := range rawPayload.AmiiboList {
-		rawAmiiboMap.Add(newRawAmiibo(rawMessage))
+		rawAmiiboMap.Add(NewRawAmiiboFromRawMessage(rawMessage))
 	}
 	return rawAmiiboMap
 }
