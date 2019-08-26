@@ -39,7 +39,7 @@ func getAmiiboMap(content *[]byte) *AmiiboMap {
 	}
 	amiiboMap := newAmiiboMap()
 	for _, rawMessage := range rawPayload.AmiiboList {
-		amiiboMap.Add(newAmiibo(newRawAmiibo(rawMessage)))
+		amiiboMap.Add(NewAmiibo(NewRawAmiiboFromRawMessage(rawMessage)))
 	}
 	return amiiboMap
 }
@@ -53,7 +53,7 @@ func newAmiiboMap() *AmiiboMap {
 func unmarshallRawToAmiiboMap(r []*json.RawMessage) *AmiiboMap {
 	amiiboMap := newAmiiboMap()
 	for _, rawMessage := range r {
-		amiiboMap.Add(newAmiibo(newRawAmiibo(rawMessage)))
+		amiiboMap.Add(NewAmiibo(NewRawAmiiboFromRawMessage(rawMessage)))
 	}
 	return amiiboMap
 }
