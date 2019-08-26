@@ -16,20 +16,20 @@ var (
 )
 
 // DeleteItem deletes the Item from the operating system if it is written. Returns an error if the Item is unable to be deleted or another file system issue occurs.
-func deleteItem(item *Item) error {
-	return os.Remove(filepath.Join(storepathItem(), fmt.Sprintf("%s.json", item.Name)))
+func DeleteItem(item *Item) error {
+	return os.Remove(filepath.Join(StorepathItem(), fmt.Sprintf("%s.json", item.Name)))
 }
 
 // GetItem unmarshalls an Item struct from the operating system if it written to the disc. Returns nil if no corresponding Item is found or a unmarshalling error occurs.
-func getItem(ID string) *Item {
+func GetItem(ID string) *Item {
 	if ok := strings.HasSuffix(ID, ".json"); !ok {
 		ID = fmt.Sprintf("%s.json", ID)
 	}
-	b, err := openItem(ID)
+	b, err := OpenItem(ID)
 	if err != nil {
 		return nil
 	}
-	amiibo, err := unmarshallItem(b)
+	amiibo, err := UnmarshallItem(b)
 	if err != nil {
 		return nil
 	}
@@ -37,7 +37,7 @@ func getItem(ID string) *Item {
 }
 
 // MarshallItem marshalls a Item pointer into a byte slice and returns the byte slice value.
-func marshallItem(item *Item) ([]byte, error) {
+func MarshallItem(item *Item) ([]byte, error) {
 	content, err := json.Marshal(item)
 	if err != nil {
 		return nil, err
@@ -45,9 +45,23 @@ func marshallItem(item *Item) ([]byte, error) {
 	return content, nil
 }
 
+// NewItem returns a new Item pointer from a raw Item pointer. Normalizes the raw Item fields into
+// predictable patterns as well as cleans the input data. Does not modify the raw Item allowing
+// the original content to be accessed. Assumes that the argument raw Item pointer has been
+// successfully marshalled and contains all provided fields.
+func NewItem(r *RawItem) *Item {
+	return &Item{
+		Description: r.Description,
+		ID:          fmt.Sprintf("%x", md5.Sum([]byte(r.Title))),
+		Name:        (reStripName.ReplaceAllString(r.Title, "")),
+		Path:        r.Path,
+		Timestamp:   (time.Unix(r.LastModified, 0).UTC()),
+		URL:         (nintendoURL + r.URL)}
+}
+
 // OpenItem returns the byte pointer for a written Item struct by its storage name.
-func openItem(name string) (*[]byte, error) {
-	filepath := filepath.Join(storepathItem(), name)
+func OpenItem(name string) (*[]byte, error) {
+	filepath := filepath.Join(StorepathItem(), name)
 	reader, err := os.Open(filepath)
 	if err != nil {
 		return nil, err
@@ -61,12 +75,12 @@ func openItem(name string) (*[]byte, error) {
 }
 
 // StorepathItem returns the default absolute path for an Item struct being written to the operating system.
-func storepathItem() string {
+func StorepathItem() string {
 	return filepath.Join(rootpath, "item")
 }
 
 // UnmarshallItem attempts to read and unmarshall a byte slice to a Item. Returns a new Item pointer if the byte sequence is successfully deconstructed, otherwise returns nil and a corresponding error.
-func unmarshallItem(content *[]byte) (*Item, error) {
+func UnmarshallItem(content *[]byte) (*Item, error) {
 	r := &Item{}
 	err := json.Unmarshal(*content, r)
 	if err != nil {
@@ -76,31 +90,17 @@ func unmarshallItem(content *[]byte) (*Item, error) {
 }
 
 // WriteItem writes a single Item pointer to a nominated destination on the running operating system. Returns nil if Item is successfully marshalled to JSON, otherwise returns a corresponding error.
-func writeItem(item *Item) error {
-	err := os.MkdirAll(storepathItem(), 0644)
+func WriteItem(item *Item) error {
+	err := os.MkdirAll(StorepathItem(), 0644)
 	if err != nil {
 		return err
 	}
-	content, err := marshallItem(item)
+	content, err := MarshallItem(item)
 	if err != nil {
 		return err
 	}
-	filepath := filepath.Join(storepathItem(), fmt.Sprintf("%s.json", item.Name))
+	filepath := filepath.Join(StorepathItem(), fmt.Sprintf("%s.json", item.Name))
 	return ioutil.WriteFile(filepath, content, 0644)
-}
-
-// NewItem returns a new Item pointer from a raw Item pointer. Normalizes the raw Item fields into
-// predictable patterns as well as cleans the input data. Does not modify the raw Item allowing
-// the original content to be accessed. Assumes that the argument raw Item pointer has been
-// successfully marshalled and contains all provided fields.
-func newItem(r *RawItem) *Item {
-	return &Item{
-		Description: r.Description,
-		ID:          fmt.Sprintf("%x", md5.Sum([]byte(r.Title))),
-		Name:        (reStripName.ReplaceAllString(r.Title, "")),
-		Path:        r.Path,
-		Timestamp:   (time.Unix(r.LastModified, 0).UTC()),
-		URL:         (nintendoURL + r.URL)}
 }
 
 // item defines the interface for a Item struct pointer.

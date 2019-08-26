@@ -39,8 +39,8 @@ func getItemMap(content *[]byte) *ItemMap {
 	}
 	itemMap := newItemMap()
 	for _, rawMessage := range rawPayload.Items {
-		r := newRawItem(rawMessage)
-		i := newItem(r)
+		r := NewRawItemFromRawMessage(rawMessage)
+		i := NewItem(r)
 		itemMap.Add(i)
 	}
 	return itemMap
@@ -55,7 +55,7 @@ func newItemMap() *ItemMap {
 func unmarshallRawToItemMap(r []*json.RawMessage) *ItemMap {
 	itemMap := newItemMap()
 	for _, rawMessage := range r {
-		itemMap.Add(newItem(newRawItem(rawMessage)))
+		itemMap.Add(NewItem(NewRawItemFromRawMessage(rawMessage)))
 	}
 	return itemMap
 }
