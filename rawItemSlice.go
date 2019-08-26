@@ -24,7 +24,7 @@ func getRawItemSlice(content *[]byte) *RawItemSlice {
 	}
 	rawItemSlice := newRawItemSlice()
 	for _, rawMessage := range rawPayload.Items {
-		rawItemSlice.Append(newRawItem(rawMessage))
+		rawItemSlice.Append(NewRawItemFromRawMessage(rawMessage))
 	}
 	return rawItemSlice
 }

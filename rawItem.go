@@ -13,7 +13,40 @@ var (
 	_ rawItem = (*RawItem)(nil)
 )
 
-// NewRawItem instantiates a new raw Item struct pointer.
+// DeleteRawItem deletes the raw Item from the operating system if it is writtens. Returns an error if the raw Item is unable to be deleted or another file system issue occurs.
+func DeleteRawItem(rawItem *RawItem) error {
+	return os.Remove(filepath.Join(StorepathRawItem(), fmt.Sprintf("r-%s.json", rawItem.Title)))
+}
+
+// GetRawItem unmarshalls a raw Item struct from the operating system if it written to the disc. Returns nil if no corresponding raw Item is found or a unmarshalling error occurs.
+func GetRawItem(ID string) *RawItem {
+	if ok := strings.HasSuffix(ID, ".json"); !ok {
+		ID = fmt.Sprintf("%s.json", ID)
+	}
+	if ok := strings.HasPrefix(ID, "r-"); !ok {
+		ID = fmt.Sprintf("r-%s", ID)
+	}
+	b, err := OpenRawItem(ID)
+	if err != nil {
+		return nil
+	}
+	rawItem, err := UnmarshallRawItem(b)
+	if err != nil {
+		return nil
+	}
+	return rawItem
+}
+
+// MarshallRawItem marshalls a raw Item pointer into a byte slice and returns the byte slice value.
+func MarshallRawItem(rawItem *RawItem) ([]byte, error) {
+	content, err := json.Marshal(rawItem)
+	if err != nil {
+		return nil, err
+	}
+	return content, nil
+}
+
+// NewRawItem instantiates a new raw Item struct pointer from a valid byte slice pointer. Assumes the byte slice contains valid Raw Item byte indexes.
 func NewRawItem(b *[]byte) *RawItem {
 	r := new(RawItem)
 	err := json.Unmarshal(*b, r)
@@ -23,42 +56,19 @@ func NewRawItem(b *[]byte) *RawItem {
 	return r
 }
 
-// DeleteRawItem deletes the raw Item from the operating system if it is writtens. Returns an error if the raw Item is unable to be deleted or another file system issue occurs.
-func deleteRawItem(rawItem *RawItem) error {
-	return os.Remove(filepath.Join(storepathRawItem(), fmt.Sprintf("r-%s.json", rawItem.Title)))
-}
-
-// GetRawItem unmarshalls a raw Item struct from the operating system if it written to the disc. Returns nil if no corresponding raw Item is found or a unmarshalling error occurs.
-func getRawItem(ID string) *RawItem {
-	if ok := strings.HasSuffix(ID, ".json"); !ok {
-		ID = fmt.Sprintf("%s.json", ID)
-	}
-	if ok := strings.HasPrefix(ID, "r-"); !ok {
-		ID = fmt.Sprintf("r-%s", ID)
-	}
-	b, err := openRawItem(ID)
-	if err != nil {
-		return nil
-	}
-	rawItem, err := unmarshallRawItem(b)
+// NewRawItemFromRawMessage instantiates a new raw Item pointer from a valid JSON raw message.
+func NewRawItemFromRawMessage(r *json.RawMessage) *RawItem {
+	rawItem := &RawItem{}
+	err := json.Unmarshal(*r, rawItem)
 	if err != nil {
 		return nil
 	}
 	return rawItem
 }
 
-// MarshallRawItem marshalls a raw Item pointer into a byte slice and returns the byte slice value.
-func marshallRawItem(rawItem *RawItem) ([]byte, error) {
-	content, err := json.Marshal(rawItem)
-	if err != nil {
-		return nil, err
-	}
-	return content, nil
-}
-
 // OpenRawItem returns the byte pointer for a written raw Item struct by its storage name.
-func openRawItem(name string) (*[]byte, error) {
-	filepath := filepath.Join(storepathRawItem(), name)
+func OpenRawItem(name string) (*[]byte, error) {
+	filepath := filepath.Join(StorepathRawItem(), name)
 	reader, err := os.Open(filepath)
 	if err != nil {
 		return nil, err
@@ -72,12 +82,12 @@ func openRawItem(name string) (*[]byte, error) {
 }
 
 // StorepathRawItem returns the default absolute path for raw Item struct being written to the operating system.
-func storepathRawItem() string {
+func StorepathRawItem() string {
 	return filepath.Join(rootpath, "item")
 }
 
 // UnmarshallRawItem attempts to read and unmarshall a byte slice to a raw Item. Returns a new raw Item pointer if the byte sequence is successfully deconstructed, otherwise returns nil and a corresponding error.
-func unmarshallRawItem(content *[]byte) (*RawItem, error) {
+func UnmarshallRawItem(content *[]byte) (*RawItem, error) {
 	r := &RawItem{}
 	err := json.Unmarshal(*content, r)
 	if err != nil {
@@ -87,27 +97,17 @@ func unmarshallRawItem(content *[]byte) (*RawItem, error) {
 }
 
 // WriteRawItem writes a single raw Item pointer to a nominated destination on the running operating system. Returns nil if raw Item is successfully marshalled to JSON, otherwise returns a corresponding error.
-func writeRawItem(rawItem *RawItem) error {
-	err := os.MkdirAll(storepathRawItem(), 0644)
+func WriteRawItem(rawItem *RawItem) error {
+	err := os.MkdirAll(StorepathRawItem(), 0644)
 	if err != nil {
 		return err
 	}
-	content, err := marshallRawItem(rawItem)
+	content, err := MarshallRawItem(rawItem)
 	if err != nil {
 		return err
 	}
-	filepath := filepath.Join(storepathRawItem(), fmt.Sprintf("r-%s.json", rawItem.Title))
+	filepath := filepath.Join(StorepathRawItem(), fmt.Sprintf("r-%s.json", rawItem.Title))
 	return ioutil.WriteFile(filepath, content, 0644)
-}
-
-// newRawItem instantiates a new raw Item pointer.
-func newRawItem(r *json.RawMessage) *RawItem {
-	rawItem := &RawItem{}
-	err := json.Unmarshal(*r, rawItem)
-	if err != nil {
-		return nil
-	}
-	return rawItem
 }
 
 // rawItem defines the interface for the Raw item struct.

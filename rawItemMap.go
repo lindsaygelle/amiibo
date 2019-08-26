@@ -19,12 +19,12 @@ func getRawItemMap(content *[]byte) *RawItemMap {
 	}
 	rawItemMap := newRawItemMap()
 	for _, rawMessage := range rawPayload.Items {
-		rawItemMap.Add(newRawItem(rawMessage))
+		rawItemMap.Add(NewRawItemFromRawMessage(rawMessage))
 	}
 	return rawItemMap
 }
 
-// newRawItem map returns a new raw Item map pointer.
+// NewRawItemFromRawMessage map returns a new raw Item map pointer.
 func newRawItemMap() *RawItemMap {
 	return &RawItemMap{lexicon: &lexicon.Lexicon{}}
 }
