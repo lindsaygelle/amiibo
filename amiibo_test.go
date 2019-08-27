@@ -3,7 +3,9 @@ package amiibo
 import (
 	"crypto/md5"
 	"fmt"
+	"path/filepath"
 	"reflect"
+	"runtime"
 	"testing"
 )
 
@@ -28,4 +30,17 @@ func TestAmiibo(t *testing.T) {
 	if hashMD5 := fmt.Sprintf("%x", md5.Sum([]byte(rawAmiiboStructDefault.AmiiboName))); hashMD5 != testAmiiboStruct.ID {
 		t.Fatalf("Amiibo.ID != md5.Sum([]byte(RawAmiibo.AmiiboName); %s != %s", testAmiiboStruct.ID, hashMD5)
 	}
+
+	_, file, _, _ := runtime.Caller(0)
+
+	fullpath := filepath.Dir(file)
+
+	if err := WriteAmiibo(fullpath, testAmiiboStruct); err != nil {
+		t.Fatalf("amiibo.WriteAmiibo(f string, a *Amiibo) err returned err; %v", err)
+	}
+
+	if err := DeleteAmiibo(fullpath, testAmiiboStruct); err != nil {
+		t.Fatalf("amiibo.DeleteAmiibo(f string, a *Amiibo) err returned err; %v", err)
+	}
+
 }
