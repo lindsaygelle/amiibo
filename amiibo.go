@@ -113,7 +113,7 @@ func UnmarshallAmiibo(content *[]byte) (*Amiibo, error) {
 
 // WriteAmiibo writes a single Amiibo pointer to a nominated destination on the running operating system. Returns nil if Amiibo is successfully marshalled to JSON, otherwise returns a corresponding error.
 func WriteAmiibo(fullpath string, amiibo *Amiibo) error {
-	err := os.MkdirAll(StorepathAmiibo(), 0644)
+	err := os.MkdirAll(fullpath, 0644)
 	if err != nil {
 		return err
 	}
@@ -121,7 +121,7 @@ func WriteAmiibo(fullpath string, amiibo *Amiibo) error {
 	if err != nil {
 		return err
 	}
-	filepath := filepath.Join(StorepathAmiibo(), fmt.Sprintf("%s.json", amiibo.Hex))
+	filepath := filepath.Join(fullpath, fmt.Sprintf("%s.json", amiibo.ID))
 	return ioutil.WriteFile(filepath, content, 0644)
 }
 
