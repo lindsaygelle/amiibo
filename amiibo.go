@@ -24,11 +24,8 @@ func DeleteAmiibo(fullpath string, amiibo *Amiibo) error {
 }
 
 // GetAmiibo unmarshalls an Amiibo struct from the operating system if it written to the disc. Returns nil if no corresponding Amiibo is found or a unmarshalling error occurs.
-func GetAmiibo(ID string) *Amiibo {
-	if ok := strings.HasSuffix(ID, ".json"); !ok {
-		ID = fmt.Sprintf("%s.json", ID)
-	}
-	b, err := OpenAmiibo(ID)
+func GetAmiibo(fullpath, ID string) *Amiibo {
+	b, err := OpenAmiibo(fullpath, ID)
 	if err != nil {
 		return nil
 	}
@@ -82,8 +79,11 @@ func NewAmiibo(r *RawAmiibo) *Amiibo {
 }
 
 // OpenAmiibo returns the byte pointer for a written Amiibo struct by its storage name.
-func OpenAmiibo(name string) (*[]byte, error) {
-	filepath := filepath.Join(StorepathAmiibo(), name)
+func OpenAmiibo(fullpath, ID string) (*[]byte, error) {
+	if ok := strings.HasSuffix(ID, ".json"); !ok {
+		ID = fmt.Sprintf("%s.json", ID)
+	}
+	filepath := filepath.Join(fullpath, ID)
 	reader, err := os.Open(filepath)
 	if err != nil {
 		return nil, err

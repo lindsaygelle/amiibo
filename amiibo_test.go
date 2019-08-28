@@ -39,6 +39,20 @@ func TestAmiibo(t *testing.T) {
 		t.Fatalf("amiibo.WriteAmiibo(f string, a *Amiibo) err returned err; %v", err)
 	}
 
+	b, err := OpenAmiibo(fullpath, testAmiiboStruct.ID)
+
+	if err != nil {
+		t.Fatalf("amiibo.OpenAmiibo(f string, ID string) (*[]byte, error); err != nil; %v", err)
+	}
+
+	returnType = reflect.TypeOf(b).Elem().String()
+
+	expectType = reflect.TypeOf(&[]byte{}).Elem().String()
+
+	if ok := returnType == expectType; ok != true {
+		t.Fatalf("amiibo.OpenAmiibo(f string, ID string) (*[]byte, error) %s != %s", returnType, expectType)
+	}
+
 	if err := DeleteAmiibo(fullpath, testAmiiboStruct); err != nil {
 		t.Fatalf("amiibo.DeleteAmiibo(f string, a *Amiibo) err returned err; %v", err)
 	}
