@@ -36,7 +36,7 @@ func TestAmiibo(t *testing.T) {
 	fullpath := filepath.Dir(file)
 
 	if err := WriteAmiibo(fullpath, testAmiiboStruct); err != nil {
-		t.Fatalf("amiibo.WriteAmiibo(f string, a *Amiibo) err returned err; %v", err)
+		t.Fatalf("amiibo.WriteAmiibo(f string, a *Amiibo) error; err != nil; %v", err)
 	}
 
 	b, err := OpenAmiibo(fullpath, testAmiiboStruct.ID)
@@ -50,11 +50,25 @@ func TestAmiibo(t *testing.T) {
 	expectType = reflect.TypeOf(&[]byte{}).Elem().String()
 
 	if ok := returnType == expectType; ok != true {
-		t.Fatalf("amiibo.OpenAmiibo(f string, ID string) (*[]byte, error) %s != %s", returnType, expectType)
+		t.Fatalf("amiibo.OpenAmiibo(f string, ID string) (*[]byte, error); %s != %s", returnType, expectType)
+	}
+
+	a, err := GetAmiibo(fullpath, testAmiiboStruct.ID)
+
+	if err != nil {
+		t.Fatalf("amiibo.GetAmiibo(f string, ID string) (*Amiibo, error); err != nil; %v", err)
+	}
+
+	returnType = reflect.TypeOf(a).Elem().String()
+
+	expectType = reflect.TypeOf(&Amiibo{}).Elem().String()
+
+	if ok := returnType == expectType; ok != true {
+		t.Fatalf("amiibo.GetAmiibo(f string, ID string) (*Amiibo, error); %s != %s", returnType, expectType)
 	}
 
 	if err := DeleteAmiibo(fullpath, testAmiiboStruct); err != nil {
-		t.Fatalf("amiibo.DeleteAmiibo(f string, a *Amiibo) err returned err; %v", err)
+		t.Fatalf("amiibo.DeleteAmiibo(f string, a *Amiibo) error; err != err; %v", err)
 	}
 
 }

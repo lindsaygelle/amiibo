@@ -24,16 +24,16 @@ func DeleteAmiibo(fullpath string, amiibo *Amiibo) error {
 }
 
 // GetAmiibo unmarshalls an Amiibo struct from the operating system if it written to the disc. Returns nil if no corresponding Amiibo is found or a unmarshalling error occurs.
-func GetAmiibo(fullpath, ID string) *Amiibo {
+func GetAmiibo(fullpath, ID string) (*Amiibo, error) {
 	b, err := OpenAmiibo(fullpath, ID)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 	amiibo, err := UnmarshallAmiibo(b)
 	if err != nil {
-		return nil
+		return nil, err
 	}
-	return amiibo
+	return amiibo, err
 }
 
 // MarshallAmiibo marshalls an Amiibo pointer into a byte slice and returns the byte slice value.
