@@ -36,13 +36,13 @@ func GetAmiibo(fullpath, ID string) (*Amiibo, error) {
 	return amiibo, err
 }
 
-// MarshallAmiibo marshalls an Amiibo pointer into a byte slice and returns the byte slice value.
-func MarshallAmiibo(amiibo *Amiibo) ([]byte, error) {
+// MarshallAmiibo marshalls an Amiibo pointer into a byte slice and returns the byte slice pointer.
+func MarshallAmiibo(amiibo *Amiibo) (*[]byte, error) {
 	content, err := json.Marshal(amiibo)
 	if err != nil {
 		return nil, err
 	}
-	return content, nil
+	return &content, nil
 }
 
 // NewAmiibo returns a new Amiibo pointer from a raw Amiibo pointer. Normalizes the raw Amiibo fields into
@@ -122,7 +122,7 @@ func WriteAmiibo(fullpath string, amiibo *Amiibo) error {
 		return err
 	}
 	filepath := filepath.Join(fullpath, fmt.Sprintf("%s.json", amiibo.ID))
-	return ioutil.WriteFile(filepath, content, 0644)
+	return ioutil.WriteFile(filepath, *content, 0644)
 }
 
 // amiibo defines the interface for the Amiibo struct pointer.
