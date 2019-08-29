@@ -14,36 +14,30 @@ var (
 )
 
 // DeleteRawAmiibo deletes the raw Amiibo from the operating system if it is written. Returns an error if the raw Amiibo is unable to be deleted or another file system issue occurs.
-func DeleteRawAmiibo(rawAmiibo *RawAmiibo) error {
-	return os.Remove(filepath.Join(StorepathRawAmiibo(), fmt.Sprintf("%s.json", rawAmiibo.HexCode)))
+func DeleteRawAmiibo(fullpath string, rawAmiibo *RawAmiibo) error {
+	return os.Remove(filepath.Join(fullpath, fmt.Sprintf("%s.json", rawAmiibo.HexCode)))
 }
 
 // GetRawAmiibo unmarshalls a raw Amiibo struct from the operating system if it written to the disc. Returns nil if no corresponding raw Amiibo is found or a unmarshalling error occurs.
-func GetRawAmiibo(ID string) *RawAmiibo {
-	if ok := strings.HasSuffix(ID, ".json"); !ok {
-		ID = fmt.Sprintf("%s.json", ID)
-	}
-	if ok := strings.HasPrefix(ID, "r-"); !ok {
-		ID = fmt.Sprintf("r-%s", ID)
-	}
-	b, err := OpenRawAmiibo(ID)
+func GetRawAmiibo(fullpath, ID string) (*RawAmiibo, error) {
+	b, err := OpenRawAmiibo(fullpath, ID)
 	if err != nil {
-		return nil
+		return nil, err
 	}
-	amiibo, err := UnmarshallRawAmiibo(b)
+	rawAmiibo, err := UnmarshallRawAmiibo(b)
 	if err != nil {
-		return nil
+		return nil, err
 	}
-	return amiibo
+	return rawAmiibo, err
 }
 
-// MarshallRawAmiibo marshalls a raw Amiibo pointer into a byte slice and returns the byte slice value.
-func MarshallRawAmiibo(rawAmiibo *RawAmiibo) ([]byte, error) {
+// MarshallRawAmiibo marshalls a raw Amiibo pointer into a byte slice and returns the byte slice pointer.
+func MarshallRawAmiibo(rawAmiibo *RawAmiibo) (*[]byte, error) {
 	content, err := json.Marshal(rawAmiibo)
 	if err != nil {
 		return nil, err
 	}
-	return content, nil
+	return &content, nil
 }
 
 // NewRawAmiibo instantiates a new raw Amiibo struct pointer.
@@ -67,8 +61,11 @@ func NewRawAmiiboFromRawMessage(r *json.RawMessage) *RawAmiibo {
 }
 
 // OpenRawAmiibo returns the byte pointer for a written raw Amiibo struct by its storage name.
-func OpenRawAmiibo(name string) (*[]byte, error) {
-	filepath := filepath.Join(StorepathRawAmiibo(), name)
+func OpenRawAmiibo(fullpath, ID string) (*[]byte, error) {
+	if ok := strings.HasSuffix(ID, ".json"); !ok {
+		ID = fmt.Sprintf("%s.json", ID)
+	}
+	filepath := filepath.Join(fullpath, ID)
 	reader, err := os.Open(filepath)
 	if err != nil {
 		return nil, err
@@ -97,8 +94,8 @@ func UnmarshallRawAmiibo(content *[]byte) (*RawAmiibo, error) {
 }
 
 // WriteRawAmiibo writes a single raw Amiibo pointer to a nominated destination on the running operating system. Returns nil if raw Amiibo is successfully marshalled to JSON, otherwise returns a corresponding error.
-func writeRawAmiibo(rawAmiibo *RawAmiibo) error {
-	err := os.MkdirAll(StorepathRawAmiibo(), 0644)
+func WriteRawAmiibo(fullpath string, rawAmiibo *RawAmiibo) error {
+	err := os.MkdirAll(fullpath, 0644)
 	if err != nil {
 		return err
 	}
@@ -106,8 +103,8 @@ func writeRawAmiibo(rawAmiibo *RawAmiibo) error {
 	if err != nil {
 		return err
 	}
-	filepath := filepath.Join(StorepathRawAmiibo(), fmt.Sprintf("r-%s.json", rawAmiibo.HexCode))
-	return ioutil.WriteFile(filepath, content, 0644)
+	filepath := filepath.Join(fullpath, fmt.Sprintf("%s.json", rawAmiibo.HexCode))
+	return ioutil.WriteFile(filepath, *content, 0644)
 }
 
 // rawAmiibo defines the interface for a raw Amiibo struct pointer.
