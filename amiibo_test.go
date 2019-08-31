@@ -68,7 +68,10 @@ func TestAmiibo(t *testing.T) {
 	}
 
 	if err := DeleteAmiibo(fullpath, testAmiiboStruct); err != nil {
-		t.Fatalf("amiibo.DeleteAmiibo(f string, a *Amiibo) error; err != err; %v", err)
+		t.Fatalf("amiibo.DeleteAmiibo(f string, a *Amiibo) error; err != nil; %v", err)
 	}
 
+	if err := ChanWriteAmiibo(fullpath, testAmiiboStruct); err != nil {
+		t.Fatalf("amiibo.ChanWriteAmiibo(f string, a ...*Amiibo) error; err != nil; %v", err)
+	}
 }
