@@ -9,7 +9,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 	"time"
 
 	"golang.org/x/text/currency"
@@ -18,29 +17,6 @@ import (
 var (
 	_ amiibo = (*Amiibo)(nil)
 )
-
-// ChanWriteAmiibo writes a collection of Amiibo concurrently.
-func ChanWriteAmiibo(fullpath string, a ...*Amiibo) error {
-	var err error
-	var wg sync.WaitGroup
-	c := make(chan *Amiibo, len(a))
-	for _, amiibo := range a {
-		if err != nil {
-			return err
-		}
-		wg.Add(1)
-		c <- amiibo
-		go func(c chan *Amiibo) {
-			defer wg.Done()
-			a := <-c
-			err = WriteAmiibo(fullpath, a)
-		}(c)
-
-	}
-	wg.Wait()
-	close(c)
-	return err
-}
 
 // DeleteAmiibo deletes the Amiibo from the operating system if it is written. Returns an error if the Amiibo is unable to be deleted or another file system issue occurs.
 func DeleteAmiibo(fullpath string, amiibo *Amiibo) error {
@@ -137,7 +113,7 @@ func UnmarshallAmiibo(content *[]byte) (*Amiibo, error) {
 
 // WriteAmiibo writes a single Amiibo pointer to a nominated destination on the running operating system. Returns nil if Amiibo is successfully marshalled to JSON, otherwise returns a corresponding error.
 func WriteAmiibo(fullpath string, amiibo *Amiibo) error {
-	err := os.MkdirAll(fullpath, 0644)
+	err := os.MkdirAll(fullpath, os.ModePerm)
 	if err != nil {
 		return err
 	}
@@ -146,7 +122,7 @@ func WriteAmiibo(fullpath string, amiibo *Amiibo) error {
 		return err
 	}
 	filepath := filepath.Join(fullpath, fmt.Sprintf("%s.json", amiibo.ID))
-	return ioutil.WriteFile(filepath, *content, 0644)
+	return ioutil.WriteFile(filepath, *content, os.ModePerm)
 }
 
 // amiibo defines the interface for the Amiibo struct pointer.
