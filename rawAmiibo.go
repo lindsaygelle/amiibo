@@ -95,7 +95,7 @@ func UnmarshallRawAmiibo(content *[]byte) (*RawAmiibo, error) {
 
 // WriteRawAmiibo writes a single raw Amiibo pointer to a nominated destination on the running operating system. Returns nil if raw Amiibo is successfully marshalled to JSON, otherwise returns a corresponding error.
 func WriteRawAmiibo(fullpath string, rawAmiibo *RawAmiibo) error {
-	err := os.MkdirAll(fullpath, 0644)
+	err := os.MkdirAll(fullpath, os.ModePerm)
 	if err != nil {
 		return err
 	}
@@ -104,7 +104,7 @@ func WriteRawAmiibo(fullpath string, rawAmiibo *RawAmiibo) error {
 		return err
 	}
 	filepath := filepath.Join(fullpath, fmt.Sprintf("%s.json", rawAmiibo.HexCode))
-	return ioutil.WriteFile(filepath, *content, 0644)
+	return ioutil.WriteFile(filepath, *content, os.ModePerm)
 }
 
 // rawAmiibo defines the interface for a raw Amiibo struct pointer.
