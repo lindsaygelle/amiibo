@@ -14,19 +14,19 @@ var (
 )
 
 // DeleteRawItem deletes the raw Item from the operating system if it is writtens. Returns an error if the raw Item is unable to be deleted or another file system issue occurs.
-func DeleteRawItem(rawItem *RawItem) error {
-	return os.Remove(filepath.Join(StorepathRawItem(), fmt.Sprintf("r-%s.json", rawItem.Title)))
+func DeleteRawItem(fullpath string, rawItem *RawItem) error {
+	return os.Remove(filepath.Join(fullpath, fmt.Sprintf("r-%s.json", rawItem.Title)))
 }
 
 // GetRawItem unmarshalls a raw Item struct from the operating system if it written to the disc. Returns nil if no corresponding raw Item is found or a unmarshalling error occurs.
-func GetRawItem(ID string) *RawItem {
+func GetRawItem(fullpath, ID string) *RawItem {
 	if ok := strings.HasSuffix(ID, ".json"); !ok {
 		ID = fmt.Sprintf("%s.json", ID)
 	}
 	if ok := strings.HasPrefix(ID, "r-"); !ok {
 		ID = fmt.Sprintf("r-%s", ID)
 	}
-	b, err := OpenRawItem(ID)
+	b, err := OpenRawItem(fullpath, ID)
 	if err != nil {
 		return nil
 	}
@@ -67,8 +67,8 @@ func NewRawItemFromRawMessage(r *json.RawMessage) *RawItem {
 }
 
 // OpenRawItem returns the byte pointer for a written raw Item struct by its storage name.
-func OpenRawItem(name string) (*[]byte, error) {
-	filepath := filepath.Join(StorepathRawItem(), name)
+func OpenRawItem(fullpath, name string) (*[]byte, error) {
+	filepath := filepath.Join(fullpath, name)
 	reader, err := os.Open(filepath)
 	if err != nil {
 		return nil, err
@@ -97,8 +97,8 @@ func UnmarshallRawItem(content *[]byte) (*RawItem, error) {
 }
 
 // WriteRawItem writes a single raw Item pointer to a nominated destination on the running operating system. Returns nil if raw Item is successfully marshalled to JSON, otherwise returns a corresponding error.
-func WriteRawItem(rawItem *RawItem) error {
-	err := os.MkdirAll(StorepathRawItem(), 0644)
+func WriteRawItem(fullpath string, rawItem *RawItem) error {
+	err := os.MkdirAll(fullpath, os.ModePerm)
 	if err != nil {
 		return err
 	}
@@ -106,8 +106,8 @@ func WriteRawItem(rawItem *RawItem) error {
 	if err != nil {
 		return err
 	}
-	filepath := filepath.Join(StorepathRawItem(), fmt.Sprintf("r-%s.json", rawItem.Title))
-	return ioutil.WriteFile(filepath, content, 0644)
+	filepath := filepath.Join(fullpath, fmt.Sprintf("r-%s.json", rawItem.Title))
+	return ioutil.WriteFile(filepath, content, os.ModePerm)
 }
 
 // rawItem defines the interface for the Raw item struct.
