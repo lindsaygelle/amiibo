@@ -1,0 +1,5 @@
+package compatability
+
+const ()
+
+var ()
