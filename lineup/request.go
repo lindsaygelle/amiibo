@@ -7,6 +7,6 @@ import (
 )
 
 var (
-	// Request is the HTTP request made to collect the XHR content from https://www.nintendo.com/.
+	// Request is a preconstructed the HTTP request to collect the XHR content from resouce.Lineup.
 	Request, _ = http.NewRequest(http.MethodGet, resource.Lineup, nil)
 )
