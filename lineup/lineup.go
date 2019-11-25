@@ -9,10 +9,13 @@ import (
 	"github.com/gellel/amiibo/network"
 )
 
-// Get performs a HTTP request to Nintendo Amiibo lineup resource and unmarshal's the
+// Get performs a HTTP request to Nintendo Amiibo lineup resource and unmarshals the
 // HTTP response body on http.StatusOK. Throws an error if the Nintendo server
 // returns anything other than http.StatusOK. If the response content cannot be
-// handled by json.Unmarshal the corresponding error message is returned.
+// handled by json.Unmarshal the corresponding error message is returned. Get
+// will always contact the Nintendo Amiibo lineup using the preconstructed
+// lineup.Request. The lineup.Request can be modified to provide any additional
+// parameters should the Nintendo endpoint change.
 func Get() (*XHR, error) {
 	var (
 		data     []byte
