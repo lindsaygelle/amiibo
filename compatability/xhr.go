@@ -9,4 +9,6 @@ type XHR struct {
 	Items            []*Item   `json:"items"`
 	Language         string    `json:"language"`
 	Mode             string    `json:"mode"`
+	Status           string    `json:"status"`
+	StatusCode       int       `json:"statusCode"`
 }
