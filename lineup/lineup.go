@@ -33,5 +33,7 @@ func Get() (*XHR, error) {
 	if err != nil {
 		return nil, err
 	}
+	xhr.ContentLength = res.ContentLength
+	xhr.Cookies = res.Cookies()
 	return &xhr, err
 }
