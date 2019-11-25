@@ -47,7 +47,8 @@ type Address struct {
 // NewAddress creates a new instance of the address.Address based on the
 // argument raw url string provided to the function. Throws an error
 // if the argument raw url does not contain a http(s)://(subdomain|www) prefix
-// or if url.Parse(rawurl) cannot parse the raw url.
+// or if url.Parse(rawurl) cannot parse the raw url. All address.Address's
+// are created in reference to a remote Nintendo source.
 func NewAddress(rawurl string) (*Address, error) {
 	var (
 		a  *Address
