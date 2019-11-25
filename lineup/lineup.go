@@ -35,5 +35,6 @@ func Get() (*XHR, error) {
 	}
 	xhr.ContentLength = res.ContentLength
 	xhr.Cookies = res.Cookies()
+	xhr.Headers = res.Header
 	return &xhr, err
 }

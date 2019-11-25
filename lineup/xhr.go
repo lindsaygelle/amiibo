@@ -13,6 +13,7 @@ type XHR struct {
 	ContentLength    int64          `json:"contentLength"`
 	Cookies          []*http.Cookie `json:"cookies"`
 	DateFormatString string         `json:"dataFormatString"`
+	Headers          http.Header    `json:"headers"`
 	Items            []*Item        `json:"items"`
 	Status           string         `json:"status"`
 	StatusCode       string         `json:"statusCode"`
