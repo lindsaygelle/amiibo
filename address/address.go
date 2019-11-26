@@ -25,7 +25,7 @@ const (
 )
 
 const (
-	// Version is the semver of the address.Address.
+	// Version is the semver of address.Address.
 	Version string = "1.0.0"
 )
 
@@ -47,7 +47,7 @@ type Address struct {
 }
 
 // NewAddress creates a new instance of the address.Address based on the
-// argument raw url string provided to the function. Throws an error
+// argument raw url string provided to the function. Returns an error
 // if the argument raw url does not contain a http(s)://(subdomain|www) prefix
 // or if url.Parse(rawurl) cannot parse the raw url. All address.Address's
 // are created in reference to a remote Nintendo source.
