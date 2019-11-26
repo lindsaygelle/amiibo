@@ -16,5 +16,5 @@ type XHR struct {
 	Headers          http.Header    `json:"headers"`
 	Items            []*Item        `json:"items"`
 	Status           string         `json:"status"`
-	StatusCode       string         `json:"statusCode"`
+	StatusCode       int            `json:"statusCode"`
 }
