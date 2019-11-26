@@ -21,6 +21,10 @@ const (
 )
 
 const (
+	measurement string = "px"
+)
+
+const (
 	sep string = "." // sep string for parsing raw url
 	rep string = ""  // rep string for parsing raw url
 )
@@ -34,15 +38,16 @@ const (
 // to give verbosity to all data pulled from the various Nintendo web resources
 // that populate the content of the amiibo package.
 type Image struct {
-	Dir        string           `json:"dir"`
-	Empty      bool             `json:"empty"`
-	Ext        string           `json:"ext"`
-	Height     int              `json:"height"`
-	Name       string           `json:"name"`
-	Status     string           `json:"status"`
-	StatusCode int              `json:"status_code"`
-	URL        *address.Address `json:"url"`
-	Width      int              `json:"width"`
+	Dir         string           `json:"dir"`
+	Empty       bool             `json:"empty"`
+	Ext         string           `json:"ext"`
+	Height      int              `json:"height"`
+	Measurement string           `json:"measurement"`
+	Name        string           `json:"name"`
+	Status      string           `json:"status"`
+	StatusCode  int              `json:"status_code"`
+	URL         *address.Address `json:"url"`
+	Width       int              `json:"width"`
 }
 
 func (i *Image) String() string {
@@ -77,14 +82,15 @@ func NewImage(rawurl string) (*Image, error) {
 	}
 	defer res.Body.Close()
 	i = Image{
-		Dir:        parseDir(rawurl),
-		Ext:        parseExt(rawurl),
-		Height:     height,
-		Name:       parseName(rawurl),
-		Status:     status,
-		StatusCode: statusCode,
-		Width:      width,
-		URL:        URL}
+		Dir:         parseDir(rawurl),
+		Ext:         parseExt(rawurl),
+		Height:      height,
+		Measurement: measurement,
+		Name:        parseName(rawurl),
+		Status:      status,
+		StatusCode:  statusCode,
+		Width:       width,
+		URL:         URL}
 	img, err = parseImage(i.Ext, res.Body)
 	if err != nil {
 		return &i, err
@@ -98,7 +104,7 @@ func NewImage(rawurl string) (*Image, error) {
 
 // parseDir parses the folder directory hosting the image file from the raw url string.
 func parseDir(rawurl string) string {
-	return filepath.Dir(rawurl)
+	return filepath.Base(filepath.Dir(rawurl))
 }
 
 // parseExt parses the image file extension substring from the raw url string.
@@ -123,5 +129,5 @@ func parseImage(ext string, r io.ReadCloser) (image.Image, error) {
 
 // parseName parses the image file name substring from the raw url string.
 func parseName(rawurl string) string {
-	return filepath.Base(rawurl)
+	return strings.Split(filepath.Base(rawurl), sep)[0]
 }
