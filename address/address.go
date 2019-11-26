@@ -46,6 +46,10 @@ type Address struct {
 	Version   string `json:"version"`
 }
 
+func (a *Address) String() string {
+	return a.URL
+}
+
 // NewAddress creates a new instance of the address.Address based on the
 // argument raw url string provided to the function. Returns an error
 // if the argument raw url does not contain a http(s)://(subdomain|www) prefix

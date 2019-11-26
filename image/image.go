@@ -1,6 +1,7 @@
 package image
 
 import (
+	"fmt"
 	"image"
 	"image/gif"
 	"image/png"
@@ -42,6 +43,10 @@ type Image struct {
 	StatusCode int              `json:"status_code"`
 	URL        *address.Address `json:"url"`
 	Width      int              `json:"width"`
+}
+
+func (i *Image) String() string {
+	return fmt.Sprintf("%s.%s", i.Name, i.Ext)
 }
 
 // NewImage creates a new instance of the image.Image based on the
