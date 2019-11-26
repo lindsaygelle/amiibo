@@ -2,7 +2,7 @@ package lineup
 
 import "net/http"
 
-// XHR is the content HTTP response that is requested from https://www.nintendo.com/amiibo/line-up/.
+// XHR is the content HTTP response that is requested from resource.Lineup.
 // XHR contains the structured information provided from Nintendo as-is and is updated
 // with the release of new Nintendo Amiibo products. All content within the XHR
 // response body describes the Nintendo Amiibo products in the context of the lineup, meaning information

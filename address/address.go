@@ -29,7 +29,9 @@ const (
 	Version string = "1.0.0"
 )
 
-// Address is a destructured url.URL provided by Go.
+// Address is a destructured url.URL provided by Go. Addresses are
+// to give verbosity to all data pulled from the various Nintendo web resources
+// that populate the content of the amiibo package.
 type Address struct {
 	Domain    string `json:"domain"`
 	Fragment  string `json:"fragment"`
