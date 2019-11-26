@@ -14,9 +14,9 @@ import (
 )
 
 const (
-	extGIF string = "GIF"
-	extJPG string = "JPG"
-	extPNG string = "PNG"
+	extGIF string = "GIF" // GIF file extension pattern.
+	extJPG string = "JPG" // JPG file extension pattern.
+	extPNG string = "PNG" // PNG file extension pattern.
 )
 
 const (
@@ -29,6 +29,9 @@ const (
 	Version string = "1.0.0"
 )
 
+// Image is a destructured image.Image provided by Go. Images are
+// to give verbosity to all data pulled from the various Nintendo web resources
+// that populate the content of the amiibo package.
 type Image struct {
 	Dir        string           `json:"dir"`
 	Empty      bool             `json:"empty"`
@@ -88,10 +91,12 @@ func NewImage(rawurl string) (*Image, error) {
 	return &i, err
 }
 
+// parseDir parses the folder directory hosting the image file from the raw url string.
 func parseDir(rawurl string) string {
 	return filepath.Dir(rawurl)
 }
 
+// parseExt parses the image file extension substring from the raw url string.
 func parseExt(rawurl string) string {
 	return strings.TrimPrefix(filepath.Ext(rawurl), sep)
 }
@@ -110,6 +115,7 @@ func parseImage(ext string, r io.ReadCloser) (image.Image, error) {
 	return img, err
 }
 
+// parseName parses the image file name substring from the raw url string.
 func parseName(rawurl string) string {
 	return filepath.Base(rawurl)
 }
