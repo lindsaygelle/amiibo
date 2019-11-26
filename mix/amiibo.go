@@ -29,7 +29,7 @@ func NewAmiibo(c *compatability.Amiibo, i *lineup.Item, l *lineup.Amiibo) (*Amii
 		return nil, errLNil
 	}
 	if c.Key() != i.Key() || i.Key() != l.Key() {
-		return nil, fmt.Errorf("*c does not relate to *l")
+		return nil, fmt.Errorf("*c, *i and *l do not relate")
 	}
 	amiibo = &Amiibo{
 		Compatability: c,

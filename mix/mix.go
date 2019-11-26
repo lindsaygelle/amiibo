@@ -20,11 +20,18 @@ var (
 	errLNil = fmt.Errorf(tep, "l", "nil")
 )
 
+// Mix is a an organised collection of maps for both mix.Amiibo and mix.Game.
+// Mix is built from the content of compatability.XHR and lineup.XHR.
 type Mix struct {
 	Amiibo map[string]*Amiibo
 	Games  map[string]*Game
 }
 
+// Get performs a HTTP request to Nintendo Amiibo compatability resource and the
+// Nintendo Amiibo lineup resource and organises the XHR content into its appropriate maps.
+// Returns an error if the Nintendo server returns anything other than http.StatusOK for
+// both resource destinations. If the response content cannot be
+// handled by either compatability.Get or lineup.Get the corresponding error is returned.
 func Get() (*Mix, error) {
 	var (
 		c   *compatability.XHR
@@ -42,6 +49,8 @@ func Get() (*Mix, error) {
 	return NewMix(c, l)
 }
 
+// NewMix creates a new instance of mix.Mix, combining the various data points across
+// compatability.XHR and lineup.XHR into a ordered data structure.
 func NewMix(c *compatability.XHR, l *lineup.XHR) (*Mix, error) {
 	if c == nil {
 		return nil, fmt.Errorf("*c is nil")
