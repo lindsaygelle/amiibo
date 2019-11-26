@@ -10,9 +10,14 @@ import (
 )
 
 const (
+	// Version is the semver of amiibo.Amiibo.
 	Version string = "1.0.0"
 )
 
+// Amiibo is a structured representation of a Nintendo Amiibo figuring.
+// Amiibo structs are built from a mixture of resources that
+// are provided from the amiibo/mix package.
+// Amiibos are consumed by amiibo/mux to create a basic HTTP REST API.
 type Amiibo struct {
 	BoxImage        *image.Image     `json:"box_image"`
 	Compatability   []*Game          `json:"compatability"`
