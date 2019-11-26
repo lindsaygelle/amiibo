@@ -16,8 +16,8 @@ const (
 )
 
 const (
-	sep string = "." // sep string for parsing raw url
 	rep string = ""  // rep string for parsing raw url
+	sep string = "." // sep string for parsing raw url
 )
 
 const (
