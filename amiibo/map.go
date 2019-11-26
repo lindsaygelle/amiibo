@@ -1,5 +1,7 @@
 package amiibo
 
+import "fmt"
+
 // Map is a map of Amiibo.
 type Map map[string]*Amiibo
 
@@ -55,4 +57,25 @@ func (m *Map) Val() []*Amiibo {
 		s = append(s, v)
 	}
 	return s
+}
+
+// NewMap creates a new instance of amiibo.Map in N time using the argument
+// key as the hashing mechanism. Does not reconcile hash collisions but will
+// return a non nil error if an error occurs. Will always return an Amiibo map pointer
+// even if there are no Amiibo provided to the function.
+func NewMap(k string, a ...*Amiibo) (*Map, error) {
+	var (
+		err error
+		m   = &Map{}
+	)
+	for _, a := range a {
+		var (
+			key = a.Get(k)
+		)
+		if m.Has(key) && err != nil {
+			err = fmt.Errorf("map has collision using key '%s'", k)
+		}
+		m.Add(key, a)
+	}
+	return m, err
 }
