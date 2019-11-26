@@ -69,13 +69,14 @@ type Amiibo struct {
 	PageURL         *address.Address `json:"page"`
 	Path            string           `json:"path"`
 	PresentedBy     string           `json:"presented_by"`
-	Price           string           `json:"price"`
+	Price           float64          `json:"price"`
 	ReleaseDateMask string           `json:"release_date_mask"`
 	Series          string           `json:"series"`
 	SeriesID        string           `json:"series_id"`
 	Slug            string           `json:"slug"`
 	TagID           string           `json:"tag_id"`
 	Timestamp       time.Time        `json:"timestamp"`
+	Title           string           `json:"title"`
 	Type            string           `json:"type"`
 	TypeAlias       string           `json:"type_alias"`
 	Unix            int64            `json:"unix"`
@@ -100,136 +101,21 @@ func NewAmiibo(c *compatability.Amiibo, l *lineup.Amiibo, i *lineup.Item) (*Amii
 		return nil, errNilAll
 	}
 	var (
-		a               *Amiibo
-		boxImage        *image.Image
-		compatability   []*Game
-		complete        bool
-		description     string
-		detailsPath     string
-		detailsURL      *address.Address
-		figureURL       *address.Address
-		franchise       string
-		franchiseID     string
-		gameCode        string
-		hex             string
-		ID              string
-		img             *image.Image
-		isRelatedTo     string
-		isReleased      bool
-		language        = language.AmericanEnglish
-		lastModified    int64
-		name            string
-		overview        string
-		pageURL         *address.Address
-		path            string
-		presentedBy     string
-		price           string
-		rawurl          string
-		releaseDateMask string
-		series          string
-		seriesID        string
-		slug            string
-		tagID           string
-		timestamp       time.Time
-		typeAlias       string
-		typeOf          string
-		unix            int64
-		UPC             string
-		URI             string
-		URL             *address.Address
+		a = &Amiibo{
+			Currency: currencyISO,
+			Language: language.AmericanEnglish}
 	)
-	complete = (c != nil) && (l != nil) && (i != nil)
 	if c != nil {
-		ID = c.ID
-		img, _ = image.NewImage(fmt.Sprintf(tep, resource.Nintendo, c.Image))
-		isRelatedTo = c.IsRelatedTo
-		isReleased, _ = strconv.ParseBool(c.IsReleased)
-		name = t.Name(c.Name)
-		tagID = c.TagID
-		typeOf = c.Type
-		URL, _ = address.NewAddress(fmt.Sprintf(tep, resource.Nintendo, c.URL))
+		parseCompatability(a, c)
 	}
 	if l != nil {
-		boxImage, _ = parseAmiiboBoxImage(l)
-		detailsPath = parseAmiiboDetailsPath(l)
-		detailsURL, _ = parseAmiiboDetailsURL(l)
-		figureURL, _ = parseAmiiboFigureURL(l)
-		franchise = parseAmiiboFranchise(l)
-		franchiseID = parseAmiiboFranchiseID(l)
-		gameCode = parseAmiiboGameCode(l)
-		hex = parseAmiiboHexCode(l)
-		isReleased = l.IsReleased
-		ok = (len(name) != 0)
-		if !ok {
-			name = parseAmiiboName(l)
-		}
-		overview = parseAmiiboOverviewDescription(l)
-		pageURL, _ = parseAmiiboPageURL(l)
-		presentedBy = t.PresentedBy(l.PresentedBy)
-		price = l.Price
-		releaseDateMask = l.ReleaseDateMask
-		series = l.Series
-		seriesID = t.URI(t.Name(series))
-		slug = l.Slug
-		timestamp = time.Unix(l.UnixTimestamp, 0).UTC()
-		typeAlias = strings.ToLower(l.Type)
-		UPC = l.UPC
-		unix = l.UnixTimestamp
+		parseLineup(a, l)
 	}
 	if i != nil {
-		description = i.Description
-		lastModified = i.LastModified
-		path = i.Path
-		ok = (len(name) != 0)
-		if !ok {
-			name = t.Name(i.Title)
-		}
-		ok = (URL != nil)
-		if !ok {
-			rawurl = strings.TrimPrefix((i.URL + "/"), noa)
-			rawurl = fmt.Sprintf(tep, (resource.Amiibo + "/"), rawurl)
-			URL, _ = address.NewAddress(rawurl)
-		}
+		parseItem(a, i)
 	}
-	URI = t.URI(name)
-	compatability, _ = GetGames(URL.URL)
-	a = &Amiibo{
-		BoxImage:        boxImage,
-		Compatability:   compatability,
-		Complete:        complete,
-		Currency:        currencyISO,
-		Description:     description,
-		DetailsPath:     detailsPath,
-		DetailsURL:      detailsURL,
-		FigureURL:       figureURL,
-		Franchise:       franchise,
-		FranchiseID:     franchiseID,
-		GameCode:        gameCode,
-		HexCode:         hex,
-		ID:              ID,
-		Image:           img,
-		IsRelatedTo:     isRelatedTo,
-		IsReleased:      isReleased,
-		Language:        language,
-		LastModified:    lastModified,
-		Name:            name,
-		Overview:        overview,
-		Path:            path,
-		PageURL:         pageURL,
-		PresentedBy:     presentedBy,
-		Price:           price,
-		ReleaseDateMask: releaseDateMask,
-		Series:          series,
-		SeriesID:        seriesID,
-		Slug:            slug,
-		TagID:           tagID,
-		Timestamp:       timestamp,
-		Type:            typeOf,
-		TypeAlias:       typeAlias,
-		Unix:            unix,
-		UPC:             UPC,
-		URI:             URI,
-		URL:             URL}
+	a.Compatability, _ = GetGames(a.URL.URL)
+	a.URI = t.URI(a.Name)
 	return a, nil
 }
 
@@ -265,8 +151,16 @@ func parseAmiiboHexCode(l *lineup.Amiibo) string {
 	return l.HexCode
 }
 
-func parseAmiiboName(l *lineup.Amiibo) string {
-	return t.Name(l.AmiiboName)
+func parseAmiiboImage(c *compatability.Amiibo) (*image.Image, error) {
+	return image.NewImage(fmt.Sprintf(tep, resource.Nintendo, c.Image))
+}
+
+func parseAmiiboIsReleased(c *compatability.Amiibo) (bool, error) {
+	return strconv.ParseBool(c.IsReleased)
+}
+
+func parseAmiiboName(s string) string {
+	return t.Name(s)
 }
 
 func parseAmiiboOverviewDescription(l *lineup.Amiibo) string {
@@ -275,4 +169,90 @@ func parseAmiiboOverviewDescription(l *lineup.Amiibo) string {
 
 func parseAmiiboPageURL(l *lineup.Amiibo) (*address.Address, error) {
 	return address.NewAddress(fmt.Sprintf(tep, resource.Nintendo, l.AmiiboPage))
+}
+
+func parseAmiiboPrice(l *lineup.Amiibo) (float64, error) {
+	return strconv.ParseFloat(strings.TrimPrefix(l.Price, "$"), 32)
+}
+
+func parseAmiiboPresentedBy(l *lineup.Amiibo) string {
+	return t.PresentedBy(l.PresentedBy)
+}
+
+func parseAmiiboReleaseDateMask(l *lineup.Amiibo) string {
+	return l.ReleaseDateMask
+}
+
+func parseAmiiboSeriesID(l *lineup.Amiibo) string {
+	return t.URI(t.Name(l.Series))
+}
+
+func parseAmiiboSlug(l *lineup.Amiibo) string {
+	return l.Slug
+}
+
+func parseAmiiboTimestamp(l *lineup.Amiibo) time.Time {
+	return time.Unix(l.UnixTimestamp, 0).UTC()
+}
+
+func parseAmiiboTitle(i *lineup.Item) string {
+	return t.Name(i.Title)
+}
+
+func parseAmiiboTypeAlias(l *lineup.Amiibo) string {
+	return strings.ToLower(l.Type)
+}
+
+func parseAmiiboURL(rawurl string) (*address.Address, error) {
+	return address.NewAddress(rawurl)
+}
+
+func parseCompatability(a *Amiibo, c *compatability.Amiibo) {
+	a.ID = c.ID
+	a.Image, _ = parseAmiiboImage(c)
+	a.IsRelatedTo = c.IsRelatedTo
+	a.IsReleased, _ = parseAmiiboIsReleased(c)
+	if len(c.Name) == 0 {
+		a.Name = parseAmiiboName(c.Name)
+	}
+	a.TagID = c.TagID
+	a.Type = c.Type
+	a.URL, _ = parseAmiiboURL(fmt.Sprintf(tep, resource.Nintendo, c.URL))
+}
+
+func parseLineup(a *Amiibo, l *lineup.Amiibo) {
+	a.BoxImage, _ = parseAmiiboBoxImage(l)
+	a.DetailsPath = parseAmiiboDetailsPath(l)
+	a.DetailsURL, _ = parseAmiiboDetailsURL(l)
+	a.FigureURL, _ = parseAmiiboFigureURL(l)
+	a.Franchise = parseAmiiboFranchise(l)
+	a.FranchiseID = parseAmiiboFranchiseID(l)
+	a.GameCode = parseAmiiboGameCode(l)
+	a.HexCode = parseAmiiboHexCode(l)
+	a.IsReleased = l.IsReleased
+	if len(a.Name) == 0 {
+		a.Name = parseAmiiboName(l.AmiiboName)
+	}
+	a.Overview = parseAmiiboOverviewDescription(l)
+	a.PageURL, _ = parseAmiiboPageURL(l)
+	a.PresentedBy = parseAmiiboPresentedBy(l)
+	a.Price, _ = parseAmiiboPrice(l)
+	a.ReleaseDateMask = parseAmiiboReleaseDateMask(l)
+	a.Series = l.Series
+	a.SeriesID = parseAmiiboSeriesID(l)
+	a.Slug = parseAmiiboSlug(l)
+	a.Timestamp = parseAmiiboTimestamp(l)
+	a.TypeAlias = parseAmiiboTypeAlias(l)
+	a.UPC = l.UPC
+	a.Unix = l.UnixTimestamp
+}
+
+func parseItem(a *Amiibo, i *lineup.Item) {
+	a.Description = i.Description
+	a.LastModified = i.LastModified
+	a.Path = i.Path
+	a.Title = i.Title
+	if a.URL == nil {
+		a.URL, _ = parseAmiiboURL(fmt.Sprintf(tep, (resource.Amiibo + "/"), strings.TrimPrefix((i.URL+"/"), noa)))
+	}
 }
