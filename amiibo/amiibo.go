@@ -206,54 +206,67 @@ func parseAmiiboIsReleased(c *compatability.Amiibo) (bool, error) {
 	return strconv.ParseBool(c.IsReleased)
 }
 
+// parseAmiiboName parses the name of the Amiibo using the name field from either compatability.Amiibo or lineup.Amiibo.
 func parseAmiiboName(s string) string {
 	return t.Name(s)
 }
 
+// parseAmiiboOverviewDescription parses the Amiibo description from the lineup.Amiibo.
 func parseAmiiboOverviewDescription(l *lineup.Amiibo) string {
 	return t.Untokenize(l.OverviewDescription)
 }
 
+// parseAmiiboPageURL parses the Amiibo detail page URL from the lineup.Amiibo.
 func parseAmiiboPageURL(l *lineup.Amiibo) (*address.Address, error) {
 	return address.NewAddress(fmt.Sprintf(tep, resource.Nintendo, l.AmiiboPage))
 }
 
+// parseAmiiboPrice parses the Amiibo price from the lineup.Amiibo.
 func parseAmiiboPrice(l *lineup.Amiibo) (float64, error) {
 	return strconv.ParseFloat(strings.TrimPrefix(l.Price, "$"), 32)
 }
 
+// parseAmiiboPresentedBy parses the presenter from the lineup.Amiibo.
 func parseAmiiboPresentedBy(l *lineup.Amiibo) string {
 	return t.PresentedBy(l.PresentedBy)
 }
 
+// parseAmiiboReleaseDateMask parses the release date mask from the lineup.Amiibo.
 func parseAmiiboReleaseDateMask(l *lineup.Amiibo) string {
 	return l.ReleaseDateMask
 }
 
+// parseAmiiboSeriesID parses the Amiibo's series ID using the series string from the lineup.Amiibo.
 func parseAmiiboSeriesID(l *lineup.Amiibo) string {
 	return t.URI(t.Name(l.Series))
 }
 
+// parseAmiiboSlug parses the slug from the lineup.Amiibo.
 func parseAmiiboSlug(l *lineup.Amiibo) string {
 	return l.Slug
 }
 
+// parseAmiiboTimestamp parses the unix timestamp from the lineup.Amiibo.
 func parseAmiiboTimestamp(l *lineup.Amiibo) time.Time {
 	return time.Unix(l.UnixTimestamp, 0).UTC()
 }
 
+// parseAmiiboTitle parses the title from the lineup.Item.
 func parseAmiiboTitle(i *lineup.Item) string {
 	return t.Name(i.Title)
 }
 
+// parseAmiiboTypeAlias parses the Amiibo type alias from the lineup.Amiibo.
 func parseAmiiboTypeAlias(l *lineup.Amiibo) string {
 	return strings.ToLower(l.Type)
 }
 
+// parseAmiiboURL parses the URL of the Amiibo using the URL field from either compatability.Amiibo or lineup.Amiibo.
 func parseAmiiboURL(rawurl string) (*address.Address, error) {
 	return address.NewAddress(rawurl)
 }
 
+// parseCompatability parses all fields exposed in the compatability.Amiibo and assigns them to the argument amiibo.Amiibo.
 func parseCompatability(a *Amiibo, c *compatability.Amiibo) {
 	a.ID = c.ID
 	a.Image, _ = parseAmiiboImage(c)
@@ -267,6 +280,7 @@ func parseCompatability(a *Amiibo, c *compatability.Amiibo) {
 	a.URL, _ = parseAmiiboURL(fmt.Sprintf(tep, resource.Nintendo, c.URL))
 }
 
+// parseLineup parses all fields exposed in the lineup.Amiibo and assigns them to the argument amiibo.Amiibo.
 func parseLineup(a *Amiibo, l *lineup.Amiibo) {
 	a.BoxImage, _ = parseAmiiboBoxImage(l)
 	a.DetailsPath = parseAmiiboDetailsPath(l)
@@ -294,6 +308,7 @@ func parseLineup(a *Amiibo, l *lineup.Amiibo) {
 	a.Unix = l.UnixTimestamp
 }
 
+// parseItem parses all fields exposed in the lineup.Item and assigns them to the argument amiibo.Amiibo.
 func parseItem(a *Amiibo, i *lineup.Item) {
 	a.Description = i.Description
 	a.LastModified = i.LastModified
