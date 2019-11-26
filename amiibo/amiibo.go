@@ -1,6 +1,8 @@
 package amiibo
 
 import (
+	"fmt"
+	"reflect"
 	"time"
 
 	"golang.org/x/text/language"
@@ -55,4 +57,11 @@ type Amiibo struct {
 	UPC             string           `json:"upc"`
 	URI             string           `json:"uri"`
 	URL             *address.Address `json:"url"`
+}
+
+// Get gets a field from the Amiibo by its struct name and returns its string value.
+func (a *Amiibo) Get(key string) string {
+	var r = reflect.ValueOf(a)
+	var v = reflect.Indirect(r).FieldByName(key)
+	return fmt.Sprintf("%s", v)
 }
