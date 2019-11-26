@@ -10,7 +10,7 @@ import (
 )
 
 // Get performs a HTTP request to Nintendo Amiibo lineup resource and unmarshals the
-// HTTP response body on http.StatusOK. Throws an error if the Nintendo server
+// HTTP response body on http.StatusOK. Returns an error if the Nintendo server
 // returns anything other than http.StatusOK. If the response content cannot be
 // handled by json.Unmarshal the corresponding error message is returned. Get
 // will always contact the Nintendo Amiibo lineup using the preconstructed
@@ -28,6 +28,7 @@ func Get() (*XHR, error) {
 	if res.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf(res.Status)
 	}
+	defer res.Body.Close()
 	data, err = ioutil.ReadAll(res.Body)
 	if err != nil {
 		return nil, err

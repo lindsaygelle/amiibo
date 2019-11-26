@@ -10,9 +10,14 @@ import (
 )
 
 const (
+	// Version is the semver of game.Game.
 	Version string = "1.0.0"
 )
 
+// Game is a structured representation of a Nintendo video-game that is compatible with a
+// Nintendo Amiibo figuring product. Game structs are built from a mixture of resources that
+// are provided from the amiibo/mix package.
+// Games are consumed by amiibo/mux to create a basic HTTP REST API.
 type Game struct {
 	Compatability   []*Amiibo        `json:"compatability"`
 	Complete        bool             `json:"complete"`
