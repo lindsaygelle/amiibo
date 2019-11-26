@@ -2,8 +2,8 @@ package lineup
 
 // Amiibo is a representation of a Nintendo Amiibo product provided from https://www.nintendo.com/amiibo/line-up/.
 // Amiibo contains data provided as-is from Nintendo with a mixture of content
-// provided for each Nintendo Amiibo product. Amiibo contains the most
-// verbose data content.
+// provided for each Nintendo Amiibo product. Amiibo provided from lineup.Amiibo describes the
+// Amiibo figure product data.
 type Amiibo struct {
 	AmiiboName          string `json:"amiiboName"`
 	AmiiboPage          string `json:"amiiboPage"`
