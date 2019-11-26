@@ -40,5 +40,7 @@ func Get() (*XHR, error) {
 	xhr.ContentLength = res.ContentLength
 	xhr.Cookies = res.Cookies()
 	xhr.Headers = res.Header
+	xhr.Status = res.Status
+	xhr.StatusCode = res.StatusCode
 	return &xhr, err
 }
