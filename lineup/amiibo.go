@@ -1,5 +1,10 @@
 package lineup
 
+import (
+	"path/filepath"
+	"strings"
+)
+
 // Amiibo is a representation of a Nintendo Amiibo product provided from resource.Lineup.
 // Amiibo contains data provided as-is from Nintendo with a mixture of content
 // provided for each Nintendo Amiibo product to describe its unique attributes.
@@ -27,4 +32,9 @@ type Amiibo struct {
 	Type                string `json:"type"`
 	UnixTimestamp       int64  `json:"unixTimestamp"`
 	UPC                 string `json:"upc"`
+}
+
+// Key returns a reliable ID.
+func (a *Amiibo) Key() string {
+	return strings.TrimSuffix(filepath.Base(a.DetailsURL), ".html")
 }

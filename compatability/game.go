@@ -1,5 +1,10 @@
 package compatability
 
+import (
+	"path/filepath"
+	"strings"
+)
+
 // Game is a representation of a Nintendo video-game product provided from resource.Compatability.
 // Game contains data provided as-is from Nintendo with a mixture of content
 // that provides a reference for a Nintendo video-game with a Nintendo Amiibo product.
@@ -14,4 +19,9 @@ type Game struct {
 	ReleaseDateMask string `json:"releaseDateMask"`
 	Type            string `json:"type"`
 	URL             string `json:"url"`
+}
+
+// Key returns a reliable ID.
+func (g *Game) Key() string {
+	return strings.TrimSuffix(filepath.Base(g.URL), ".html")
 }

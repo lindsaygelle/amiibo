@@ -1,6 +1,8 @@
 package mix
 
 import (
+	"fmt"
+
 	"github.com/gellel/amiibo/compatability"
 	"github.com/gellel/amiibo/lineup"
 )
@@ -10,5 +12,28 @@ import (
 type Amiibo struct {
 	Compatability *compatability.Amiibo
 	Item          *lineup.Item
-	lineup        *lineup.Amiibo
+	Lineup        *lineup.Amiibo
+}
+
+func NewAmiibo(c *compatability.Amiibo, i *lineup.Item, l *lineup.Amiibo) (*Amiibo, error) {
+	var (
+		amiibo *Amiibo
+	)
+	if c == nil {
+		return nil, errCNil
+	}
+	if i == nil {
+		return nil, errINil
+	}
+	if l == nil {
+		return nil, errLNil
+	}
+	if c.Key() != i.Key() || i.Key() != l.Key() {
+		return nil, fmt.Errorf("*c does not relate to *l")
+	}
+	amiibo = &Amiibo{
+		Compatability: c,
+		Item:          i,
+		Lineup:        l}
+	return amiibo, nil
 }

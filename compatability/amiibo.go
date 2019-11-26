@@ -1,5 +1,10 @@
 package compatability
 
+import (
+	"path/filepath"
+	"strings"
+)
+
 // Amiibo is a representation of a Nintendo Amiibo product provided from resource.Compatability.
 // Amiibo contains data provided as-is from Nintendo with a mixture of content
 // provided for each Nintendo Amiibo product to describe its unique attributes.
@@ -17,4 +22,9 @@ type Amiibo struct {
 	TagID           string `json:"tagid"`
 	Type            string `json:"type"`
 	URL             string `json:"url"`
+}
+
+// Key returns a reliable ID.
+func (a *Amiibo) Key() string {
+	return strings.TrimSuffix(filepath.Base(a.URL), ".html")
 }
