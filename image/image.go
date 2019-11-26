@@ -101,6 +101,7 @@ func parseExt(rawurl string) string {
 	return strings.TrimPrefix(filepath.Ext(rawurl), sep)
 }
 
+// parseImage parses the image content body with the appopriate image decoder.
 func parseImage(ext string, r io.ReadCloser) (image.Image, error) {
 	var img image.Image
 	var err error
