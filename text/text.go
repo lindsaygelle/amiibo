@@ -11,18 +11,21 @@ import (
 )
 
 const (
+	noa string = "noa:publisher/" // prefix for Nintendo of America.
+)
+const (
 	rep string = " " // rep string
 )
 
 var (
-	regexpHTML    = regexp.MustCompile(`(<[^>]*>|\n(\s{1,})?)`)
-	regexpHyphens = regexp.MustCompile(`\-{2,}`)
-	regexpName    = regexp.MustCompile(`(\&\#[0-9]+\;|™|\(|\))`)
-	regexpSpaces  = regexp.MustCompile(`\s{2,}`)
-	regexpURI     = regexp.MustCompile(`[^a-zA-Z0-9&]+`)
+	regexpHTML    = regexp.MustCompile(`(<[^>]*>|\n(\s{1,})?)`)  // match all HTML tokens.
+	regexpHyphens = regexp.MustCompile(`\-{2,}`)                 // match all repeating hyphens.
+	regexpName    = regexp.MustCompile(`(\&\#[0-9]+\;|™|\(|\))`) // match all unwanted characters for a Amiibo name.
+	regexpSpaces  = regexp.MustCompile(`\s{2,}`)                 // match all repeating spaces.
+	regexpURI     = regexp.MustCompile(`[^a-zA-Z0-9&]+`)         // match all unwanted characters in a URI.
 )
 var (
-	replacerURI = strings.NewReplacer([]string{"&", "and", "'", "", "é", "e"}...)
+	replacerURI = strings.NewReplacer([]string{"&", "and", "'", "", "é", "e"}...) // replacer for names like Pokémon.
 )
 
 var (
@@ -31,7 +34,7 @@ var (
 
 // PresentedBy removes all unwanted substrings from a presented by string.
 func PresentedBy(s string) string {
-	return strings.TrimPrefix(s, "noa:publisher/")
+	return strings.TrimPrefix(s, noa)
 }
 
 // Name removes all unwanted characters to create a name.
