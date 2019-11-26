@@ -2,6 +2,7 @@ package amiibo
 
 import (
 	"fmt"
+	"net/http"
 	"reflect"
 	"strconv"
 	"strings"
@@ -10,10 +11,12 @@ import (
 	"golang.org/x/text/currency"
 	"golang.org/x/text/language"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/gellel/amiibo/address"
 	"github.com/gellel/amiibo/compatability"
 	"github.com/gellel/amiibo/image"
 	"github.com/gellel/amiibo/lineup"
+	"github.com/gellel/amiibo/network"
 	"github.com/gellel/amiibo/resource"
 	t "github.com/gellel/amiibo/text"
 )
@@ -92,6 +95,9 @@ func (a *Amiibo) Get(key string) string {
 	return fmt.Sprintf("%s", v)
 }
 
+// NewAmiibo creates a new instance of the amiibo.Amiibo from the aggregation
+// of amiibo structs across the amiibo package. Returns an error if all data points are
+// not provided to the function.
 func NewAmiibo(c *compatability.Amiibo, l *lineup.Amiibo, i *lineup.Item) (*Amiibo, error) {
 	var (
 		ok bool
@@ -114,47 +120,88 @@ func NewAmiibo(c *compatability.Amiibo, l *lineup.Amiibo, i *lineup.Item) (*Amii
 	if i != nil {
 		parseItem(a, i)
 	}
-	a.Compatability, _ = GetGames(a.URL.URL)
+	a.Compatability, _ = parseAmiiboCompatability(a.URL.URL)
 	a.URI = t.URI(a.Name)
 	return a, nil
 }
 
+// parseAmiiboBoxImage parses the box art image from the lineup.Amiibo.
 func parseAmiiboBoxImage(l *lineup.Amiibo) (*image.Image, error) {
 	return image.NewImage(fmt.Sprintf(tep, resource.Nintendo, l.BoxArtURL))
 }
 
+// parseAmiiboCompatability parses the HTML content from the Amiibo's detail page.
+func parseAmiiboCompatability(rawurl string) ([]*Game, error) {
+	const (
+		CSS string = "ul#game-set li"
+	)
+	var (
+		req, _ = http.NewRequest(http.MethodGet, rawurl, nil)
+		res, _ = network.Client.Do(req)
+	)
+	var (
+		doc, err = goquery.NewDocumentFromResponse(res)
+	)
+	if err != nil {
+		return nil, err
+	}
+	var (
+		games = []*Game{}
+		s     = doc.Find(CSS)
+	)
+	s.Each(func(i int, s *goquery.Selection) {
+		var (
+			g, err = NewGame(s)
+		)
+		if err != nil {
+			return
+		}
+		games = append(games, g)
+	})
+	return games, err
+}
+
+// parseAmiiboDetailsPath parses the details path from the lineup.Amiibo.
 func parseAmiiboDetailsPath(l *lineup.Amiibo) string {
 	return l.DetailsPath
 }
 
+// parseAmiiboDetailsURL parses the details URL from the lineup.Amiibo.
 func parseAmiiboDetailsURL(l *lineup.Amiibo) (*address.Address, error) {
 	return address.NewAddress(fmt.Sprintf(tep, resource.Nintendo, l.DetailsURL))
 }
 
+// parsesAmiiboFigureURL parses the Amiibo figuring image from the lineup.Amiibo.
 func parseAmiiboFigureURL(l *lineup.Amiibo) (*address.Address, error) {
 	return address.NewAddress(fmt.Sprintf(tep, resource.Nintendo, l.FigureURL))
 }
 
+// parseAmiiboFranchise parses the Amiibo's franchise from the lineup.Amiibo.
 func parseAmiiboFranchise(l *lineup.Amiibo) string {
 	return l.Franchise
 }
 
+// parseAmiiboFranchiseID parses the Amiibo's franchise ID using the franchise string from the lineup.Amiibo.
 func parseAmiiboFranchiseID(l *lineup.Amiibo) string {
 	return t.URI(t.Name(l.Franchise))
 }
 
+// parseAmiiboGameCode parses the Amiibo's game ID from the lineup.Amiibo.
 func parseAmiiboGameCode(l *lineup.Amiibo) string {
 	return l.GameCode
 }
 
+// parseAmiiboHexCode parses the Amiibo's hex ID from the lineup.Amiibo.
 func parseAmiiboHexCode(l *lineup.Amiibo) string {
 	return l.HexCode
 }
 
+// parseAmiiboImage parses the Amiibo figuring image from the compatability.Amiibo.
 func parseAmiiboImage(c *compatability.Amiibo) (*image.Image, error) {
 	return image.NewImage(fmt.Sprintf(tep, resource.Nintendo, c.Image))
 }
 
+// parseAmiiboIsReleased parses the release state of the Amiibo product from the compatability.Amiibo.
 func parseAmiiboIsReleased(c *compatability.Amiibo) (bool, error) {
 	return strconv.ParseBool(c.IsReleased)
 }
