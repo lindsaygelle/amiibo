@@ -15,6 +15,10 @@ type Amiibo struct {
 	Lineup        *lineup.Amiibo
 }
 
+// NewAmiibo creates a new instance of the mix.Amiibo from the aggregation
+// of amiibo structs across the amiibo package. Returns an error if all data points are
+// not provided to the function or if a common union cannot be guaranteed across
+// compatability.Amiibo, lineup.Item and lineup.Amiibo.
 func NewAmiibo(c *compatability.Amiibo, i *lineup.Item, l *lineup.Amiibo) (*Amiibo, error) {
 	var (
 		amiibo *Amiibo

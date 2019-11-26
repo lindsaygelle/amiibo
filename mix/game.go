@@ -13,6 +13,10 @@ type Game struct {
 	Item *compatability.Item
 }
 
+// NewGame creates a new instance of the mix.Game from the aggregation
+// of amiibo structs across the amiibo package. Returns an error if all data points are
+// not provided to the function or if a common union cannot be guaranteed across
+// compatability.Game and compatability.Item.
 func NewGame(g *compatability.Game, i *compatability.Item) (*Game, error) {
 	var (
 		game *Game
