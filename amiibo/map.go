@@ -36,7 +36,7 @@ func (m *Map) Has(key string) bool {
 	return ok
 }
 
-// Keys gets the keys of the map in N time.
+// Keys gets the keys of the map in O(N) time.
 func (m *Map) Keys() []string {
 	var s []string
 	for k := range *m {
@@ -50,7 +50,7 @@ func (m *Map) Len() int {
 	return len(*m)
 }
 
-// Val gets the values of the map in N time.
+// Val gets the values of the map in O(N) time.
 func (m *Map) Val() []*Amiibo {
 	var s []*Amiibo
 	for _, v := range *m {
@@ -59,7 +59,7 @@ func (m *Map) Val() []*Amiibo {
 	return s
 }
 
-// NewMap creates a new instance of amiibo.Map in N time using the argument
+// NewMap creates a new instance of amiibo.Map in O(N) time using the argument
 // key as the hashing mechanism. Does not reconcile hash collisions but will
 // return a non nil error if an error occurs. Will always return an Amiibo map pointer
 // even if there are no Amiibo provided to the function.
