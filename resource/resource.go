@@ -11,6 +11,11 @@ const (
 )
 
 const (
+	// Game is the URL to the official Nintendo game webpage.
+	Game string = Nintendo + "/" + "games"
+)
+
+const (
 	// Lineup is the URL to the XHR content required for lineup.XHR.
 	Lineup string = Nintendo + "/" + "content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json"
 )
