@@ -13,6 +13,8 @@ import (
 	t "github.com/gellel/amiibo/text"
 )
 
+// Amiibo is a representation of a Nintendo Amiibo figurine that is directly compatible
+// with a Nintendo video game.
 type Amiibo struct {
 	Image           *image.Image     `json:"image"`
 	IsReleased      bool             `json:"is_released"`
@@ -23,6 +25,7 @@ type Amiibo struct {
 	URL             *address.Address `json:"url"`
 }
 
+// NewAmiibo creates a new instance of the game.Amiibo.
 func NewAmiibo(s *goquery.Selection) (*Amiibo, error) {
 	var (
 		ok bool
