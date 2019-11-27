@@ -9,16 +9,16 @@ import (
 	"sync"
 	"time"
 
-	"github.com/gellel/amiibo/mix"
-
 	"golang.org/x/text/currency"
 	"golang.org/x/text/language"
 
 	"github.com/PuerkitoBio/goquery"
+
 	"github.com/gellel/amiibo/address"
 	"github.com/gellel/amiibo/compatability"
 	"github.com/gellel/amiibo/image"
 	"github.com/gellel/amiibo/lineup"
+	"github.com/gellel/amiibo/mix"
 	"github.com/gellel/amiibo/network"
 	"github.com/gellel/amiibo/resource"
 	t "github.com/gellel/amiibo/text"
