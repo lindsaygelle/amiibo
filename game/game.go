@@ -93,6 +93,7 @@ func NewGame(c *compatability.Game, i *compatability.Item) (*Game, error) {
 	g.Compatability, _ = parseGameCompatability(g.URL.URL)
 	g.Complete = c != nil && i != nil
 	g.URI = t.URI(g.Name)
+	g.Version = Version
 	return g, nil
 }
 
@@ -179,7 +180,6 @@ func parseGameURL(rawurl string) (*address.Address, error) {
 // parseCompatability parses all fields exposed in the compatability.Game and assigns them to the argument game.Game.
 func parseCompatability(g *Game, c *compatability.Game) {
 	g.GamePath = c.Path
-	g.GameURL, _ = parseGameURL(fmt.Sprintf(tep, resource.Nintendo, c.URL))
 	g.ID = c.ID
 	g.Image, _ = image.NewImage(fmt.Sprintf(tep, resource.Nintendo, c.Image))
 	g.IsReleased, _ = parseGameIsReleased(c)
@@ -189,14 +189,15 @@ func parseCompatability(g *Game, c *compatability.Game) {
 	g.Timestamp, _ = time.Parse("2006-01-02", c.ReleaseDateMask)
 	g.Type = c.Type
 	g.Unix = g.Timestamp.Unix()
+	g.URL, _ = parseGameURL(fmt.Sprintf(tep, resource.Nintendo, c.URL))
 }
 
 // parseItem parses all fields exposed in the compatability.Item and assigns them to the argument game.Game.
 func parseItem(g *Game, i *compatability.Item) {
 	g.Description = i.Description
+	g.GameURL, _ = parseGameURL(fmt.Sprintf(tep, resource.Game, i.URL))
 	g.LastModified = i.LastModified / 1000
 	g.LastModifiedTimestamp = parsGameTimestamp(g.LastModified)
 	g.Path = i.Path
 	g.Title = i.Title
-	g.URL, _ = parseGameURL(i.URL)
 }
