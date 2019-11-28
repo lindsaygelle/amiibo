@@ -1,9 +1,8 @@
 package mix
 
 import (
-	"fmt"
-
 	"github.com/gellel/amiibo/compatability"
+	"github.com/gellel/amiibo/errors"
 )
 
 // Game is an aggregation of all game related data points across the
@@ -22,13 +21,13 @@ func NewGame(g *compatability.Game, i *compatability.Item) (*Game, error) {
 		game *Game
 	)
 	if g == nil {
-		return nil, errGNil
+		return nil, errors.ErrArgGNil
 	}
 	if i == nil {
-		return nil, errINil
+		return nil, errors.ErrArgINil
 	}
 	if g.Key() != i.Key() {
-		return nil, fmt.Errorf("*g and *i do not relate")
+		return nil, errors.ErrArgsNoRel
 	}
 	game = &Game{
 		Game: g,

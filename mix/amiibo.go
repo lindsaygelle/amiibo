@@ -1,9 +1,8 @@
 package mix
 
 import (
-	"fmt"
-
 	"github.com/gellel/amiibo/compatability"
+	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/lineup"
 )
 
@@ -24,16 +23,16 @@ func NewAmiibo(c *compatability.Amiibo, i *lineup.Item, l *lineup.Amiibo) (*Amii
 		amiibo *Amiibo
 	)
 	if c == nil {
-		return nil, errCNil
+		return nil, errors.ErrArgCNil
 	}
 	if i == nil {
-		return nil, errINil
+		return nil, errors.ErrArgINil
 	}
 	if l == nil {
-		return nil, errLNil
+		return nil, errors.ErrArgLNil
 	}
 	if c.Key() != i.Key() || i.Key() != l.Key() {
-		return nil, fmt.Errorf("*c, *i and *l do not relate")
+		return nil, errors.ErrArgsNoRel
 	}
 	amiibo = &Amiibo{
 		Compatability: c,

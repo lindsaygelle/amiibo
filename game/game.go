@@ -14,6 +14,7 @@ import (
 
 	"github.com/gellel/amiibo/address"
 	"github.com/gellel/amiibo/compatability"
+	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/image"
 	"github.com/gellel/amiibo/mix"
 	"github.com/gellel/amiibo/network"
@@ -28,10 +29,6 @@ const (
 const (
 	// Version is the semver of game.Game.
 	Version string = "1.0.0"
-)
-
-var (
-	errNilAll = fmt.Errorf("*c, and *i are nil")
 )
 
 // Game is a structured representation of a Nintendo video-game that is compatible with a
@@ -78,7 +75,7 @@ func NewGame(c *compatability.Game, i *compatability.Item) (*Game, error) {
 	)
 	ok = (c != nil) || (i != nil)
 	if !ok {
-		return nil, errNilAll
+		return nil, errors.ErrArgsNil
 	}
 	var (
 		g = &Game{

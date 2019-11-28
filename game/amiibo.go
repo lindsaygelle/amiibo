@@ -8,6 +8,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 
 	"github.com/gellel/amiibo/address"
+	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/image"
 	"github.com/gellel/amiibo/resource"
 	t "github.com/gellel/amiibo/text"
@@ -32,11 +33,11 @@ func NewAmiibo(s *goquery.Selection) (*Amiibo, error) {
 	)
 	ok = (s != nil)
 	if !ok {
-		return nil, fmt.Errorf("*s is nil")
+		return nil, errors.ErrArgSNil
 	}
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, fmt.Errorf("*s is empty")
+		return nil, errors.ErrSEmpty
 	}
 	var (
 		amiibo = Amiibo{}
@@ -60,14 +61,17 @@ func parseAmiiboImage(s *goquery.Selection) (*image.Image, error) {
 		ok     bool
 		rawurl string
 	)
+	if !ok {
+		return nil, errors.ErrArgSNil
+	}
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, fmt.Errorf("*s is empty")
+		return nil, errors.ErrSEmpty
 	}
 	rawurl, ok = s.Attr("src")
 	if !ok {
-		return nil, fmt.Errorf("*s has no src")
+		return nil, errors.ErrSNoSrc
 	}
 	return image.NewImage(fmt.Sprintf("%s%s", resource.Nintendo, rawurl))
 }
@@ -84,12 +88,12 @@ func parseAmiiboName(s *goquery.Selection) (string, error) {
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return name, fmt.Errorf("*s is empty")
+		return name, errors.ErrSEmpty
 	}
 	name = (s.Text())
 	ok = (len(name) != 0)
 	if !ok {
-		return name, fmt.Errorf("*s has no text")
+		return name, errors.ErrSNoText
 	}
 	return t.Name(name), err
 }
@@ -106,7 +110,7 @@ func parseAmiiboReleaseDateMask(s *goquery.Selection) (string, error) {
 	substring = strings.TrimSpace(substring)
 	ok = (len(substring) != 0)
 	if !ok {
-		return substring, fmt.Errorf("*s is empty")
+		return substring, errors.ErrSEmpty
 	}
 	substring = strings.ToLower(substring)
 	substring = strings.ReplaceAll(substring, " ", "")
@@ -127,12 +131,12 @@ func parseAmiiboSeries(s *goquery.Selection) (string, error) {
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return series, fmt.Errorf("*s is empty")
+		return series, errors.ErrSEmpty
 	}
 	series = (s.Text())
 	ok = (len(series) != 0)
 	if !ok {
-		return series, fmt.Errorf("*s has no text")
+		return series, errors.ErrSNoText
 	}
 	series = strings.TrimSpace(series)
 	return series, err
@@ -149,11 +153,11 @@ func parseAmiiboURL(s *goquery.Selection) (*address.Address, error) {
 	s = s.Find(CSS)
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, fmt.Errorf("*s is empty")
+		return nil, errors.ErrSEmpty
 	}
 	rawurl, ok = s.Attr("href")
 	if !ok {
-		return nil, fmt.Errorf("*s has no href")
+		return nil, errors.ErrSNoHref
 	}
 	rawurl = fmt.Sprintf("%s%s", resource.Nintendo, rawurl)
 	return address.NewAddress(rawurl)

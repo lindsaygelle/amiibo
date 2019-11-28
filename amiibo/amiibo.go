@@ -16,6 +16,7 @@ import (
 
 	"github.com/gellel/amiibo/address"
 	"github.com/gellel/amiibo/compatability"
+	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/image"
 	"github.com/gellel/amiibo/lineup"
 	"github.com/gellel/amiibo/mix"
@@ -41,10 +42,6 @@ const (
 
 var (
 	currencyISO = currency.USD.String() // Currency ISO for all Nintendo Amiibo products.
-)
-
-var (
-	errNilAll = fmt.Errorf("*c, *l and *i are nil")
 )
 
 // Amiibo is a structured representation of a Nintendo Amiibo figuring.
@@ -108,7 +105,7 @@ func NewAmiibo(c *compatability.Amiibo, i *lineup.Item, l *lineup.Amiibo) (*Amii
 	)
 	ok = (c != nil) || (l != nil) || (i != nil)
 	if !ok {
-		return nil, errNilAll
+		return nil, errors.ErrArgsNil
 	}
 	var (
 		a = &Amiibo{

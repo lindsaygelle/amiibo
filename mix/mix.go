@@ -6,18 +6,8 @@ import (
 	"sync"
 
 	"github.com/gellel/amiibo/compatability"
+	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/lineup"
-)
-
-const (
-	tep string = "*%s is %s"
-)
-
-var (
-	errCNil = fmt.Errorf(tep, "c", "nil")
-	errGNil = fmt.Errorf(tep, "g", "nil")
-	errINil = fmt.Errorf(tep, "i", "nil")
-	errLNil = fmt.Errorf(tep, "l", "nil")
 )
 
 // Mix is a an organised collection of maps for both mix.Amiibo and mix.Game.
@@ -53,10 +43,10 @@ func Get() (*Mix, error) {
 // compatability.XHR and lineup.XHR into a ordered data structure.
 func NewMix(c *compatability.XHR, l *lineup.XHR) (*Mix, error) {
 	if c == nil {
-		return nil, fmt.Errorf("*c is nil")
+		return nil, errors.ErrArgCNil
 	}
 	if l == nil {
-		return nil, fmt.Errorf("*l is nil")
+		return nil, errors.ErrArgLNil
 	}
 	if c.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf(c.Status)
@@ -76,7 +66,7 @@ func NewMix(c *compatability.XHR, l *lineup.XHR) (*Mix, error) {
 // sequence into a unified map to be consumed by mix.Mix.
 func parseAmiibo(c []*compatability.Amiibo, i []*lineup.Item, l []*lineup.Amiibo) (map[string]*Amiibo, error) {
 	if len(c) == 0 && len(i) == 0 && len(l) == 0 {
-		return nil, fmt.Errorf("*c, *i and *l are empty")
+		return nil, errors.ErrArgsNil
 	}
 	var (
 		mu sync.Mutex
@@ -132,7 +122,7 @@ func parseAmiibo(c []*compatability.Amiibo, i []*lineup.Item, l []*lineup.Amiibo
 // consumed by mix.Mix.
 func parseGames(g []*compatability.Game, i []*compatability.Item) (map[string]*Game, error) {
 	if len(g) == 0 && len(i) == 0 {
-		return nil, fmt.Errorf("*g and *i are empty")
+		return nil, errors.ErrArgsNil
 	}
 	var (
 		mu sync.Mutex

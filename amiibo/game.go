@@ -6,17 +6,10 @@ import (
 	"github.com/PuerkitoBio/goquery"
 
 	"github.com/gellel/amiibo/address"
+	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/image"
 	"github.com/gellel/amiibo/resource"
 	t "github.com/gellel/amiibo/text"
-)
-
-var (
-	errSEmpty   = fmt.Errorf("*s is empty")     // err goquery.Selection no nodes.
-	errSNil     = fmt.Errorf("*s is nil")       // err goquery.Selection nil address.
-	errSNoHref  = fmt.Errorf("*s has no href")  // err goquery.Selection no href attribute.
-	errSNoSrc   = fmt.Errorf("*s has no src")   // err goquery.Selection no src attribute.
-	errSNoTitle = fmt.Errorf("*s has no title") // err goquery.Selection no title attribute.
 )
 
 // Game is a representation of a Nintendo video-game that is directly compatible
@@ -34,11 +27,11 @@ func NewGame(s *goquery.Selection) (*Game, error) {
 	)
 	ok = (s != nil)
 	if !ok {
-		return nil, errSNil
+		return nil, errors.ErrArgSNil
 	}
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, errSEmpty
+		return nil, errors.ErrSEmpty
 	}
 	var (
 		game = &Game{}
@@ -59,16 +52,16 @@ func parseGameImage(s *goquery.Selection) (*image.Image, error) {
 		rawurl string
 	)
 	if s == nil {
-		return nil, errSNil
+		return nil, errors.ErrArgSNil
 	}
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, errSEmpty
+		return nil, errors.ErrSEmpty
 	}
 	rawurl, ok = s.Attr("src")
 	if !ok {
-		return nil, errSNoSrc
+		return nil, errors.ErrSNoSrc
 	}
 	rawurl = fmt.Sprintf(tep, resource.Nintendo, rawurl)
 	return image.NewImage(rawurl)
@@ -83,7 +76,7 @@ func parseGameName(s *goquery.Selection) (string, error) {
 		name string
 	)
 	if s == nil {
-		return name, errSNil
+		return name, errors.ErrArgSNil
 	}
 	var (
 		err error
@@ -92,11 +85,11 @@ func parseGameName(s *goquery.Selection) (string, error) {
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return name, errSEmpty
+		return name, errors.ErrSEmpty
 	}
 	name, ok = s.Attr("title")
 	if !ok {
-		return name, errSNoTitle
+		return name, errors.ErrSNoTitle
 	}
 	return t.Untokenize(name), err
 }
@@ -107,7 +100,7 @@ func parseGameURL(s *goquery.Selection) (*address.Address, error) {
 		CSS string = "a"
 	)
 	if s == nil {
-		return nil, errSNil
+		return nil, errors.ErrArgSNil
 	}
 	var (
 		ok     bool
@@ -116,11 +109,11 @@ func parseGameURL(s *goquery.Selection) (*address.Address, error) {
 	s = s.Find(CSS)
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, errSEmpty
+		return nil, errors.ErrSEmpty
 	}
 	rawurl, ok = s.Attr("href")
 	if !ok {
-		return nil, errSNoHref
+		return nil, errors.ErrSNoHref
 	}
 	rawurl = fmt.Sprintf(tep, resource.Nintendo, rawurl)
 	return address.NewAddress(rawurl)
