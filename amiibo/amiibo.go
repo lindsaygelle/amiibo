@@ -44,10 +44,12 @@ var (
 	currencyISO = currency.USD.String() // Currency ISO for all Nintendo Amiibo products.
 )
 
-// Amiibo is a structured representation of a Nintendo Amiibo figuring.
-// Amiibo structs are built from a mixture of resources that
+// Amiibo is a package structured representation of a Nintendo Amiibo figurine.
+// Amiibo structs are built from the mixture of resources that
 // are provided from the amiibo/mix package.
-// Amiibos are consumed by amiibo/mux to create a basic HTTP REST API.
+// Amiibo structs are provided by default by the amiibo/mux package.
+// Amiibo structures may change as Nintendo updates the definition of the
+// XHR specification that is returned from their CDN.
 type Amiibo struct {
 	BoxImage              *image.Image     `json:"box_image"`
 	Compatability         []*Game          `json:"compatability"`
@@ -97,7 +99,7 @@ func (a *Amiibo) Get(key string) string {
 }
 
 // NewAmiibo creates a new instance of the amiibo.Amiibo from the aggregation
-// of amiibo structs across the amiibo package. Returns an error if all data points are
+// of structs across the amiibo package. Returns an error if all data points are
 // not provided to the function.
 func NewAmiibo(c *compatability.Amiibo, i *lineup.Item, l *lineup.Amiibo) (*Amiibo, error) {
 	var (
@@ -197,7 +199,7 @@ func parseAmiiboDetailsURL(l *lineup.Amiibo) (*address.Address, error) {
 	return address.NewAddress(fmt.Sprintf(tep, resource.Nintendo, l.DetailsURL))
 }
 
-// parsesAmiiboFigureURL parses the Amiibo figuring image from the lineup.Amiibo.
+// parsesAmiiboFigureURL parses the Amiibo figurine image from the lineup.Amiibo.
 func parseAmiiboFigureURL(l *lineup.Amiibo) (*address.Address, error) {
 	return address.NewAddress(fmt.Sprintf(tep, resource.Nintendo, l.FigureURL))
 }
@@ -222,7 +224,7 @@ func parseAmiiboHexCode(l *lineup.Amiibo) string {
 	return l.HexCode
 }
 
-// parseAmiiboImage parses the Amiibo figuring image from the compatability.Amiibo.
+// parseAmiiboImage parses the Amiibo figurine image from the compatability.Amiibo.
 func parseAmiiboImage(c *compatability.Amiibo) (*image.Image, error) {
 	return image.NewImage(fmt.Sprintf(tep, resource.Nintendo, c.Image))
 }
