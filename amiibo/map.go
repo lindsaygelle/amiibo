@@ -2,6 +2,10 @@ package amiibo
 
 import "fmt"
 
+const (
+	templateErr string = "amiibo (%s) has a collision against (%s) using key %s" // template error collision hash.
+)
+
 // Map is a map of amiibo.Amiibo.
 type Map map[string]*Amiibo
 
@@ -22,6 +26,12 @@ func (m *Map) Each(fn func(string, *Amiibo)) {
 	for k, v := range *m {
 		fn(k, v)
 	}
+}
+
+// Fetch gets an amiib.Amiibo from the map without worrying about if it is found.
+func (m *Map) Fetch(key string) *Amiibo {
+	var a, _ = m.Get(key)
+	return a
 }
 
 // Get gets an amiibo.Amiibo from the map by its key.
@@ -63,22 +73,19 @@ func (m *Map) Val() []*Amiibo {
 // key as the hashing mechanism. Does not reconcile hash collisions but will
 // return a non nil error if an error occurs. Will always return an Amiibo map pointer
 // even if there are no Amiibo provided to the function.
-func NewMap(k string, a ...*Amiibo) (*Map, error) {
-	const (
-		template string = "map has collision using key '%s'"
-	)
+func NewMap(k string, amiibo ...*Amiibo) (*Map, error) {
 	var (
 		err error
 		m   = &Map{}
 	)
-	for _, a := range a {
+	for _, amiibo := range amiibo {
 		var (
-			key = a.Get(k)
+			key = amiibo.Get(k)
 		)
 		if m.Has(key) && err != nil {
-			err = fmt.Errorf(template, k)
+			err = fmt.Errorf(templateErr, amiibo.Name, m.Fetch(key).Name, key)
 		}
-		m.Add(key, a)
+		m.Add(key, amiibo)
 	}
 	return m, err
 }

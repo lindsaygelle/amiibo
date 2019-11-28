@@ -2,6 +2,10 @@ package game
 
 import "fmt"
 
+const (
+	templateErr string = "game (%s) has a collision against (%s) using key %s" // template error collision hash.
+)
+
 // Map is a map of game.Game.
 type Map map[string]*Game
 
@@ -24,10 +28,16 @@ func (m *Map) Each(fn func(string, *Game)) {
 	}
 }
 
+// Fetch gets an game.Game from the map without worrying about if it is found.
+func (m *Map) Fetch(key string) *Game {
+	var g, _ = m.Get(key)
+	return g
+}
+
 // Get gets a game.Game from the map by its key.
 func (m *Map) Get(key string) (*Game, bool) {
-	var a, ok = (*m)[key]
-	return a, ok
+	var g, ok = (*m)[key]
+	return g, ok
 }
 
 // Has checks the map for game.Game by its key.
@@ -64,9 +74,6 @@ func (m *Map) Val() []*Game {
 // return a non nil error if an error occurs. Will always return an game map pointer
 // even if there are no Game provided to the function.
 func NewMap(k string, game ...*Game) (*Map, error) {
-	const (
-		template string = "map has collision using key '%s'"
-	)
 	var (
 		err error
 		m   = &Map{}
@@ -76,7 +83,7 @@ func NewMap(k string, game ...*Game) (*Map, error) {
 			key = game.Get(k)
 		)
 		if m.Has(key) && err != nil {
-			err = fmt.Errorf(template, k)
+			err = fmt.Errorf(templateErr, game.Name, m.Fetch(key).Name, key)
 		}
 		m.Add(key, game)
 	}
