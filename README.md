@@ -1,3 +1,1 @@
 # Amiibo
-
-Amiibo package fetches information about the Nintendo Amiibo statues. Uses the public JSON found on the Nintendo Amiibo website to perform the data look-up and pairing. The package aims to provide two sets of structures that can be used to browse the Amiibo contents. The raw variants of the different data structures offers the raw endpoint data. For custom implementations, the raw structs can be used to ensure that the data used in your custom program is provided as-is from Nintendo. The normalized structs are attempts to structure and clean the data for ease of implementation.
