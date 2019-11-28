@@ -31,7 +31,7 @@ func NewGame(s *goquery.Selection) (*Game, error) {
 	}
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, errors.ErrSEmpty
+		return nil, errors.ErrGoQueryEmpty
 	}
 	var (
 		game = &Game{}
@@ -57,11 +57,11 @@ func parseGameImage(s *goquery.Selection) (*image.Image, error) {
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, errors.ErrSEmpty
+		return nil, errors.ErrGoQueryEmpty
 	}
 	rawurl, ok = s.Attr("src")
 	if !ok {
-		return nil, errors.ErrSNoSrc
+		return nil, errors.ErrGoQueryNoSrc
 	}
 	rawurl = fmt.Sprintf(tep, resource.Nintendo, rawurl)
 	return image.NewImage(rawurl)
@@ -85,11 +85,11 @@ func parseGameName(s *goquery.Selection) (string, error) {
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return name, errors.ErrSEmpty
+		return name, errors.ErrGoQueryEmpty
 	}
 	name, ok = s.Attr("title")
 	if !ok {
-		return name, errors.ErrSNoTitle
+		return name, errors.ErrGoQueryNoTitle
 	}
 	return t.Untokenize(name), err
 }
@@ -109,11 +109,11 @@ func parseGameURL(s *goquery.Selection) (*address.Address, error) {
 	s = s.Find(CSS)
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, errors.ErrSEmpty
+		return nil, errors.ErrGoQueryEmpty
 	}
 	rawurl, ok = s.Attr("href")
 	if !ok {
-		return nil, errors.ErrSNoHref
+		return nil, errors.ErrGoQueryNoHref
 	}
 	rawurl = fmt.Sprintf(tep, resource.Nintendo, rawurl)
 	return address.NewAddress(rawurl)

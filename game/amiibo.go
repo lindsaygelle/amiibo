@@ -37,7 +37,7 @@ func NewAmiibo(s *goquery.Selection) (*Amiibo, error) {
 	}
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, errors.ErrSEmpty
+		return nil, errors.ErrGoQueryEmpty
 	}
 	var (
 		amiibo = Amiibo{}
@@ -67,11 +67,11 @@ func parseAmiiboImage(s *goquery.Selection) (*image.Image, error) {
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, errors.ErrSEmpty
+		return nil, errors.ErrGoQueryEmpty
 	}
 	rawurl, ok = s.Attr("src")
 	if !ok {
-		return nil, errors.ErrSNoSrc
+		return nil, errors.ErrGoQueryNoSrc
 	}
 	return image.NewImage(fmt.Sprintf("%s%s", resource.Nintendo, rawurl))
 }
@@ -88,12 +88,12 @@ func parseAmiiboName(s *goquery.Selection) (string, error) {
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return name, errors.ErrSEmpty
+		return name, errors.ErrGoQueryEmpty
 	}
 	name = (s.Text())
 	ok = (len(name) != 0)
 	if !ok {
-		return name, errors.ErrSNoText
+		return name, errors.ErrGoQueryNoText
 	}
 	return t.Name(name), err
 }
@@ -110,7 +110,7 @@ func parseAmiiboReleaseDateMask(s *goquery.Selection) (string, error) {
 	substring = strings.TrimSpace(substring)
 	ok = (len(substring) != 0)
 	if !ok {
-		return substring, errors.ErrSEmpty
+		return substring, errors.ErrGoQueryEmpty
 	}
 	substring = strings.ToLower(substring)
 	substring = strings.ReplaceAll(substring, " ", "")
@@ -131,12 +131,12 @@ func parseAmiiboSeries(s *goquery.Selection) (string, error) {
 	s = (s.Find(CSS).First())
 	ok = (s.Length() != 0)
 	if !ok {
-		return series, errors.ErrSEmpty
+		return series, errors.ErrGoQueryEmpty
 	}
 	series = (s.Text())
 	ok = (len(series) != 0)
 	if !ok {
-		return series, errors.ErrSNoText
+		return series, errors.ErrGoQueryNoText
 	}
 	series = strings.TrimSpace(series)
 	return series, err
@@ -153,11 +153,11 @@ func parseAmiiboURL(s *goquery.Selection) (*address.Address, error) {
 	s = s.Find(CSS)
 	ok = (s.Length() != 0)
 	if !ok {
-		return nil, errors.ErrSEmpty
+		return nil, errors.ErrGoQueryEmpty
 	}
 	rawurl, ok = s.Attr("href")
 	if !ok {
-		return nil, errors.ErrSNoHref
+		return nil, errors.ErrGoQueryNoHref
 	}
 	rawurl = fmt.Sprintf("%s%s", resource.Nintendo, rawurl)
 	return address.NewAddress(rawurl)

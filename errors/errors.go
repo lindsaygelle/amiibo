@@ -16,20 +16,29 @@ const (
 	errArgSNil string = "*s is nil"
 )
 
+const (
+	errGoQuerySelection string = "*goquery.Selection (*s)"
+	errGoQueryEmpty     string = errGoQuerySelection + " " + "is empty"
+	errGoQueryNoHref    string = errGoQuerySelection + " " + "has no attribute href"
+	errGoQueryNoSrc     string = errGoQuerySelection + " " + "has no attribute src"
+	errGoQueryNoText    string = errGoQuerySelection + " " + "has no text nodes"
+	errGoQueryNoTitle   string = errGoQuerySelection + " " + "has no attribute title"
+)
+
 var (
-	ErrSEmpty = fmt.Errorf("*s is empty")
+	ErrGoQueryEmpty = fmt.Errorf(errGoQueryEmpty)
 )
 var (
-	ErrSNoHref = fmt.Errorf("*s has no href")
+	ErrGoQueryNoHref = fmt.Errorf(errGoQueryNoHref)
 )
 var (
-	ErrSNoSrc = fmt.Errorf("*s has no src")
+	ErrGoQueryNoSrc = fmt.Errorf(errGoQueryNoSrc)
 )
 var (
-	ErrSNoText = fmt.Errorf("*s has no text")
+	ErrGoQueryNoText = fmt.Errorf(errGoQueryNoText)
 )
 var (
-	ErrSNoTitle = fmt.Errorf("*s has no title")
+	ErrGoQueryNoTitle = fmt.Errorf(errGoQueryNoTitle)
 )
 
 var (
