@@ -80,7 +80,7 @@ func NewMap(k string, game ...*Game) (*Map, error) {
 	)
 	for _, game := range game {
 		var (
-			key = game.Get(k)
+			key = game.Field(k)
 		)
 		if m.Has(key) && err != nil {
 			err = fmt.Errorf(templateErr, game.Name, m.Fetch(key).Name, key)

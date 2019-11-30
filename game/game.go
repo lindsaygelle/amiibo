@@ -59,8 +59,8 @@ type Game struct {
 	Version               string           `json:"version"`
 }
 
-// Get gets a field from the Game by its struct name and returns its string value.
-func (g *Game) Get(key string) string {
+// Field gets a field from the Game by its struct name and returns its string value.
+func (g *Game) Field(key string) string {
 	var r = reflect.ValueOf(g)
 	var v = reflect.Indirect(r).FieldByName(key)
 	return fmt.Sprintf("%s", v)
