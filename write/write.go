@@ -19,7 +19,7 @@ const (
 )
 
 // Current writes the byte content to the current directory the program calling
-// the amiibo package is being exected from. Translate the byte sequence into a corresponding
+// the amiibo package is being exected from. Translates the byte sequence into a corresponding
 // file type based on the extension string provided to the function.
 func Current(name, ext string, b []byte) (string, error) {
 	var (
@@ -36,7 +36,7 @@ func Current(name, ext string, b []byte) (string, error) {
 
 // Write writes the byte content to the specified directory using the argument
 // byte sequence as the content to be sent to the file writer.
-// Translate the byte sequence into a corresponding
+// Translates the byte sequence into a corresponding
 // file type based on the extension string provided to the function.
 func Write(directory, folder, name, ext string, b []byte) (string, error) {
 	var (
