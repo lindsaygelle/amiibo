@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	tep string = "%s.%s"
+	tep string = "%s.%s" // tep is the template for formatting filename.extension.
 )
 
 const (
@@ -18,6 +18,9 @@ const (
 	Permission os.FileMode = 0777
 )
 
+// Current writes the byte content to the current directory the program calling
+// the amiibo package is being exected from. Translate the byte sequence into a corresponding
+// file type based on the extension string provided to the function.
 func Current(name, ext string, b []byte) (string, error) {
 	var (
 		fullpath string
@@ -31,6 +34,10 @@ func Current(name, ext string, b []byte) (string, error) {
 	return fullpath, err
 }
 
+// Write writes the byte content to the specified directory using the argument
+// byte sequence as the content to be sent to the file writer.
+// Translate the byte sequence into a corresponding
+// file type based on the extension string provided to the function.
 func Write(directory, folder, name, ext string, b []byte) (string, error) {
 	var (
 		fullpath string
