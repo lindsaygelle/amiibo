@@ -7,6 +7,11 @@ import (
 )
 
 const (
+	portHTTPS = "443" // HTTPS port
+	portHTTP  = "80"  // HTTP port
+)
+
+const (
 	protocol string = "http" // HTTP protocol prefix
 )
 
@@ -31,7 +36,9 @@ const (
 
 // Address is a destructured url.URL provided by Go. Addresses are
 // to give verbosity to all data pulled from the various Nintendo web resources
-// that populate the content of the amiibo package.
+// that populate the content of the amiibo package. Attempts to parse all
+// information exposed in the provided raw url. Defaults port to be
+// either 80 or 443 if no value is found (80 on HTTP and HTTPS 443).
 type Address struct {
 	Domain    string `json:"domain"`
 	Fragment  string `json:"fragment"`
@@ -54,7 +61,9 @@ func (a *Address) String() string {
 // argument raw url string provided to the function. Returns an error
 // if the argument raw url does not contain a http(s)://(subdomain|www) prefix
 // or if url.Parse(rawurl) cannot parse the raw url. All address.Address's
-// are created in reference to a remote Nintendo source.
+// are created in reference to a remote Nintendo source. Assigns a default
+// port to the created address.Address if none is found in the raw url.
+// Assumes scheme HTTP is always routed to port 80 and 443 for HTTPS.
 func NewAddress(rawurl string) (*Address, error) {
 	var (
 		a  *Address
@@ -80,6 +89,14 @@ func NewAddress(rawurl string) (*Address, error) {
 		subdomain = parseSubdomain(u)
 		tld       = parseTLD(subdomain, domain, hostname)
 	)
+	if len(port) == 0 {
+		switch strings.ToUpper(scheme) {
+		case "HTTPS":
+			port = portHTTPS
+		case "HTTP":
+			port = portHTTP
+		}
+	}
 	a = &Address{
 		Domain:    domain,
 		Fragment:  fragment,
