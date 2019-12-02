@@ -10,67 +10,6 @@ const (
 	templateErr string = "%s is not a directory" // template error invalid directory
 )
 
-const (
-	// Permission is the os.FileMode all directories created by the amiibo package are written under.
-	Permission os.FileMode = 0777
-)
-
-func Del(path string, folder string) error {
-	var (
-		err error
-		ok  bool
-		p   = filepath.Join(path, folder)
-	)
-	ok = Not(p)
-	if ok {
-		return err
-	}
-	ok = Is(p)
-	if !ok {
-		return fmt.Errorf(templateErr, p)
-	}
-	err = os.Remove(p)
-	ok = (err == nil)
-	if !ok {
-		return err
-	}
-	return err
-}
-
-func DelAll(path string, folder string) error {
-	var (
-		err error
-		ok  bool
-		p   = filepath.Join(path, folder)
-	)
-	ok = Not(p)
-	if ok {
-		return err
-	}
-	ok = Is(p)
-	if !ok {
-		return fmt.Errorf(templateErr, p)
-	}
-	err = os.RemoveAll(p)
-	ok = (err == nil)
-	if !ok {
-		return err
-	}
-	return err
-}
-
-func Has(path string) bool {
-	return (Not(path) == false)
-}
-
-func Not(path string) bool {
-	var (
-		err error
-	)
-	_, err = os.Stat(path)
-	return os.IsNotExist(err)
-}
-
 func Current() (string, error) {
 	var (
 		err error
@@ -86,6 +25,44 @@ func Current() (string, error) {
 	return s, err
 }
 
+func Del(path string, folder string) error {
+	var (
+		err error
+		ok  bool
+		p   = filepath.Join(path, folder)
+	)
+	ok = Not(p)
+	if ok {
+		return err
+	}
+	ok = Is(p)
+	if !ok {
+		return fmt.Errorf(templateErr, p)
+	}
+	return os.Remove(p)
+}
+
+func DelAll(path string, folder string) error {
+	var (
+		err error
+		ok  bool
+		p   = filepath.Join(path, folder)
+	)
+	ok = Not(p)
+	if ok {
+		return err
+	}
+	ok = Is(p)
+	if !Is(p) {
+		return fmt.Errorf(templateErr, p)
+	}
+	return os.RemoveAll(p)
+}
+
+func Has(path string) bool {
+	return (Not(path) == false)
+}
+
 func Is(path string) bool {
 	var (
 		err  error
@@ -93,14 +70,26 @@ func Is(path string) bool {
 		ok   bool
 	)
 	info, err = os.Stat(path)
-	ok = (err == nil)
-	if !ok {
-		return false
+	if err != nil {
+		return ok
 	}
-	return info.IsDir()
+	ok = info.IsDir()
+	return ok
 }
 
-func Make(path string, folder string) (string, error) {
+func Make(path string, perm os.FileMode) (string, error) {
+	var (
+		err error
+		ok  = Has(path)
+	)
+	if ok {
+		return path, err
+	}
+	err = os.MkdirAll(path, perm)
+	return path, err
+}
+
+func MakeAt(path string, folder string, perm os.FileMode) (string, error) {
 	var (
 		err error
 		ok  bool
@@ -110,14 +99,14 @@ func Make(path string, folder string) (string, error) {
 	if ok {
 		return p, err
 	}
-	err = os.MkdirAll(p, Permission)
-	ok = (err == nil)
-	if !ok {
-		return p, err
-	}
-	ok = Is(p)
-	if !ok {
-		return p, fmt.Errorf(templateErr, p)
-	}
+	err = os.MkdirAll(p, perm)
 	return p, err
+}
+
+func Not(path string) bool {
+	var (
+		err error
+	)
+	_, err = os.Stat(path)
+	return os.IsNotExist(err)
 }
