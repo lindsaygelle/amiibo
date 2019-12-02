@@ -13,12 +13,10 @@ const (
 func Current() (string, error) {
 	var (
 		err error
-		ok  bool
 		s   string
 	)
 	s, err = os.Executable()
-	ok = (err == nil)
-	if !ok {
+	if err != nil {
 		return s, err
 	}
 	s = filepath.Dir(s)
@@ -39,24 +37,23 @@ func Del(path string, folder string) error {
 	if !ok {
 		return fmt.Errorf(templateErr, p)
 	}
-	return os.Remove(p)
+	return os.RemoveAll(p)
 }
 
-func DelAll(path string, folder string) error {
+func DelAt(path string) error {
 	var (
 		err error
 		ok  bool
-		p   = filepath.Join(path, folder)
 	)
-	ok = Not(p)
+	ok = Not(path)
 	if ok {
 		return err
 	}
-	ok = Is(p)
-	if !Is(p) {
-		return fmt.Errorf(templateErr, p)
+	ok = Is(path)
+	if !ok {
+		return fmt.Errorf(templateErr, path)
 	}
-	return os.RemoveAll(p)
+	return os.RemoveAll(path)
 }
 
 func Has(path string) bool {
