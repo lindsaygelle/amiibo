@@ -41,7 +41,7 @@ func Is(fullpath string) bool {
 func Make(path, name, ext string, perm os.FileMode, b []byte) (string, error) {
 	var (
 		fullpath string
-		p, err   = dir.Make(directory)
+		p, err   = dir.Make(path, perm)
 	)
 	if err != nil {
 		return fullpath, err
