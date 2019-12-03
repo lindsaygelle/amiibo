@@ -22,7 +22,7 @@ func Test(t *testing.T) {
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
-	err = dir.DelAt(fullpath)
+	err = dir.Del(fullpath)
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
