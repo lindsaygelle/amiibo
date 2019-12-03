@@ -17,6 +17,8 @@ const (
 	templateErr string = "%s is not a file"
 )
 
+// Del deletes a file at the filepath target if the file
+// is a file and if os.Remove is permitted to remove the file.
 func Del(fullpath string) error {
 	var (
 		ok = Is(fullpath)
@@ -27,6 +29,7 @@ func Del(fullpath string) error {
 	return os.Remove(fullpath)
 }
 
+// Is checks that the filepath target is a file.
 func Is(fullpath string) bool {
 	var (
 		info, err = os.Stat(fullpath)
@@ -38,6 +41,9 @@ func Is(fullpath string) bool {
 	return (info.IsDir() == ok)
 }
 
+// Make makes a file at the filepath target, using the name and extension
+// argument to create the file name. Requires the permissions to the target
+// to be accessible by Go.
 func Make(path, name, ext string, perm os.FileMode, b []byte) (string, error) {
 	var (
 		fullpath string
@@ -51,6 +57,9 @@ func Make(path, name, ext string, perm os.FileMode, b []byte) (string, error) {
 	return fullpath, err
 }
 
+// Open opens a file at the filepath provided. Returns an error
+// if the fullpath does not point to a file or
+// if ioutil.ReadFile cannot read the target destination.
 func Open(fullpath string) ([]byte, error) {
 	if Is(fullpath) == false {
 		return nil, fmt.Errorf(templateErr, fullpath)

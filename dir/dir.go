@@ -10,6 +10,7 @@ const (
 	templateErr string = "%s is not a directory" // template error invalid directory
 )
 
+// Current gets the current folder the program is being executed from.
 func Current() (string, error) {
 	var (
 		err error
@@ -23,7 +24,24 @@ func Current() (string, error) {
 	return s, err
 }
 
-func Del(path string, folder string) error {
+// Del deletes a folder at the filepath using os.RemoveAll. Uses the
+// last entry in the filepath as the folder to be removed. Returns
+// an error if path does not point to a folder or if os.RemoveAll
+// cannot remove the folder.
+func Del(path string) error {
+	var (
+		ok = Is(path)
+	)
+	if !ok {
+		return fmt.Errorf(templateErr, path)
+	}
+	return os.RemoveAll(path)
+}
+
+// DelAt deletes a folder from the target path by the argument name. Returns
+// an error if os.RemoveAll cannot remove the folder or if the path or name
+// does not point to a folder.
+func DelAt(path string, folder string) error {
 	var (
 		err error
 		ok  bool
@@ -40,26 +58,12 @@ func Del(path string, folder string) error {
 	return os.RemoveAll(p)
 }
 
-func DelAt(path string) error {
-	var (
-		err error
-		ok  bool
-	)
-	ok = Not(path)
-	if ok {
-		return err
-	}
-	ok = Is(path)
-	if !ok {
-		return fmt.Errorf(templateErr, path)
-	}
-	return os.RemoveAll(path)
-}
-
+// Has checks if the path is a folder.
 func Has(path string) bool {
 	return (Not(path) == false)
 }
 
+// Is checks if the path points to a folder.
 func Is(path string) bool {
 	var (
 		err  error
@@ -74,6 +78,10 @@ func Is(path string) bool {
 	return ok
 }
 
+// Make makes a new folder at the filepath using os.MkDirAll. Uses the
+// last entry in the filepath as the folder name. Does not create a new folder
+// if the folder already exists. Returns an error if os.MkDirAll
+// cannot create a new folder.
 func Make(path string, perm os.FileMode) (string, error) {
 	var (
 		err error
@@ -86,6 +94,10 @@ func Make(path string, perm os.FileMode) (string, error) {
 	return path, err
 }
 
+// MakeAt makes a new folder at the provided filepath, using the name argument
+// as the new folder to be added to the directory. Does not create a new folder if the folder
+// already exists. Returns an error if os.MkDirAll
+// cannot create a new folder.
 func MakeAt(path string, folder string, perm os.FileMode) (string, error) {
 	var (
 		err error
@@ -100,6 +112,7 @@ func MakeAt(path string, folder string, perm os.FileMode) (string, error) {
 	return p, err
 }
 
+// Not checks that the path does not point to a folder.
 func Not(path string) bool {
 	var (
 		err error
