@@ -22,4 +22,5 @@ type XHR struct {
 	Mode             string         `json:"mode"`
 	Status           string         `json:"status"`
 	StatusCode       int            `json:"statusCode"`
+	Version          string         `json:"version"`
 }
