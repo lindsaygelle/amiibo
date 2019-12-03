@@ -8,20 +8,22 @@ import (
 	"os"
 
 	"github.com/gellel/amiibo/file"
-
 	"github.com/gellel/amiibo/network"
 )
 
 const (
-	// Ext is the extension that the XHR is written under.
-	Ext string = "json"
-	// Name is the name that the XHR is written under.
-	Name string = "compatability"
+	// Version is the semver of compatability.XHR.
+	Version string = "1.0.0"
 )
 
-const (
-	// Version is the semver of compatability.Version.
-	Version string = "1.0.0"
+var (
+	// Extension is the file extension compatability.XHR is written as.
+	Extension string = "json"
+)
+
+var (
+	// Name is the filename (before the .extension) compatability.XHR is written as.
+	Name string = "compatability"
 )
 
 // Get performs a HTTP request to Nintendo Amiibo compatability resource and unmarshals the
@@ -82,8 +84,11 @@ func Load(fullpath string) (*XHR, error) {
 
 // Write writes the HTTP response from Nintendo Amiibo compatability resource
 // as a marshalled JSON file to the provided path. Writes content using the
-// provided file permissions. Returns an error if the file cannot be
-// written to the target destination or a JSON marshalling error occurs.
+// provided file permissions, but will always write using the compatability.Name
+// and compatability.Extension. These values can be overwritten to suit the
+// requirements of the integration.
+// Returns an error if the file cannot be written to the
+// target destination or a JSON marshalling error occurs.
 func Write(path string, perm os.FileMode, xhr *XHR) (string, error) {
 	var (
 		b, err   = json.Marshal(xhr)
@@ -92,5 +97,5 @@ func Write(path string, perm os.FileMode, xhr *XHR) (string, error) {
 	if err != nil {
 		return fullpath, err
 	}
-	return file.Make(path, Name, Ext, perm, b)
+	return file.Make(path, Name, Extension, perm, b)
 }

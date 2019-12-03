@@ -11,6 +11,21 @@ import (
 	"github.com/gellel/amiibo/network"
 )
 
+const (
+	// Version is the semver of lineup.XHR.
+	Version string = "1.0.0"
+)
+
+var (
+	// Extension is the file extension lineup.XHR is written as.
+	Extension string = "json"
+)
+
+var (
+	// Name is the filename (before the .extension) lineup.XHR is written as.
+	Name string = "lineup"
+)
+
 // Get performs a HTTP request to Nintendo Amiibo lineup resource and unmarshals the
 // HTTP response body on http.StatusOK. Returns an error if the Nintendo server
 // returns anything other than http.StatusOK. If the response content cannot be
@@ -69,8 +84,11 @@ func Load(fullpath string) (*XHR, error) {
 
 // Write writes the HTTP response from Nintendo Amiibo lineup resource
 // as a marshalled JSON file to the provided path. Writes content using the
-// provided file permissions. Returns an error if the file cannot be
-// written to the target destination or a JSON marshalling error occurs.
+// provided file permissions, but will always write using the lineup.Name
+// and lineup.Extension. These values can be overwritten to suit the
+// requirements of the integration.
+// Returns an error if the file cannot be written to the
+// target destination or a JSON marshalling error occurs.
 func Write(path string, perm os.FileMode, xhr *XHR) (string, error) {
 	var (
 		b, err   = json.Marshal(xhr)
@@ -79,5 +97,5 @@ func Write(path string, perm os.FileMode, xhr *XHR) (string, error) {
 	if err != nil {
 		return fullpath, err
 	}
-	return file.Make(path, Name, Ext, perm, b)
+	return file.Make(path, Name, Extension, perm, b)
 }
