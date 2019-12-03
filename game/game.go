@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"reflect"
 	"strconv"
-	"sync"
 	"time"
 
 	"golang.org/x/text/language"
@@ -16,7 +15,6 @@ import (
 	"github.com/gellel/amiibo/compatability"
 	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/image"
-	"github.com/gellel/amiibo/mix"
 	"github.com/gellel/amiibo/network"
 	"github.com/gellel/amiibo/resource"
 	t "github.com/gellel/amiibo/text"
@@ -92,30 +90,6 @@ func NewGame(c *compatability.Game, i *compatability.Item) (*Game, error) {
 	g.URI = t.URI(g.Name)
 	g.Version = Version
 	return g, nil
-}
-
-// NewFromMix creates a sequence of game.Game in O(N) time. Omits all mix.Game
-// that cannot be instantiated by game.NewGame.
-func NewFromMix(m map[string]*mix.Game) []*Game {
-	var (
-		s  = []*Game{}
-		wg sync.WaitGroup
-	)
-	for _, m := range m {
-		wg.Add(1)
-		go func(m *mix.Game) {
-			defer wg.Done()
-			var (
-				g, err = NewGame(m.Game, m.Item)
-			)
-			if err != nil {
-				return
-			}
-			s = append(s, g)
-		}(m)
-	}
-	wg.Wait()
-	return s
 }
 
 // parseGameCompatability parses the HTML content from the Game's detail page.

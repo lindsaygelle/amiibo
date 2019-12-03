@@ -6,7 +6,6 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
-	"sync"
 	"time"
 
 	"golang.org/x/text/currency"
@@ -19,7 +18,6 @@ import (
 	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/image"
 	"github.com/gellel/amiibo/lineup"
-	"github.com/gellel/amiibo/mix"
 	"github.com/gellel/amiibo/network"
 	"github.com/gellel/amiibo/resource"
 	t "github.com/gellel/amiibo/text"
@@ -127,30 +125,6 @@ func NewAmiibo(c *compatability.Amiibo, i *lineup.Item, l *lineup.Amiibo) (*Amii
 	a.Complete = c != nil && i != nil && l != nil
 	a.URI = t.URI(a.Name)
 	return a, nil
-}
-
-// NewFromMix creates a sequence of amiibo.Amiibo in O(N) time. Omits all mix.Amiibo
-// that cannot be instantiated by amiibo.NewAmiibo.
-func NewFromMix(m map[string]*mix.Amiibo) []*Amiibo {
-	var (
-		s  = []*Amiibo{}
-		wg sync.WaitGroup
-	)
-	for _, m := range m {
-		wg.Add(1)
-		go func(m *mix.Amiibo) {
-			defer wg.Done()
-			var (
-				a, err = NewAmiibo(m.Compatability, m.Item, m.Lineup)
-			)
-			if err != nil {
-				return
-			}
-			s = append(s, a)
-		}(m)
-	}
-	wg.Wait()
-	return s
 }
 
 // parseAmiiboBoxImage parses the box art image from the lineup.Amiibo.
