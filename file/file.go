@@ -50,3 +50,10 @@ func Make(path, name, ext string, perm os.FileMode, b []byte) (string, error) {
 	err = ioutil.WriteFile(fullpath, b, perm)
 	return fullpath, err
 }
+
+func Open(fullpath string) ([]byte, error) {
+	if Is(fullpath) == false {
+		return nil, fmt.Errorf(templateErr, fullpath)
+	}
+	return ioutil.ReadFile(fullpath)
+}
