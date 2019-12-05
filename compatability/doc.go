@@ -25,6 +25,6 @@
 // wrangler that makes the fields of the struct consumable by another program,
 // but is important to keep in mind that the Amiibo (as of writing this
 // documentation) does not contain all the product information and
-// needs to be used in conjunction with the compatability package to build out the
+// needs to be used in conjunction with the lineup package to build out the
 // full picture of an Amiibo product.
 package compatability
