@@ -10,6 +10,7 @@
 // and allows the developer to build their own custom union, passing in
 // the relevant structs that help detail the level of verbosity each standardized Amiibo should export.
 //
-// If you want to defer to the game SDKs implementation of this action,
-// the amiibo SDK mix package in conjunction with the amiibo SDK unmix package can be used.
+// The amiibo SDK provides a basic union operation that will automatically compose
+// and parse the structs into a normalized game. Refer to the package documenation for
+// more information.
 package game
