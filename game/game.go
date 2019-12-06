@@ -34,26 +34,26 @@ const (
 // are provided from the amiibo/mix package.
 // Games are consumed by amiibo/mux to create a basic HTTP REST API.
 type Game struct {
-	Compatability         []*Amiibo        `json:"compatability"`
+	Compatability         []*Amiibo        `json:"compatability,omitempty"`
 	Complete              bool             `json:"complete"`
-	Description           string           `json:"description"`
-	GamePath              string           `json:"game_path"`
-	GameURL               *address.Address `json:"game_url"`
-	ID                    string           `json:"id"`
-	Image                 *image.Image     `json:"image"`
-	IsReleased            bool             `json:"is_released"`
-	Language              language.Tag     `json:"language"`
-	LastModified          int64            `json:"last_modified"`
-	LastModifiedTimestamp time.Time        `json:"last_modified_timestamp"`
-	Path                  string           `json:"path"`
-	Name                  string           `json:"name"`
-	ReleaseDateMask       string           `json:"release_date_mask"`
-	Timestamp             time.Time        `json:"timestamp"`
-	Title                 string           `json:"title"`
-	Type                  string           `json:"type"`
-	Unix                  int64            `json:"unix"`
-	URI                   string           `json:"uri"`
-	URL                   *address.Address `json:"url"`
+	Description           string           `json:"description,omitempty"`
+	GamePath              string           `json:"game_path,omitempty"`
+	GameURL               *address.Address `json:"game_url,omitempty"`
+	ID                    string           `json:"id,omitempty"`
+	Image                 *image.Image     `json:"image,omitempty"`
+	IsReleased            bool             `json:"is_released,omitempty"`
+	Language              language.Tag     `json:"language,omitempty"`
+	LastModified          int64            `json:"last_modified,omitempty"`
+	LastModifiedTimestamp time.Time        `json:"last_modified_timestamp,omitempty"`
+	Path                  string           `json:"path,omitempty"`
+	Name                  string           `json:"name,omitempty"`
+	ReleaseDateMask       string           `json:"release_date_mask,omitempty"`
+	Timestamp             time.Time        `json:"timestamp,omitempty"`
+	Title                 string           `json:"title,omitempty"`
+	Type                  string           `json:"type,omitempty"`
+	Unix                  int64            `json:"unix,omitempty"`
+	URI                   string           `json:"uri,omitempty"`
+	URL                   *address.Address `json:"url,omitempty"`
 	Version               string           `json:"version"`
 }
 

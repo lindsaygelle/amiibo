@@ -87,6 +87,7 @@ type Amiibo struct {
 	UPC                   string           `json:"upc,omitempty"`
 	URI                   string           `json:"uri,omitempty"`
 	URL                   *address.Address `json:"url,omitempty"`
+	Version               string           `json:"version"`
 }
 
 // Field gets a field from the Amiibo by its struct name and returns its string value.
