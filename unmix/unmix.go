@@ -58,7 +58,7 @@ func Game(m map[string]*mix.Game) []*game.Game {
 	return s
 }
 
-func Unmix(a map[string]*mix.Amiibo, g map[string]*mix.Game) ([]*amiibo.Amiibo, []*game.Game) {
+func Unmix(m *mix.Mix) ([]*amiibo.Amiibo, []*game.Game) {
 	var (
 		amiibo []*amiibo.Amiibo
 		game   []*game.Game
@@ -67,12 +67,12 @@ func Unmix(a map[string]*mix.Amiibo, g map[string]*mix.Game) ([]*amiibo.Amiibo, 
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		amiibo = Amiibo(a)
+		amiibo = Amiibo(m.Amiibo)
 	}()
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		game = Game(g)
+		game = Game(m.Games)
 	}()
 	wg.Wait()
 	return amiibo, game
