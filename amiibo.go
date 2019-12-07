@@ -25,7 +25,7 @@ const (
 // some of the Nintendo content, the function panics.
 // To build a custom and robust implementation of this action,
 // the various SDKs APIs and structs can be used.
-func Scrape() {
+func Scrape() ([]*amiibo.Amiibo, []*game.Game) {
 	var (
 		c    *compatability.XHR
 		cErr error
