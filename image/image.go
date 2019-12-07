@@ -39,6 +39,7 @@ const (
 // that populate the content of the amiibo package.
 type Image struct {
 	Dir         string           `json:"dir"`
+	Err         string           `json:"error"`
 	Empty       bool             `json:"empty"`
 	Ext         string           `json:"ext"`
 	Height      int              `json:"height"`
@@ -67,15 +68,21 @@ func NewImage(rawurl string) (*Image, error) {
 		height     = -1
 		i          Image
 		img        image.Image
-		req, _     = http.NewRequest(http.MethodGet, rawurl, nil)
+		req, eReq  = http.NewRequest(http.MethodGet, rawurl, nil)
 		status     = http.StatusText(http.StatusBadRequest)
 		statusCode = http.StatusBadRequest
 		width      = -1
 		URL, _     = address.NewAddress(rawurl)
 	)
+	if eReq != nil {
+		return nil, eReq
+	}
 	var (
-		res, _ = network.Client.Do(req)
+		res, eRes = network.Client.Do(req)
 	)
+	if eRes != nil {
+		return nil, eRes
+	}
 	if res.StatusCode != statusCode {
 		status = res.Status
 		statusCode = res.StatusCode
