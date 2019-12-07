@@ -4,12 +4,11 @@ import (
 	"sync"
 
 	"github.com/gellel/amiibo/amiibo"
+	"github.com/gellel/amiibo/compatability"
 	"github.com/gellel/amiibo/game"
+	"github.com/gellel/amiibo/lineup"
 	"github.com/gellel/amiibo/mix"
 	"github.com/gellel/amiibo/unmix"
-
-	"github.com/gellel/amiibo/compatability"
-	"github.com/gellel/amiibo/lineup"
 )
 
 const (
@@ -22,15 +21,19 @@ const (
 //
 // The scrape function processes all of the content found using
 // the various tools provided by the amiibo SDK. This process is quite network
-// intensive and takes (approx.) two minutes to complete (on a stable wifi connection).
+// intensive and takes (approx.) a few minutes to complete (on a stable wifi connection).
 // If the function cannot reach any of the content destinations or is unable to parse
-// some of the Nintendo content, the function panics.
-// To build a custom and robust implementation of this action,
-// the various SDKs APIs and structs can be used.
-func Scrape() ([]*amiibo.Amiibo, []*game.Game) {
+// some of the Nintendo content, the function may return the corresponding error
+// handler that describes why the routine was unable to parse the content.
+// To build a custom and more robust implementation of this action (with greater verbosity
+// of outcomes per parsing stage) the package level APIs and structs can be used.
+// This function is intended to be a basic out of the box utility.
+func Scrape() ([]*amiibo.Amiibo, []*game.Game, error) {
 	var (
+		a    []*amiibo.Amiibo
 		c    *compatability.XHR
 		cErr error
+		g    []*game.Game
 		m    *mix.Mix
 		mErr error
 		l    *lineup.XHR
@@ -49,14 +52,15 @@ func Scrape() ([]*amiibo.Amiibo, []*game.Game) {
 	}()
 	wg.Wait()
 	if cErr != nil {
-		panic(cErr)
+		return nil, nil, cErr
 	}
 	if lErr != nil {
-		panic(lErr)
+		return nil, nil, lErr
 	}
 	m, mErr = mix.NewMix(c, l)
 	if mErr != nil {
-		panic(mErr)
+		return nil, nil, mErr
 	}
-	return unmix.Unmix(m)
+	a, g = unmix.Unmix(m)
+	return a, g, nil
 }
