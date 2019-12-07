@@ -3,6 +3,8 @@ package amiibo
 import (
 	"sync"
 
+	"github.com/gellel/amiibo/amiibo"
+	"github.com/gellel/amiibo/game"
 	"github.com/gellel/amiibo/mix"
 	"github.com/gellel/amiibo/unmix"
 
