@@ -6,19 +6,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-const ()
+var (
+	ByteID string = "ID"
+)
 
 type Byte map[string][]byte
 
 func (b Byte) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	const (
-		ID string = "ID"
-	)
 	var (
 		vars = mux.Vars(r)
 	)
 	var (
-		key = vars[ID]
+		key = vars[ByteID]
 	)
 	var (
 		c, ok = (b[key])
