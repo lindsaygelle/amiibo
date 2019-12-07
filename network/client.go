@@ -7,7 +7,7 @@ import (
 
 const (
 	// Timeout is the default HTTP client timeout in seconds.
-	Timeout time.Duration = time.Second * 5
+	Timeout time.Duration = time.Minute * 1
 )
 
 var (
