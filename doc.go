@@ -17,7 +17,7 @@
 // Nintendo Amiibo website directly (through the use of the resources contained in the resources
 // package).
 //
-// To use the normalized Nintendo data, the amiibo/web package can be imported and used. The web
+// To consume the normalized Nintendo data, the amiibo/web package can be imported and used. The web
 // package focuses on abstracting the task of fetching, merging and organizing all of
 // the Nintendo data across all of the different resources.
 package amiibo
