@@ -17,6 +17,10 @@ const (
 )
 
 const (
+	errArgAmiiboNil string = "*amiibo is nil"
+)
+
+const (
 	errGoQuerySelection string = "*goquery.Selection (*s)"
 	errGoQueryEmpty     string = errGoQuerySelection + " " + "is empty"
 	errGoQueryNoHref    string = errGoQuerySelection + " " + "has no attribute href"
@@ -46,6 +50,10 @@ var (
 	ErrGoQueryNoTitle = fmt.Errorf(errGoQueryNoTitle)
 )
 
+var (
+	//ErrArgAmiiboNil is an error when pointer to argument amiibo is nil.
+	ErrArgAmiiboNil = fmt.Errorf(errArgAmiiboNil)
+)
 var (
 	//ErrArgCNil is an error when pointer to argument c is nil.
 	ErrArgCNil = fmt.Errorf(errArgCNil)
