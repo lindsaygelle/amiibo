@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
+	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/file"
 )
 
