@@ -41,19 +41,3 @@ func Write(path, key string, perm os.FileMode, amiibo *Amiibo) (string, error) {
 	fullpath, err = file.Make(path, name, ext, perm, b)
 	return fullpath, err
 }
-
-// WriteAll writes a collection of amiibo.Amiibo to the provided path using the supported file permissions.
-//
-// On unsuccessful writes the function will exit and return an error.
-func WriteAll(path, key string, perm os.FileMode, amiibo ...*Amiibo) {
-	var (
-		err error
-	)
-	for _, amiibo := range amiibo {
-		_, err = Write(path, key, per, amiibo)
-		if err != nil {
-			return err
-		}
-	}
-	return err
-}
