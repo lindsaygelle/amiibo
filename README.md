@@ -9,7 +9,7 @@ Amiibo is a fan project to collect the latest information about the Amiibo produ
 from Nintendo. Package is built on scraping the Nintendo Amiibo website and normalizing
 the data into consumable chunks.
 
-The package is built around the Go API reference documentation. Please consider using godoc
+The package is built around the Go API reference documentation. Please consider using `godoc`
 to build custom integrations. If you are using Go 1.12 or earlier, godoc should be included. All
 Go 1.13 users will need to grab this package using the `go get` flow.
 
@@ -17,7 +17,7 @@ Go 1.13 users will need to grab this package using the `go get` flow.
 
 Use `go get` to retrieve the SDK to add it to your `GOPATH` workspace, or project's Go module dependencies.
 
-```go get github.com/gellel/amiibo``
+```go get github.com/gellel/amiibo```
 
 To update the SDK use `go get -u` to retrieve the latest version of the SDK.
 
