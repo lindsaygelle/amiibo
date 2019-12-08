@@ -18,6 +18,7 @@ const (
 
 const (
 	errArgAmiiboNil string = "*amiibo is nil"
+	errArgGameNil   string = "*game is nil"
 )
 
 const (
@@ -30,7 +31,7 @@ const (
 )
 
 var (
-	//ErrGoQueryEmpty is an error for an empty goquery.Selection.
+	// ErrGoQueryEmpty is an error for an empty goquery.Selection.
 	ErrGoQueryEmpty = fmt.Errorf(errGoQueryEmpty)
 )
 var (
@@ -51,31 +52,35 @@ var (
 )
 
 var (
-	//ErrArgAmiiboNil is an error when pointer to argument amiibo is nil.
+	// ErrArgAmiiboNil is an error when pointer to argument amiibo is nil.
 	ErrArgAmiiboNil = fmt.Errorf(errArgAmiiboNil)
 )
 var (
-	//ErrArgCNil is an error when pointer to argument c is nil.
+	// ErrArgCNil is an error when pointer to argument c is nil.
 	ErrArgCNil = fmt.Errorf(errArgCNil)
 )
 var (
-	//ErrArgGNil is an error when pointer to argument g is nil.
+	// ErrArgGNil is an error when pointer to argument g is nil.
 	ErrArgGNil = fmt.Errorf(errArgGNil)
 )
 var (
-	//ErrArgINil is an error when pointer to argument i is nil.
+	// ErrArgGameNil is an error when pointer to argument game is nil.
+	ErrArgGameNil = fmt.Errorf(errArgGameNil)
+)
+var (
+	// ErrArgINil is an error when pointer to argument i is nil.
 	ErrArgINil = fmt.Errorf(errArgINil)
 )
 var (
-	//ErrArgLNil is an error when pointer to argument l is nil.
+	// ErrArgLNil is an error when pointer to argument l is nil.
 	ErrArgLNil = fmt.Errorf(errArgLNil)
 )
 var (
-	//ErrArgSNil is an error when pointer to argument s is nil.
+	// ErrArgSNil is an error when pointer to argument s is nil.
 	ErrArgSNil = fmt.Errorf(errArgSNil)
 )
 var (
-	//ErrArgsNil is an error when all arguments that are pointers are nil.
+	// ErrArgsNil is an error when all arguments that are pointers are nil.
 	ErrArgsNil = fmt.Errorf(errArgsNil)
 )
 var (
