@@ -18,6 +18,26 @@ var (
 	Name string = "name"
 )
 
+// Load loads an game.Game from the provided fullpath using the last substring after the
+// trailing slash as the file name to open.
+//
+// Load assumes the fullpath points to a valid json file. If the function cannot parse
+// or cannot reach the file, a corresponding error is returned.
+func Load(fullpath string) (*Game, error) {
+	var (
+		game   Game
+		b, err = file.Open(fullpath)
+	)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(b, &game)
+	if err != nil {
+		return nil, err
+	}
+	return &game, err
+}
+
 // Write writes an game.Game to the provided path using the supported file permission.
 //
 // Write usess the Game.Field function to select the filename that the Game will be written under.

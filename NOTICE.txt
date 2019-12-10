@@ -1,0 +1,3 @@
+Please remember to cache the content payloads after successfully scraping the Nintendo website.
+
+All data provided by Nintendo and is subject to change without notice. 
