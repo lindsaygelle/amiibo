@@ -18,6 +18,26 @@ var (
 	Name string = "name"
 )
 
+// Load loads an amiibo.Amiibo from the provided fullpath using the last substring after the
+// trailing slash as the file name to open.
+//
+// Load assumes the fullpath points to a valid json file. If the function cannot parse
+// or cannot reach the file, a corresponding error is returned.
+func Load(fullpath string) (*Amiibo, error) {
+	var (
+		amiibo Amiibo
+		b, err = file.Open(fullpath)
+	)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(b, &amiibo)
+	if err != nil {
+		return nil, err
+	}
+	return &amiibo, err
+}
+
 // Write writes an amiibo.Amiibo to the provided path using the supported file permission.
 //
 // Write usess the Amiibo.Field function to select the filename that the Amiibo will be written under.
