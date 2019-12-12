@@ -2,10 +2,15 @@ package amiibo
 
 import (
 	"encoding/json"
+	"net/http"
 	"os"
+	"sync"
+
+	"github.com/gorilla/mux"
 
 	"github.com/gellel/amiibo/errors"
 	"github.com/gellel/amiibo/file"
+	"github.com/gellel/amiibo/mix"
 )
 
 var (
@@ -17,6 +22,34 @@ var (
 	// Name is the filename key used (before the .extension) when writing amiibo.Amiibo using amiibo.Write.
 	Name string = "name"
 )
+
+func Get() ([]*Amiibo, error) {
+	var (
+		m, err = mix.Get()
+	)
+	if err != nil {
+		return nil, err
+	}
+	var (
+		s  = []*Amiibo{}
+		wg sync.WaitGroup
+	)
+	for _, m := range m.Amiibo {
+		wg.Add(1)
+		go func(m *mix.Amiibo) {
+			defer wg.Done()
+			var (
+				a, err = NewAmiibo(m.Compatability, m.Item, m.Lineup)
+			)
+			if err != nil {
+				return
+			}
+			s = append(s, a)
+		}(m)
+	}
+	wg.Wait()
+	return s, nil
+}
 
 // Load loads an amiibo.Amiibo from the provided fullpath using the last substring after the
 // trailing slash as the file name to open.
@@ -36,6 +69,51 @@ func Load(fullpath string) (*Amiibo, error) {
 		return nil, err
 	}
 	return &amiibo, err
+}
+
+// Server sets up a basic http.Handler interface to be used with http.ListenAndServe.
+//
+// Server is built on the map strategy used when creating the argument amiibo.Map
+// passed into the function.
+func Server(m *Map) http.Handler {
+	const (
+		contentTypeKey = "Content-Type"
+	)
+	const (
+		contentTypeValue = "application/json; charset=utf-8"
+	)
+	var r = mux.NewRouter().StrictSlash(true)
+	var handleSlash = func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set(contentTypeKey, contentTypeValue)
+		var b, err = json.Marshal(m)
+		if err == nil {
+			w.WriteHeader(http.StatusOK)
+		} else {
+			w.WriteHeader(http.StatusServiceUnavailable)
+		}
+		w.Write(b)
+	}
+	var handleID = func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set(contentTypeKey, contentTypeValue)
+		var vars = mux.Vars(r)
+		var ID = vars["ID"]
+		var (
+			amiibo, ok = m.Get(ID)
+		)
+		if ok {
+			w.WriteHeader(http.StatusOK)
+		} else {
+			w.WriteHeader(http.StatusNotFound)
+		}
+		var b, err = json.Marshal(amiibo)
+		if err != nil {
+			w.WriteHeader(http.StatusServiceUnavailable)
+		}
+		w.Write(b)
+	}
+	r.HandleFunc("/", handleSlash).Methods(http.MethodGet)
+	r.HandleFunc("/{ID}", handleID).Methods(http.MethodGet)
+	return r
 }
 
 // Write writes an amiibo.Amiibo to the provided path using the supported file permission.
