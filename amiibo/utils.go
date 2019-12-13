@@ -23,6 +23,12 @@ var (
 	Name string = "name"
 )
 
+// Get gets all the HTTP content from the various Nintendo resources and organizes
+// the response content into a slice of normalized amiibo.Amiibo.
+//
+// Get consumes the reponse content from the compatability.XHR and lineup.XHR.
+// Should either one of these resources not be able to be parsed,
+// the collection will return an error.
 func Get() ([]*Amiibo, error) {
 	var (
 		m, err = mix.Get()
@@ -74,13 +80,23 @@ func Load(fullpath string) (*Amiibo, error) {
 // Server sets up a basic http.Handler interface to be used with http.ListenAndServe.
 //
 // Server is built on the map strategy used when creating the argument amiibo.Map
-// passed into the function.
+// passed into the function. Each amiibo.Amiibo in the amiibo.Map is returned
+// when a HTTP connection matches the provided map key path used when
+// creating the initial amiibo.Map.
+//
+// When the key cannot be used to match to a value in the amiibo.Map
+// the HTTP request is treated as http.StatusNotFound.
+//
+// If the amiibo.Amiibo cannot be marshaled, the HTTP request is
+// handle as http.StatusServiceUnavailable.
+//
+// Server only accepts connections via http.MethodGet.
 func Server(m *Map) http.Handler {
 	const (
-		contentTypeKey = "Content-Type"
+		contentTypeKey string = "Content-Type"
 	)
 	const (
-		contentTypeValue = "application/json; charset=utf-8"
+		contentTypeValue string = "application/json; charset=utf-8"
 	)
 	var r = mux.NewRouter().StrictSlash(true)
 	var handleSlash = func(w http.ResponseWriter, r *http.Request) {
