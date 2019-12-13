@@ -58,6 +58,7 @@ func Game(m map[string]*mix.Game) []*game.Game {
 	return s
 }
 
+// Unmix unmixes the mixed structs created from the amiibo/mix package.
 func Unmix(m *mix.Mix) ([]*amiibo.Amiibo, []*game.Game) {
 	var (
 		amiibo []*amiibo.Amiibo
