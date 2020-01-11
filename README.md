@@ -31,7 +31,7 @@ The SDK includes a vendor folder containing the runtime dependencies of the SDK.
 
 If you are using Go modules, your go get will default to the latest tagged release version of the SDK. To get a specific release version of the SDK use `@<tag>` in your `go get` command.
 
-```go get github.com/aws/aws-sdk-go@<version>```
+```go get github.com/gellel/amiibo@<version>```
 
 To get the latest SDK repository change use @latest.
 
