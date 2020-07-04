@@ -29,7 +29,28 @@ type rawAmiibo struct{}
 // rawGame describes the abbreviated game product information that has known Nintendo Amiibo support.
 //
 // rawGame contains varying levels of accuracy relative to the release status of Nintendo Amiibo products.
-type rawGame struct{}
+type rawGame struct {
+
+	// Image is the relative URL to the Nintendo game box art image.
+	//
+	// Image requires the nintendo.com domain prepended to the URL.
+	Image string `json:"image"`
+
+	// IsReleased is a string representation of a boolean that indicates whether the Nintendo game is available.
+	//
+	// IsReleased needs to be formatted to a bool data type.
+	IsReleased string `json:"isReleased"`
+
+	// Path is the relative path to the Nintendo game to the Nintendo CDN.
+	//
+	// Path requires the nintendo.com domain prepended to the path.
+	Path string `json:"path"`
+
+	// URL is the relative URL to the Nintendo game.
+	//
+	// URL requires the nintendo.com domain prepended to the URL.
+	URL string `json:"url"`
+}
 
 // rawItem is the unfettered auxiliary information related to a Nintendo Amiibo product provided by nintendo.com.
 //
@@ -42,16 +63,20 @@ type rawItem struct {
 	//
 	// Description is often a null string.
 	Description string `json:"description"`
+
 	// LastModified is the timestamp in milliseconds.
 	LastModified int64 `json:"lastModified"`
+
 	// Path is the relative path to the Nintendo game item to the Nintendo CDN.
 	//
 	// Path requires the nintendo.com domain prepended to the path.
 	Path string `json:"path"`
+
 	// Title is the name given to the Nintendo game item.
 	//
 	// Title often can contain special characters that will need filtering to prevent poor hashing keys.
 	Title string `json:"title"`
+
 	// URL is the relative URL to the Nintendo game item.
 	//
 	// URL requires the nintendo.com domain prepended to the URL.
