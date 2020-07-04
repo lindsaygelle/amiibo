@@ -46,10 +46,18 @@ type rawGame struct {
 	// IsReleased needs to be formatted to a bool data type.
 	IsReleased string `json:"isReleased"`
 
+	// Name is the name given to the Nintendo game.
+	//
+	// Name often can contain special characters that will need filtering to prevent poor hashing keys.
+	Name string `json:"name"`
+
 	// Path is the relative path to the Nintendo game to the Nintendo CDN.
 	//
 	// Path requires the nintendo.com domain prepended to the path.
 	Path string `json:"path"`
+
+	// ReleaseDateMask is the YYYY-MM-DD expression for the date when the Nintendo game was released.
+	ReleaseDateMask string `json:"releaseDateMask"`
 
 	// Type is the entity type for the Nintendo product.
 	//
