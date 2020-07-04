@@ -37,6 +37,23 @@ type rawGame struct{}
 //
 // rawItem contains varying levels of completeness relative to the release status of Nintendo Amiibo products or game titles.
 type rawItem struct {
-	Description  string `json:"description"`
-	LastModified int64  `json:"lastModified"`
+
+	// Description is the description for the Nintendo product.
+	//
+	// Description can commonly be a null field.
+	Description string `json:"description"`
+	// LastModified is the timestamp in milliseconds.
+	LastModified int64 `json:"lastModified"`
+	// Path is the relative path to the Nintendo game item to the Nintendo CDN.
+	//
+	// Path requires the nintendo.com domain prepended to the path.
+	Path string `json:"path"`
+	// Title is the name given to the Nintendo game item.
+	//
+	// Title often can contain special characters that will need filtering to prevent poor hashing keys.
+	Title string `json:"title"`
+	// URL is the relative URL to the Nintendo game item.
+	//
+	// URL requires the nintendo.com domain prepended to the URL.
+	URL string `json:"url"`
 }
