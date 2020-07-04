@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gellel/amiibo.svg?branch=master)](https://travis-ci.org/gellel/amiibo)
+[![Build Status](https://travis-ci.org/lindsaygelle/amiibo.svg?branch=master)](https://travis-ci.org/lindsaygelle/amiibo)
 [![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-blue.svg)](https://github.com/gelell/amiibo/blob/master/LICENSE)
 
 # Amiibo
@@ -17,11 +17,11 @@ Go 1.13 users will need to grab this package using the `go get` flow.
 
 Use `go get` to retrieve the SDK to add it to your `GOPATH` workspace, or project's Go module dependencies.
 
-```go get github.com/gellel/amiibo```
+```go get github.com/lindsaygelle/amiibo```
 
 To update the SDK use `go get -u` to retrieve the latest version of the SDK.
 
-```go get -u github.com/gellel/amiibo```
+```go get -u github.com/lindsaygelle/amiibo```
 
 ## Dependencies
 
@@ -31,7 +31,7 @@ The SDK includes a vendor folder containing the runtime dependencies of the SDK.
 
 If you are using Go modules, your go get will default to the latest tagged release version of the SDK. To get a specific release version of the SDK use `@<tag>` in your `go get` command.
 
-```go get github.com/gellel/amiibo@<version>```
+```go get github.com/lindsaygelle/amiibo@<version>```
 
 To get the latest SDK repository change use @latest.
 
