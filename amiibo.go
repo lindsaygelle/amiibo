@@ -40,7 +40,7 @@ type rawItem struct {
 
 	// Description is the description for the Nintendo product.
 	//
-	// Description can commonly be a null field.
+	// Description is often a null string.
 	Description string `json:"description"`
 	// LastModified is the timestamp in milliseconds.
 	LastModified int64 `json:"lastModified"`
