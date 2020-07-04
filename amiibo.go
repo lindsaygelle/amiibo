@@ -62,6 +62,12 @@ type amiiboLineup struct {
 
 	// amiiboContent is a composed property.
 	amiiboContent
+
+	// AmiiboList is a collection of Nintendo Amiibo products containing their product information.
+	AmiiboList []lineupAmiibo
+
+	// Items is a collection of metadata related to Nintendo Amiibo products.
+	Items []lineupItem
 }
 
 // compatabilityAmiibo is the unfettered Nintendo Amiibo product data provided by nintendo.com.
@@ -165,3 +171,7 @@ type compatabilityItem struct {
 	// Title often can contain special characters that will need filtering to prevent poor hashing keys.
 	Title string `json:"title"`
 }
+
+type lineupAmiibo struct{}
+
+type lineupItem struct{}
