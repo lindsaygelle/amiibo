@@ -14,16 +14,18 @@ type amiibo struct{}
 //
 // amiiboCompatibility contains the relationship information between Nintendo Amiibo products
 // and the games or applications that can be used within.
+//
+// amiiboCompatibility is assumed to be in English.
 type amiiboCompatibility struct {
+
+	// amiiboContent is a composed property.
+	amiiboContent
 
 	// AuthorMode is the state of the Nintendo CDN for the compatability file.
 	AuthorMode bool `json:"authorMode"`
 
 	// AmiiboList is a collection of Nintendo Amiibo products that are compatible with Nintendo games.
 	AmiiboList []compatabilityAmiibo `json:"amiiboList"`
-
-	// ComponentPath is the relative path to the Nintendo compatability file.
-	ComponentPath string `json:"componentPath"`
 
 	// Date is the date signature when the Nintendo compatability file was recevied.
 	Date string `json:"date"`
@@ -42,6 +44,24 @@ type amiiboCompatibility struct {
 
 	// Mode is an exposed field from the Nintendo CDN that has an unknown purpose.
 	Mode string `json:"mode"`
+}
+
+// amiiboContent are the common properties shared between amiiboCompatibility and amiiboLineup.
+type amiiboContent struct {
+
+	// ComponentPath is the relative path to the Nintendo resource file.
+	ComponentPath string `json:"componentPath"`
+}
+
+// amiiboLineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
+//
+// amiiboLineup contains the product information for the Nintendo Amiibo product.
+//
+// amiiboLineup is assumed to be in English.
+type amiiboLineup struct {
+
+	// amiiboContent is a composed property.
+	amiiboContent
 }
 
 // compatabilityAmiibo is the unfettered Nintendo Amiibo product data provided by nintendo.com.
@@ -65,7 +85,7 @@ type compatabilityAmiibo struct {
 	TagID string `json:"tagId"`
 }
 
-// compatabilityCommon is the common properties shared between compatabilityAmiibo, compatabilityGame and compatabilityItem structs.
+// compatabilityCommon are the common properties shared between compatabilityAmiibo, compatabilityGame and compatabilityItem structs.
 type compatabilityCommon struct {
 
 	// Path is the relative path to the Nintendo product and its information in the context of the Nintendo CDN.
