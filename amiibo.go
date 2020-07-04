@@ -17,13 +17,23 @@ type amiiboCompatability struct {
 	Mode          string      `json:"mode"`
 }
 
-// rawAmiibo is the unfettered amiibo product data provided by nintendo.com.
+// rawAmiibo is the unfettered Nintendo Amiibo product data provided by nintendo.com.
 //
-// rawAmiibo describes the abbreviated compatability information for a specific amiibo figurine or card.
+// rawAmiibo describes the abbreviated compatability information for a specific Nintendo Amiibo figurine or card.
+//
+// rawAmiibo contains varying levels of completeness relative to the release status of the product.
 type rawAmiibo struct{}
 
-// rawGame is the unfettered game information related to a Nintendo amiibo product provided by nintendo.com.
+// rawGame is the unfettered game information related to a Nintendo Amiibo product provided by nintendo.com.
 //
-// rawGame describes the abbreviated game product information that has Nintendo amiibo support.
+// rawGame describes the abbreviated game product information that has known Nintendo Amiibo support.
+//
+// rawGame contains varying levels of accurracy relative to the release status of Nintendo Amiibo products.
 type rawGame struct{}
 
+// rawItem is the unfettered auxilliary information related to a Nintendo Amiibo product provided by nintendo.com.
+//
+// rawItem describes the additional miscellaneous information that relates to Nintendo game that supports a Nintendo Amiibo product.
+//
+// rawItem contains varying levels of completeness relative to the release status of Nintendo Amiibo products or game titles.
+type rawItem struct{}
