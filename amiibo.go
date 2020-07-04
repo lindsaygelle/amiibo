@@ -31,6 +31,11 @@ type rawAmiibo struct{}
 // rawGame contains varying levels of accuracy relative to the release status of Nintendo Amiibo products.
 type rawGame struct {
 
+	// ID is the unique identifier for the Nintendo game.
+	//
+	// ID is a UUID.
+	ID string `json:"id"`
+
 	// Image is the relative URL to the Nintendo game box art image.
 	//
 	// Image requires the nintendo.com domain prepended to the URL.
@@ -45,6 +50,11 @@ type rawGame struct {
 	//
 	// Path requires the nintendo.com domain prepended to the path.
 	Path string `json:"path"`
+
+	// Type is the entity type for the Nintendo product.
+	//
+	// Type is always type game for Nintendo game products.
+	Type string `json:"type"`
 
 	// URL is the relative URL to the Nintendo game.
 	//
