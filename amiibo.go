@@ -1,5 +1,12 @@
 package amiibo
 
+// https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml
+// https://www.nintendo.co.jp/hardware/amiibo/chart/data/lineup.xml
+// https://www.nintendo.co.jp/hardware/amiibo/chart/data/chart.xml
+
+// https://www.nintendo.com/content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json
+// https://www.nintendo.com/content/noa/en_US/amiibo/compatibility/jcr:content/root/responsivegrid/compatibility_chart.model.json
+
 // amiibo is the normalized amiibo data scraped from a compatabilityAmiibo.
 type amiibo struct{}
 
