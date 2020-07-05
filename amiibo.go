@@ -70,14 +70,7 @@ type amiiboContent struct {
 //
 // amiiboItem is provided as XML from nintendo.co.jp.
 type amiiboItem struct {
-
-	// Code is the English ID for the Nintendo Amiibo product.
-	Code string `xml:"code"`
-
-	// Name is the Japanese Hiragana for the Nintendo Amiibo product.
-	//
-	// Name will need to be translated from Japanese to English.
-	Name string `xml:"name"`
+	chartCommon
 
 	// Series is the Japanese Hiragana for the Nintendo product that the Nintendo Amiibo product is affiliated with.
 	//
@@ -88,7 +81,25 @@ type amiiboItem struct {
 	Softwares []amiiboItemSoftware `xml:"softwares"`
 }
 
-type amiiboItemSoftware struct{}
+// amiiboItemSoftware is the software support information for a Nintendo Amiibo chart item provided by nintendo.co.jp.
+//
+// amiiboItemSoftware is assumed to be in Japanese Hiragana.
+//
+// amiiboItemSoftware is provided as XML from nintedo.co.jp.
+type amiiboItemSoftware struct {
+
+	// chartCommon is a composed property.
+	chartCommon
+
+	// More is the verbose description for the Nintendo Amiibo chart item.
+	More string `xml:"more"`
+
+	// Pickup is a provided property with an unclear purpose.
+	Pickup int64 `xml:"pickup"`
+
+	// ReadWrite is a provided property with an unclear purpose.
+	ReadWrite string `xml:"readwrite"`
+}
 
 // amiiboLineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
 //
@@ -105,6 +116,17 @@ type amiiboLineup struct {
 
 	// Items is a collection of metadata related to Nintendo Amiibo products.
 	Items []lineupItem
+}
+
+type chartCommon struct {
+
+	// Code is the English ID for the Nintendo Amiibo product from the Japanese CDN.
+	Code string `xml:"code"`
+
+	// Name is the name for the Nintendo product.
+	//
+	// Name is assumed to be in Japanese Hiragana but may be in English.
+	Name string `xml:"name"`
 }
 
 // compatabilityAmiibo is the unfettered Nintendo Amiibo product data provided by nintendo.com.
