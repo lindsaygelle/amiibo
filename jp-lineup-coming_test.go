@@ -4,9 +4,9 @@ import (
 	"testing"
 )
 
-func TestGetLineupComingJPN(t *testing.T) {
+func TestGetJPNLineupComing(t *testing.T) {
 
-	_, _, v, err := getLineupComingJPN()
+	_, _, v, err := getJPNLineupComing()
 	if err != nil {
 		t.Fatal(err)
 	}

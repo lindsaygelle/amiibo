@@ -17,6 +17,7 @@ type JPNChart struct {
 	// XMLName is the xml node.
 	XMLName xml.Name `xml:"items"`
 
+	// Items is a collection of Nintendo Amiibo product information.
 	Items []JPChartItem `xml:"item"`
 }
 
