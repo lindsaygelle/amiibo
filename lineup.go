@@ -7,25 +7,25 @@ import (
 	"net/http"
 )
 
-// lineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
+// ENGLineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
 //
-// lineup contains the product information for the Nintendo Amiibo product as well as some related metadata.
-type lineup struct {
+// ENGLineup contains the product information for the Nintendo Amiibo product as well as some related metadata.
+type ENGLineup struct {
 
 	// AmiiboList is a collection of Nintendo Amiibo products containing their product information.
-	AmiiboList []lineupAmiibo `json:"amiiboList"`
+	AmiiboList []ENGLineupAmiibo `json:"amiiboList"`
 
 	// ComponentPath is the relative path to the Nintendo resource file.
 	ComponentPath string `json:"componentPath"`
 
 	// Items is a collection of metadata related to Nintendo Amiibo products.
-	Items []lineupItem `json:"items"`
+	Items []ENGLineupItem `json:"items"`
 }
 
-// lineupAmiibo is the unfettered Nintendo Amiibo product information from nintendo.com.
+// ENGLineupAmiibo is the unfettered Nintendo Amiibo product information from nintendo.com.
 //
-// lineupAmiibo contains the English language product information for a specific Nintendo Amiibo.
-type lineupAmiibo struct {
+// ENGLineupAmiibo contains the English language product information for a specific Nintendo Amiibo.
+type ENGLineupAmiibo struct {
 
 	// AmiiboName is the name of the Nintendo Amiibo product.
 	//
@@ -98,10 +98,10 @@ type lineupAmiibo struct {
 	UPC string `json:"upc"`
 }
 
-// lineupItem is the unfettered Nintendo Amiibo product additional information from nintendo.com.
+// ENGLineupItem is the unfettered Nintendo Amiibo product additional information from nintendo.com.
 //
-// lineupItem contains additional information for a Nintendo Amiibo product.
-type lineupItem struct {
+// ENGLineupItem contains additional information for a Nintendo Amiibo product.
+type ENGLineupItem struct {
 
 	// Description is the verbose Nintendo Amiibo product summary.
 	//
@@ -125,8 +125,8 @@ type lineupItem struct {
 	URL string `json:"url"`
 }
 
-// getLineup gets the http.Response from nintendo.com for the lineup Nintendo Amiibo JSON.
-func getLineup() (req *http.Request, res *http.Response, v lineup, err error) {
+// GetENGLineup gets the http.Response from nintendo.com for the lineup Nintendo Amiibo JSON.
+func GetENGLineup() (req *http.Request, res *http.Response, v ENGLineup, err error) {
 	const URL = "https://www.nintendo.com/content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json"
 	var b ([]byte)
 	req, err = http.NewRequest(http.MethodGet, URL, nil)

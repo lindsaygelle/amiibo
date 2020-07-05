@@ -6,7 +6,7 @@ import (
 
 func TestGetLineup(t *testing.T) {
 
-	_, _, v, err := getLineup()
+	_, _, v, err := GetENGLineup()
 	if err != nil {
 		t.Fatal(err)
 	}
