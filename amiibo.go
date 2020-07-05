@@ -1,6 +1,5 @@
 package amiibo
 
-// https://www.nintendo.com/content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json
 // https://www.nintendo.com/content/noa/en_US/amiibo/compatibility/jcr:content/root/responsivegrid/compatibility_chart.model.json
 
 // compatability is the unfettered Nintendo Amiibo compatibility information provided by nintendo.com.
@@ -147,24 +146,3 @@ type compatabilityItem struct {
 	// Title often can contain special characters that will need filtering to prevent poor hashing keys.
 	Title string `json:"title"`
 }
-
-// lineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
-//
-// lineup contains the product information for the Nintendo Amiibo product.
-//
-// lineup is assumed to be in English.
-type lineup struct {
-
-	// amiiboContent is a composed property.
-	amiiboContent
-
-	// AmiiboList is a collection of Nintendo Amiibo products containing their product information.
-	AmiiboList []lineupAmiibo
-
-	// Items is a collection of metadata related to Nintendo Amiibo products.
-	Items []lineupItem
-}
-
-type lineupAmiibo struct{}
-
-type lineupItem struct{}

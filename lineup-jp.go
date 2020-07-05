@@ -27,7 +27,7 @@ type lineupJPN struct {
 	SeriesItem []lineupSeriesItemJP `xml:"series_item"`
 }
 
-// lineupItemJPN is the unfettered Nintendo Amiibo product lineup information from nintendo.co.jp.
+// lineupItemJPN is the unfettered Nintendo Amiibo product information from nintendo.co.jp.
 type lineupItemJPN struct {
 
 	// XMLName is the xml node.
@@ -83,7 +83,7 @@ type lineupItemJPN struct {
 	Series string `xml:"series"`
 }
 
-// lineupSeriesItemJP is the unfettered Nintendo Amiibo auxiliary metadata provided by nintendo.co.jp.
+// lineupSeriesItemJP is the unfettered Nintendo Amiibo product additional information from nintendo.co.jp.
 //
 // lineupSeriesItemJP is assumed to be in Japanese Hiragana.
 type lineupSeriesItemJP struct {
