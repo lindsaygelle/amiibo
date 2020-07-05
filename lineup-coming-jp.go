@@ -63,6 +63,15 @@ type lineupComingItemJPN struct {
 	TitleRuby string `xml:"title_ruby"`
 }
 
+// getLineupComingJPN gets the http.Response from nintendo.co.jp.
+//
+// getLineupComingJPN returns an error on the following:
+//
+// http.Request is nil or errors.
+//
+// http.Response is nil or errors.
+//
+// http.Response.StatusCode is not http.StatusOK.
 func getLineupComingJPN() (req *http.Request, res *http.Response, err error) {
 	const URL = "https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml"
 	req, err = http.NewRequest(http.MethodGet, URL, nil)
