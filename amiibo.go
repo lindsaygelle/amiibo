@@ -62,7 +62,18 @@ type amiiboContent struct {
 	ComponentPath string `json:"componentPath"`
 }
 
-type amiiboItem struct{}
+// amiiboItem is the unfettered Nintendo Amiibo chart information provided by nintendo.co.jp.
+//
+// amiiboItem contains the simplified Nintendo Amiibo product information.
+//
+// amiiboItem is assumed to be in Japanese Hiragana.
+//
+// amiiboItem is provided as XML from nintendo.co.jp.
+type amiiboItem struct {
+
+	// Code is the English ID for the Nintendo Amiibo product.
+	Code string `xml:"code"`
+}
 
 // amiiboLineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
 //
