@@ -7,6 +7,9 @@ import (
 	"net/http"
 )
 
+// JPNChartURL is the URL for the Nintendo Japan Nintendo Amiibo compatibility chart.
+const JPNChartURL string = "https://www.nintendo.co.jp/hardware/amiibo/chart/data/chart.xml"
+
 // JPNChart is the unfettered Japanese language Nintendo Amiibo product and game support information.
 //
 // JPNChart is provided by Nintendo Japan.
@@ -21,11 +24,10 @@ type JPNChart struct {
 	Items []JPChartItem `xml:"item"`
 }
 
-// getJPNChart gets the http.Response from nintendo.co.jp for the chart Nintendo Amiibo XML.
-func getJPNChart() (req *http.Request, res *http.Response, v JPNChart, err error) {
-	const URL = "https://www.nintendo.co.jp/hardware/amiibo/chart/data/chart.xml"
+// GetJPNChart gets the JPNChart from nintendo.co.jp.
+func GetJPNChart() (req *http.Request, res *http.Response, v JPNChart, err error) {
 	var b ([]byte)
-	req, err = http.NewRequest(http.MethodGet, URL, nil)
+	req, err = http.NewRequest(http.MethodGet, JPNChartURL, nil)
 	if err != nil {
 		return
 	}

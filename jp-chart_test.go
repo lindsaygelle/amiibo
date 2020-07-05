@@ -3,7 +3,7 @@ package amiibo
 import "testing"
 
 func TestChartJPN(t *testing.T) {
-	_, _, v, err := getJPNChart()
+	_, _, v, err := GetJPNChart()
 	if err != nil {
 		t.Fatal(err)
 	}
