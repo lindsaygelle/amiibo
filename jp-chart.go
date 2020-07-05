@@ -21,7 +21,7 @@ type JPNChart struct {
 	XMLName xml.Name `xml:"items"`
 
 	// Items is a collection of Nintendo Amiibo product information.
-	Items []JPChartItem `xml:"item"`
+	Items []JPNChartItem `xml:"item"`
 }
 
 // GetJPNChart gets the JPNChart from nintendo.co.jp.

@@ -2,8 +2,8 @@ package amiibo
 
 import "encoding/xml"
 
-// JPChartItem is the unfettered Japanese language Nintendo Amiibo product information.
-type JPChartItem struct {
+// JPNChartItem is the unfettered Japanese language Nintendo Amiibo product information.
+type JPNChartItem struct {
 
 	// XMLName is the xml node.
 	XMLName xml.Name `xml:"item"`
@@ -21,4 +21,9 @@ type JPChartItem struct {
 
 	// Softwares is a collection of metadata that the Nintendo Amiibo product integrates with.
 	Softwares []JPNChartItemSoftware `xml:"softwares"`
+}
+
+// GetID returns the JPCharItem ID.
+func (j JPNChartItem) GetID() string {
+	return j.Code
 }

@@ -59,3 +59,8 @@ type JPNLineupItem struct {
 	// Series will need to be translated from Japanese to English.
 	Series string `xml:"series"`
 }
+
+// GetID returns the JPNLineItem ID.
+func (j JPNLineupItem) GetID() string {
+	return j.Code
+}
