@@ -17,6 +17,9 @@ type lineupJPN struct {
 	// jp is a composed property.
 	jp
 
+	// XMLName is the xml node.
+	XMLName xml.Name `xml:"items"`
+
 	// Item is a collection of Nintendo Amiibo products containing their product information in Japanese.
 	Item []lineupItemJPN `xml:"item"`
 
@@ -26,6 +29,9 @@ type lineupJPN struct {
 
 // lineupItemJPN is the unfettered Nintendo Amiibo product lineup information from nintendo.co.jp.
 type lineupItemJPN struct {
+
+	// XMLName is the xml node.
+	XMLName xml.Name `xml:"item"`
 
 	// BigSize is a integer representation of a boolean.
 	//
@@ -82,6 +88,9 @@ type lineupItemJPN struct {
 // lineupSeriesItemJP is assumed to be in Japanese Hiragana.
 type lineupSeriesItemJP struct {
 
+	// XMLName is the xml node.
+	XMLName xml.Name `xml:"series_item"`
+
 	// BGColor is the hexidecimal code for the Nintendo Amiibo product.
 	BGColor string `xml:"bgcolor"`
 
@@ -125,7 +134,7 @@ func getLineupJPNXML() (v lineupJPN, err error) {
 	var b ([]byte)
 	var req *http.Request
 	var res *http.Response
-	req, res, err = getLineupComingJPN()
+	req, res, err = getLineupJPN()
 	if err != nil {
 		return
 	}
