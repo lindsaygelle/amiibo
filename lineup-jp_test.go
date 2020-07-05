@@ -1,23 +1,19 @@
 package amiibo
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestGetLineupJPN(t *testing.T) {
 
-	var _, _, err = getLineupJPN()
+	_, _, v, err := getLineupJPN()
 	if err != nil {
 		t.Fatal(err)
 	}
-}
-
-func TestGetLineupJPNXML(t *testing.T) {
-
-	var v, err = getLineupJPNXML()
-	if err != nil {
-		t.Fatal(err)
+	if l := len(v.Items); l == 0 {
+		t.Fatal("len: v.Items", l)
 	}
-	fmt.Println(v)
+	if l := len(v.SeriesItems); l == 0 {
+		t.Fatal("len: v.SeriesItems", l)
+	}
 }

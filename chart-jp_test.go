@@ -1,12 +1,9 @@
 package amiibo
 
-import (
-	"testing"
-)
+import "testing"
 
-func TestGetLineupComingJPN(t *testing.T) {
-
-	_, _, v, err := getLineupComingJPN()
+func TestChartJPN(t *testing.T) {
+	_, _, v, err := getChartJPN()
 	if err != nil {
 		t.Fatal(err)
 	}

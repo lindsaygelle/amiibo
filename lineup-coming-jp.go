@@ -10,9 +10,6 @@ import (
 // lineupComingJPN is the unfettered upcoming Nintendo Amiibo product information provided by nintendo.co.jp.
 type lineupComingJPN struct {
 
-	// jp is a composed property.
-	jp
-
 	// XMLName is the xml node.
 	XMLName xml.Name `xml:"data"`
 
@@ -62,17 +59,10 @@ type lineupComingItemJPN struct {
 	TitleRuby string `xml:"title_ruby"`
 }
 
-// getLineupComingJPN gets the http.Response from nintendo.co.jp.
-//
-// getLineupComingJPN returns an error on the following:
-//
-// http.Request is nil or errors.
-//
-// http.Response is nil or errors.
-//
-// http.Response.StatusCode is not http.StatusOK.
-func getLineupComingJPN() (req *http.Request, res *http.Response, err error) {
+// getLineupComingJPN gets the http.Response from nintendo.co.jp for the lineup Nintendo Amiibo XML.
+func getLineupComingJPN() (req *http.Request, res *http.Response, v lineupComingJPN, err error) {
 	const URL = "https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml"
+	var b ([]byte)
 	req, err = http.NewRequest(http.MethodGet, URL, nil)
 	if err != nil {
 		return
@@ -87,22 +77,6 @@ func getLineupComingJPN() (req *http.Request, res *http.Response, err error) {
 	if err != nil {
 		return
 	}
-	return
-}
-
-// getLineupComingJPNXML creates a new lineupComingJPN from getLineupComingJPN.
-func getLineupComingJPNXML() (v lineupComingJPN, err error) {
-	var b ([]byte)
-	var req *http.Request
-	var res *http.Response
-	req, res, err = getLineupComingJPN()
-	if err != nil {
-		return
-	}
-	v.Cookies = res.Cookies()
-	v.Status = res.Status
-	v.StatusCode = res.StatusCode
-	v.URL = req.URL
 	b, err = ioutil.ReadAll(res.Body)
 	if err != nil {
 		return

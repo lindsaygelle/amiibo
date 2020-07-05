@@ -1,6 +1,11 @@
 package amiibo
 
-// https://www.nintendo.com/content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
 
 // lineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
 //
@@ -14,7 +19,7 @@ type lineup struct {
 	ComponentPath string `json:"componentPath"`
 
 	// Items is a collection of metadata related to Nintendo Amiibo products.
-	Items []lineupItem `json:"item"`
+	Items []lineupItem `json:"items"`
 }
 
 // lineupAmiibo is the unfettered Nintendo Amiibo product information from nintendo.com.
@@ -118,4 +123,30 @@ type lineupItem struct {
 	//
 	// URL requires nintendo.com to be prepended to the URL.
 	URL string `json:"url"`
+}
+
+// getLineup gets the http.Response from nintendo.com for the lineup Nintendo Amiibo JSON.
+func getLineup() (req *http.Request, res *http.Response, v lineup, err error) {
+	const URL = "https://www.nintendo.com/content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json"
+	var b ([]byte)
+	req, err = http.NewRequest(http.MethodGet, URL, nil)
+	if err != nil {
+		return
+	}
+	res, err = http.DefaultClient.Do(req)
+	if err != nil {
+		return
+	}
+	if res.StatusCode != http.StatusOK {
+		err = fmt.Errorf(("http: %d"), res.StatusCode)
+	}
+	if err != nil {
+		return
+	}
+	b, err = ioutil.ReadAll(res.Body)
+	if err != nil {
+		return
+	}
+	err = json.Unmarshal(b, &v)
+	return
 }

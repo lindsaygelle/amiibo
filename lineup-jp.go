@@ -14,17 +14,14 @@ import (
 // lineupJPN is provided in Japanese Hiragana.
 type lineupJPN struct {
 
-	// jp is a composed property.
-	jp
-
 	// XMLName is the xml node.
 	XMLName xml.Name `xml:"items"`
 
 	// Item is a collection of Nintendo Amiibo products containing their product information in Japanese.
-	Item []lineupItemJPN `xml:"item"`
+	Items []lineupItemJPN `xml:"item"`
 
 	// SeriesItem is a collection of Nintendo Amiibo product auxiliary information.
-	SeriesItem []lineupSeriesItemJP `xml:"series_item"`
+	SeriesItems []lineupSeriesItemJP `xml:"series_item"`
 }
 
 // lineupItemJPN is the unfettered Nintendo Amiibo product information from nintendo.co.jp.
@@ -103,17 +100,10 @@ type lineupSeriesItemJP struct {
 	Name string `xml:"name"`
 }
 
-// getLineupJPN gets the http.Response from nintendo.co.jp.
-//
-// getLineupJPN returns an error on the following:
-//
-// http.Request is nil or errors.
-//
-// http.Response is nil or errors.
-//
-// http.Response.StatusCode is not http.StatusOK.
-func getLineupJPN() (req *http.Request, res *http.Response, err error) {
+// getLineupJPN gets the http.Response from nintendo.co.jp for the lineup Nintendo Amiibo XML.
+func getLineupJPN() (req *http.Request, res *http.Response, v lineupJPN, err error) {
 	const URL = "https://www.nintendo.co.jp/hardware/amiibo/chart/data/lineup.xml"
+	var b ([]byte)
 	req, err = http.NewRequest(http.MethodGet, URL, nil)
 	if err != nil {
 		return
@@ -128,30 +118,6 @@ func getLineupJPN() (req *http.Request, res *http.Response, err error) {
 	if err != nil {
 		return
 	}
-	return
-}
-
-// getLineupJPNXML creates a new lineupJPN from getLineupJPN.
-//
-// getLineupJPNXML returns an error on the following:
-//
-// http.Request, http.Response is nil or errors.
-//
-// ioutil.ReadAll errors.
-//
-// xml.Unmarshal errors.
-func getLineupJPNXML() (v lineupJPN, err error) {
-	var b ([]byte)
-	var req *http.Request
-	var res *http.Response
-	req, res, err = getLineupJPN()
-	if err != nil {
-		return
-	}
-	v.Cookies = res.Cookies()
-	v.Status = res.Status
-	v.StatusCode = res.StatusCode
-	v.URL = req.URL
 	b, err = ioutil.ReadAll(res.Body)
 	if err != nil {
 		return
