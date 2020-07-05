@@ -11,7 +11,7 @@ import (
 //
 // lineupJPN contains the product properties related to Nintendo Amiibo products.
 //
-// lineupJPN is assumed to be in Japanese Hiragana.
+// lineupJPN is provided in Japanese Hiragana.
 type lineupJPN struct {
 
 	// jp is a composed property.
@@ -28,6 +28,8 @@ type lineupJPN struct {
 }
 
 // lineupItemJPN is the unfettered Nintendo Amiibo product information from nintendo.co.jp.
+//
+// lineupItemJPN is provided in Japanese Hiragana.
 type lineupItemJPN struct {
 
 	// XMLName is the xml node.
@@ -85,7 +87,7 @@ type lineupItemJPN struct {
 
 // lineupSeriesItemJP is the unfettered Nintendo Amiibo product additional information from nintendo.co.jp.
 //
-// lineupSeriesItemJP is assumed to be in Japanese Hiragana.
+// lineupSeriesItemJP is provided in Japanese Hiragana.
 type lineupSeriesItemJP struct {
 
 	// XMLName is the xml node.
@@ -130,6 +132,14 @@ func getLineupJPN() (req *http.Request, res *http.Response, err error) {
 }
 
 // getLineupJPNXML creates a new lineupJPN from getLineupJPN.
+//
+// getLineupJPNXML returns an error on the following:
+//
+// http.Request, http.Response is nil or errors.
+//
+// ioutil.ReadAll errors.
+//
+// xml.Unmarshal errors.
 func getLineupJPNXML() (v lineupJPN, err error) {
 	var b ([]byte)
 	var req *http.Request
