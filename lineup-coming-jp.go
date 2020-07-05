@@ -1,9 +1,15 @@
 package amiibo
 
+import (
+	"fmt"
+	"net/http"
+)
+
 // https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml
 
 // lineupComingJPN is the unfettered upcoming Nintendo Amiibo product information provided by nintendo.co.jp.
 type lineupComingJPN struct {
+	Data lineupComingRoot `xml:"data"`
 }
 
 // lineupComingItemJPN is the unfettered upcoming Nintendo Amiibo product information provided by nintendo.co.jp.
@@ -44,4 +50,27 @@ type lineupComingItemJPN struct {
 
 	// TitleRuby is the Japanese Hiragana for the Nintendo Amiibo product.
 	TitleRuby string `xml:"title_ruby"`
+}
+
+type lineupComingRoot struct {
+	Items []itemJPN `xml:"items"`
+}
+
+func getLineupComingJPN() (req *http.Request, res *http.Response, err error) {
+	const URL = "https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml"
+	req, err = http.NewRequest(http.MethodGet, URL, nil)
+	if err != nil {
+		return
+	}
+	res, err = http.DefaultClient.Do(req)
+	if err != nil {
+		return
+	}
+	if res.StatusCode != http.StatusOK {
+		err = fmt.Errorf("http: %d", res.StatusCode)
+	}
+	if err != nil {
+		return
+	}
+	return
 }
