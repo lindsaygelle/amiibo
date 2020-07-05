@@ -73,6 +73,12 @@ type amiiboItem struct {
 
 	// Code is the English ID for the Nintendo Amiibo product.
 	Code string `xml:"code"`
+
+	// Name is the Japanese Hiragana for the Nintendo Amiibo product.
+	Name string `xml:"name"`
+
+	// ReadWrite is a provided field with an unknown purpose.
+	ReadWrite bool `xml:"readwrite"`
 }
 
 // amiiboLineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
