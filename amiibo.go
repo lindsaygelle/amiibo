@@ -10,6 +10,15 @@ package amiibo
 // amiibo is the normalized amiibo data scraped from a compatabilityAmiibo.
 type amiibo struct{}
 
+// amiiboChart is the unfettered Nintendo Amiibo chart information provided by nintendo.co.jp.
+//
+// amiiboChart contains the Japanese language Nintendo Amiibo software compatability.
+//
+// amiiboChart is assumed to be in Japanese hiragana.
+type amiiboChart struct {
+	Items []amiiboItem `xml:"items"`
+}
+
 // amiiboCompatibility is the unfettered Nintendo Amiibo compatibility information provided by nintendo.com.
 //
 // amiiboCompatibility contains the relationship information between Nintendo Amiibo products
@@ -52,6 +61,8 @@ type amiiboContent struct {
 	// ComponentPath is the relative path to the Nintendo resource file.
 	ComponentPath string `json:"componentPath"`
 }
+
+type amiiboItem struct{}
 
 // amiiboLineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
 //
