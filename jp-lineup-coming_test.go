@@ -6,7 +6,7 @@ import (
 
 func TestGetJPNLineupComing(t *testing.T) {
 
-	_, _, v, err := getJPNLineupComing()
+	_, _, v, err := GetJPNLineupComing()
 	if err != nil {
 		t.Fatal(err)
 	}

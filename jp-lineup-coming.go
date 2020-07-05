@@ -16,8 +16,8 @@ type JPNLineupComing struct {
 	Items []JPNLineupComingItem `xml:"items>item"`
 }
 
-// getJPNLineupComing gets the http.Response from nintendo.co.jp for the lineup Nintendo Amiibo XML.
-func getJPNLineupComing() (req *http.Request, res *http.Response, v JPNLineupComing, err error) {
+// GetJPNLineupComing gets the http.Response from nintendo.co.jp for the lineup Nintendo Amiibo XML.
+func GetJPNLineupComing() (req *http.Request, res *http.Response, v JPNLineupComing, err error) {
 	const URL = "https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml"
 	var b ([]byte)
 	req, err = http.NewRequest(http.MethodGet, URL, nil)

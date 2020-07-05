@@ -7,6 +7,9 @@ import (
 	"net/http"
 )
 
+// ENGLineupURL is the URL to the Nintendo of America Nintendo Amiibo lineup information.
+const ENGLineupURL string = "https://www.nintendo.com/content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json"
+
 // ENGLineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
 //
 // ENGLineup contains the product information for the Nintendo Amiibo product as well as some related metadata.
@@ -28,9 +31,8 @@ type ENGLineup struct {
 
 // GetENGLineup gets the http.Response from nintendo.com for the lineup Nintendo Amiibo JSON.
 func GetENGLineup() (req *http.Request, res *http.Response, v ENGLineup, err error) {
-	const URL = "https://www.nintendo.com/content/noa/en_US/amiibo/line-up/jcr:content/root/responsivegrid/lineup.model.json"
 	var b ([]byte)
-	req, err = http.NewRequest(http.MethodGet, URL, nil)
+	req, err = http.NewRequest(http.MethodGet, ENGLineupURL, nil)
 	if err != nil {
 		return
 	}
