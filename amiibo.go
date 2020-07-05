@@ -16,7 +16,7 @@ type amiibo struct{}
 //
 // amiiboChart is assumed to be in Japanese hiragana.
 type amiiboChart struct {
-	Items []amiiboItem `xml:"items"`
+	Items []chartAmiibo `xml:"items"`
 }
 
 // amiiboCompatibility is the unfettered Nintendo Amiibo compatibility information provided by nintendo.com.
@@ -62,14 +62,14 @@ type amiiboContent struct {
 	ComponentPath string `json:"componentPath"`
 }
 
-// amiiboItem is the unfettered Nintendo Amiibo chart information provided by nintendo.co.jp.
+// chartAmiibo is the unfettered Nintendo Amiibo chart information provided by nintendo.co.jp.
 //
-// amiiboItem contains the simplified Nintendo Amiibo product information.
+// chartAmiibo contains the simplified Nintendo Amiibo product information.
 //
-// amiiboItem is assumed to be in Japanese Hiragana.
+// chartAmiibo is assumed to be in Japanese Hiragana.
 //
-// amiiboItem is provided as XML from nintendo.co.jp.
-type amiiboItem struct {
+// chartAmiibo is provided as XML from nintendo.co.jp.
+type chartAmiibo struct {
 	chartCommon
 
 	// Series is the Japanese Hiragana for the Nintendo product that the Nintendo Amiibo product is affiliated with.
@@ -78,15 +78,15 @@ type amiiboItem struct {
 	Series string `xml:"series"`
 
 	// Softwares is a collection of metadata that the Nintendo Amiibo product integrates with.
-	Softwares []amiiboItemSoftware `xml:"softwares"`
+	Softwares []chartAmiiboSoftware `xml:"softwares"`
 }
 
-// amiiboItemSoftware is the software support information for a Nintendo Amiibo chart item provided by nintendo.co.jp.
+// chartAmiiboSoftware is the software support information for a Nintendo Amiibo chart item provided by nintendo.co.jp.
 //
-// amiiboItemSoftware is assumed to be in Japanese Hiragana.
+// chartAmiiboSoftware is assumed to be in Japanese Hiragana.
 //
-// amiiboItemSoftware is provided as XML from nintedo.co.jp.
-type amiiboItemSoftware struct {
+// chartAmiiboSoftware is provided as XML from nintedo.co.jp.
+type chartAmiiboSoftware struct {
 
 	// chartCommon is a composed property.
 	chartCommon
@@ -116,6 +116,16 @@ type amiiboLineup struct {
 
 	// Items is a collection of metadata related to Nintendo Amiibo products.
 	Items []lineupItem
+}
+
+// amiiboLineupJP is the unfettered Nintendo Amiibo lineup information provided by nintendo.co.jp.
+//
+// amiiboLineupJP contains the product properties related to Nintendo Amiibo products.
+//
+// amiiboLineupJP is assumed to be in Japanese Hiragana.
+type amiiboLineupJP struct {
+	Item       []lineupItemJP       `xml:"item"`
+	SeriesItem []lineupSeriesItemJP `xml:"series_item"`
 }
 
 type chartCommon struct {
@@ -234,3 +244,11 @@ type compatabilityItem struct {
 type lineupAmiibo struct{}
 
 type lineupItem struct{}
+
+type lineupItemJP struct{}
+
+type lineupSeriesItemJP struct {
+	BGColor string `xml:"bgcolor"`
+	Color   string `xml:"color"`
+	Name    string `xml:"name"`
+}
