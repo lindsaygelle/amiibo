@@ -75,11 +75,20 @@ type amiiboItem struct {
 	Code string `xml:"code"`
 
 	// Name is the Japanese Hiragana for the Nintendo Amiibo product.
+	//
+	// Name will need to be translated from Japanese to English.
 	Name string `xml:"name"`
 
-	// ReadWrite is a provided field with an unknown purpose.
-	ReadWrite bool `xml:"readwrite"`
+	// Series is the Japanese Hiragana for the Nintendo product that the Nintendo Amiibo product is affiliated with.
+	//
+	// Series will need to be translated from Japanese to English.
+	Series string `xml:"series"`
+
+	// Softwares is a collection of metadata that the Nintendo Amiibo product integrates with.
+	Softwares []amiiboItemSoftware `xml:"softwares"`
 }
+
+type amiiboItemSoftware struct{}
 
 // amiiboLineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.com.
 //
