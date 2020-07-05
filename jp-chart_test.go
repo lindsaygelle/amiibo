@@ -1,9 +1,13 @@
-package amiibo
+package amiibo_test
 
-import "testing"
+import (
+	"testing"
 
-func TestChartJPN(t *testing.T) {
-	_, _, v, err := GetJPNChart()
+	"github.com/lindsaygelle/amiibo"
+)
+
+func TestGetJPNChart(t *testing.T) {
+	_, _, v, err := amiibo.GetJPNChart()
 	if err != nil {
 		t.Fatal(err)
 	}

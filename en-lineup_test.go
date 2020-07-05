@@ -1,12 +1,14 @@
-package amiibo
+package amiibo_test
 
 import (
 	"testing"
+
+	"github.com/lindsaygelle/amiibo"
 )
 
 func TestGetLineup(t *testing.T) {
 
-	_, _, v, err := GetENGLineup()
+	_, _, v, err := amiibo.GetENGLineup()
 	if err != nil {
 		t.Fatal(err)
 	}

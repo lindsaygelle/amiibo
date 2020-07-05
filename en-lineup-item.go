@@ -1,5 +1,10 @@
 package amiibo
 
+import (
+	"path/filepath"
+	"strings"
+)
+
 // ENGLineupItem is the unfettered Nintendo Amiibo product additional information from nintendo.com.
 //
 // ENGLineupItem contains additional information for a Nintendo Amiibo product.
@@ -25,4 +30,9 @@ type ENGLineupItem struct {
 	//
 	// URL requires nintendo.com to be prepended to the URL.
 	URL string `json:"url"`
+}
+
+// GetID returns the ENGLineupItem ID.
+func (e ENGLineupItem) GetID() string {
+	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
 }

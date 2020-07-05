@@ -1,12 +1,14 @@
-package amiibo
+package amiibo_test
 
 import (
 	"testing"
+
+	"github.com/lindsaygelle/amiibo"
 )
 
-func TestGetLineupJPN(t *testing.T) {
+func TestGetJPNLineup(t *testing.T) {
 
-	_, _, v, err := getJPNLineup()
+	_, _, v, err := amiibo.GetJPNLineup()
 	if err != nil {
 		t.Fatal(err)
 	}

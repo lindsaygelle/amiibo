@@ -1,5 +1,10 @@
 package amiibo
 
+import (
+	"path/filepath"
+	"strings"
+)
+
 // ENGLineupAmiibo is the unfettered Nintendo Amiibo product information from nintendo.com.
 //
 // ENGLineupAmiibo contains the English language product information for a specific Nintendo Amiibo.
@@ -74,4 +79,9 @@ type ENGLineupAmiibo struct {
 
 	// UPC is the universal product code for the Nintendo Amiibo product.
 	UPC string `json:"upc"`
+}
+
+// GetID returns the ENGLineupAmiibo ID.
+func (e ENGLineupAmiibo) GetID() string {
+	return strings.TrimSuffix(filepath.Base(e.DetailsURL), ".html")
 }

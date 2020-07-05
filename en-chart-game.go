@@ -17,6 +17,7 @@ type ENGChartGame struct {
 	URL             string `json:"url"`
 }
 
-func (e ENGChartGame) String() string {
+// GetID returns the ID for ENGChartGame.
+func (e ENGChartGame) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
 }

@@ -7,11 +7,14 @@ import (
 	"net/http"
 )
 
-// JPNLineup is the unfettered Nintendo Amiibo lineup information provided by nintendo.co.jp.
+// JPNLineupURL is the URL for the Nintendo Japan Nintendo Amiibo lineup chart.
+const JPNLineupURL string = "https://www.nintendo.co.jp/hardware/amiibo/chart/data/lineup.xml"
+
+// JPNLineup is the unfettered Japanese language Nintendo Amiibo product and game support information.
 //
-// JPNLineup contains the product properties related to Nintendo Amiibo products.
+// JPNLineup is provided by Nintendo of America.
 //
-// JPNLineup is provided in Japanese Hiragana.
+// https://www.nintendo.co.jp/hardware/amiibo/chart/data/lineup.xml
 type JPNLineup struct {
 
 	// XMLName is the xml node.
@@ -24,11 +27,10 @@ type JPNLineup struct {
 	SeriesItems []JPLineupSeriesItem `xml:"series_item"`
 }
 
-// getJPNLineup gets the http.Response from nintendo.co.jp for the lineup Nintendo Amiibo XML.
-func getJPNLineup() (req *http.Request, res *http.Response, v JPNLineup, err error) {
-	const URL = "https://www.nintendo.co.jp/hardware/amiibo/chart/data/lineup.xml"
+// GetJPNLineup gets the http.Response from nintendo.co.jp for the lineup Nintendo Amiibo XML.
+func GetJPNLineup() (req *http.Request, res *http.Response, v JPNLineup, err error) {
 	var b ([]byte)
-	req, err = http.NewRequest(http.MethodGet, URL, nil)
+	req, err = http.NewRequest(http.MethodGet, JPNLineupURL, nil)
 	if err != nil {
 		return
 	}
