@@ -1,7 +1,9 @@
 package amiibo
 
 import (
+	"encoding/xml"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -9,11 +11,20 @@ import (
 
 // lineupComingJPN is the unfettered upcoming Nintendo Amiibo product information provided by nintendo.co.jp.
 type lineupComingJPN struct {
-	Data lineupComingRoot `xml:"data"`
+
+	// XMLName is the xml node.
+	XMLName xml.Name `xml:"data"`
+
+	Items      []lineupComingItemJPN `xml:"items>item"`
+	Status     string
+	StatusCode int
 }
 
 // lineupComingItemJPN is the unfettered upcoming Nintendo Amiibo product information provided by nintendo.co.jp.
 type lineupComingItemJPN struct {
+
+	// XMLName is the xml node.
+	XMLName xml.Name `xml:"item"`
 
 	// AmiiboLabel is the label for the Nintendo Amiibo product.
 	AmiiboLabel string `xml:"amiibo_label"`
@@ -52,10 +63,6 @@ type lineupComingItemJPN struct {
 	TitleRuby string `xml:"title_ruby"`
 }
 
-type lineupComingRoot struct {
-	Items []itemJPN `xml:"items"`
-}
-
 func getLineupComingJPN() (req *http.Request, res *http.Response, err error) {
 	const URL = "https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml"
 	req, err = http.NewRequest(http.MethodGet, URL, nil)
@@ -69,6 +76,26 @@ func getLineupComingJPN() (req *http.Request, res *http.Response, err error) {
 	if res.StatusCode != http.StatusOK {
 		err = fmt.Errorf("http: %d", res.StatusCode)
 	}
+	if err != nil {
+		return
+	}
+	return
+}
+
+func getLineupComingJPNXML() (v lineupComingJPN, err error) {
+	var b ([]byte)
+	var res *http.Response
+	_, res, err = getLineupComingJPN()
+	if err != nil {
+		return
+	}
+	v.Status = res.Status
+	v.StatusCode = res.StatusCode
+	b, err = ioutil.ReadAll(res.Body)
+	if err != nil {
+		return
+	}
+	err = xml.Unmarshal(b, &v)
 	if err != nil {
 		return
 	}
