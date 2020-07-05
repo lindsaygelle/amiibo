@@ -20,7 +20,17 @@ type lineup struct {
 // lineupAmiibo is the unfettered Nintendo Amiibo product information from nintendo.com.
 //
 // lineupAmiibo contains the English language product information for a specific Nintendo Amiibo.
-type lineupAmiibo struct{}
+type lineupAmiibo struct {
+
+	// DetailsPath is the relative path to the Nintendo Amiibo product information page.
+	DetailsPath string `json:"detailsPath"`
+
+	// DetailsURL is the relative URL to the Nintendo Amiibo product information page.
+	DetailsURL string `json:"detailsUrl"`
+
+	// UnixTimestamp is the Nintendo Amiibo product release date in milliseconds.
+	UnixTimestamp int64 `json:"unixTimestamp"`
+}
 
 // lineupItem is the unfettered Nintendo Amiibo product additional information from nintendo.com.
 //
@@ -28,6 +38,8 @@ type lineupAmiibo struct{}
 type lineupItem struct {
 
 	// Description is the verbose Nintendo Amiibo product summary.
+	//
+	// Description is often a null field.
 	Description string `json:"description"`
 
 	// LastModified is the Nintendo Amiibo product release date in milliseconds.
@@ -37,8 +49,12 @@ type lineupItem struct {
 	Path string `json:"path"`
 
 	// Title is the name of the Nintendo Amiibo product.
+	//
+	// Title can contain special characters that require filtering.
 	Title string `json:"title"`
 
 	// URL is the relative path URL to the Nintendo Amiibo product information page.
+	//
+	// URL requires nintendo.com to be prepended to the URL.
 	URL string `json:"url"`
 }
