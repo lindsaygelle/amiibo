@@ -5,22 +5,18 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 )
-
-// https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml
 
 // lineupComingJPN is the unfettered upcoming Nintendo Amiibo product information provided by nintendo.co.jp.
 type lineupComingJPN struct {
 
+	// jp is a composed property.
+	jp
+
 	// XMLName is the xml node.
 	XMLName xml.Name `xml:"data"`
 
-	Cookies    []*http.Cookie
-	Items      []lineupComingItemJPN `xml:"items>item"`
-	Status     string
-	StatusCode int
-	URL        *url.URL
+	Items []lineupComingItemJPN `xml:"items>item"`
 }
 
 // lineupComingItemJPN is the unfettered upcoming Nintendo Amiibo product information provided by nintendo.co.jp.

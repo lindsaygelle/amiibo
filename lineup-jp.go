@@ -1,6 +1,11 @@
 package amiibo
 
-// https://www.nintendo.co.jp/hardware/amiibo/chart/data/lineup.xml
+import (
+	"encoding/xml"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
 
 // lineupJPN is the unfettered Nintendo Amiibo lineup information provided by nintendo.co.jp.
 //
@@ -8,6 +13,9 @@ package amiibo
 //
 // lineupJPN is assumed to be in Japanese Hiragana.
 type lineupJPN struct {
+
+	// jp is a composed property.
+	jp
 
 	// Item is a collection of Nintendo Amiibo products containing their product information in Japanese.
 	Item []lineupItemJPN `xml:"item"`
@@ -82,4 +90,56 @@ type lineupSeriesItemJP struct {
 
 	// Name is the name of the Nintendo product in Japanese Hiragana.
 	Name string `xml:"name"`
+}
+
+// getLineupJPN gets the http.Response from nintendo.co.jp.
+//
+// getLineupJPN returns an error on the following:
+//
+// http.Request is nil or errors.
+//
+// http.Response is nil or errors.
+//
+// http.Response.StatusCode is not http.StatusOK.
+func getLineupJPN() (req *http.Request, res *http.Response, err error) {
+	const URL = "https://www.nintendo.co.jp/hardware/amiibo/chart/data/lineup.xml"
+	req, err = http.NewRequest(http.MethodGet, URL, nil)
+	if err != nil {
+		return
+	}
+	res, err = http.DefaultClient.Do(req)
+	if err != nil {
+		return
+	}
+	if res.StatusCode != http.StatusOK {
+		err = fmt.Errorf(("http: %d"), res.StatusCode)
+	}
+	if err != nil {
+		return
+	}
+	return
+}
+
+// getLineupJPNXML creates a new lineupJPN from getLineupJPN.
+func getLineupJPNXML() (v lineupJPN, err error) {
+	var b ([]byte)
+	var req *http.Request
+	var res *http.Response
+	req, res, err = getLineupComingJPN()
+	if err != nil {
+		return
+	}
+	v.Cookies = res.Cookies()
+	v.Status = res.Status
+	v.StatusCode = res.StatusCode
+	v.URL = req.URL
+	b, err = ioutil.ReadAll(res.Body)
+	if err != nil {
+		return
+	}
+	err = xml.Unmarshal(b, &v)
+	if err != nil {
+		return
+	}
+	return
 }
