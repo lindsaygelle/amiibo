@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 )
 
 // https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml
@@ -15,9 +16,11 @@ type lineupComingJPN struct {
 	// XMLName is the xml node.
 	XMLName xml.Name `xml:"data"`
 
+	Cookies    []*http.Cookie
 	Items      []lineupComingItemJPN `xml:"items>item"`
 	Status     string
 	StatusCode int
+	URL        *url.URL
 }
 
 // lineupComingItemJPN is the unfettered upcoming Nintendo Amiibo product information provided by nintendo.co.jp.
@@ -83,7 +86,7 @@ func getLineupComingJPN() (req *http.Request, res *http.Response, err error) {
 		return
 	}
 	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf("http: %d", res.StatusCode)
+		err = fmt.Errorf(("http: %d"), res.StatusCode)
 	}
 	if err != nil {
 		return
@@ -91,15 +94,19 @@ func getLineupComingJPN() (req *http.Request, res *http.Response, err error) {
 	return
 }
 
+// getLineupComingJPNXML creates a new lineupComingJPN from getLineupComingJPN.
 func getLineupComingJPNXML() (v lineupComingJPN, err error) {
 	var b ([]byte)
+	var req *http.Request
 	var res *http.Response
-	_, res, err = getLineupComingJPN()
+	req, res, err = getLineupComingJPN()
 	if err != nil {
 		return
 	}
+	v.Cookies = res.Cookies()
 	v.Status = res.Status
 	v.StatusCode = res.StatusCode
+	v.URL = req.URL
 	b, err = ioutil.ReadAll(res.Body)
 	if err != nil {
 		return
