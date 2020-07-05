@@ -1,43 +1,51 @@
 package amiibo_test
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
 )
 
-func TestGetJPNLineup(t *testing.T) {
+var jpnLineup amiibo.JPNLineup
 
-	_, _, v, err := amiibo.GetJPNLineup()
+func TestGetJPNLineup(t *testing.T) {
+	var err error
+	_, _, jpnLineup, err = amiibo.GetJPNLineup()
 	if err != nil {
 		t.Fatal(err)
 	}
-	if l := len(v.Items); l == 0 {
-		t.Fatal("len: v.Items", l)
+	if l := len(jpnLineup.Items); l == 0 {
+		t.Fatal("len: jpnLineup.Items", l)
 	}
-	if l := len(v.SeriesItems); l == 0 {
-		t.Fatal("len: v.SeriesItems", l)
+	if l := len(jpnLineup.SeriesItems); l == 0 {
+		t.Fatal("len: jpnLineup.SeriesItems", l)
 	}
 	m := make(map[string]int)
-	for _, v := range v.Items {
-		if _, ok := m[v.GetID()]; !ok {
-			m[v.GetID()] = 0
+	for _, v := range jpnLineup.Items {
+		ID := v.GetID()
+		if _, ok := m[ID]; !ok {
+			m[ID] = 0
 		}
-		m[v.GetID()] = m[v.GetID()] + 1
+		m[ID] = m[ID] + 1
 	}
-	a, b := len(m), len(v.Items)
+	a, b := len(m), len(jpnLineup.Items)
 	if a != b {
-		t.Fatalf("len: v.Items %d != %d", a, b)
+		t.Fatalf("len: jpnLineup.Items %d != %d", a, b)
 	}
 	m = make(map[string]int)
-	for _, v := range v.SeriesItems {
-		if _, ok := m[v.Name]; !ok {
-			m[v.Name] = 0
+	for _, v := range jpnLineup.SeriesItems {
+		ID := v.Name
+		if _, ok := m[ID]; !ok {
+			m[ID] = 0
 		}
-		m[v.Name] = m[v.Name] + 1
+		m[ID] = m[ID] + 1
 	}
-	a, b = len(m), len(v.SeriesItems)
+	a, b = len(m), len(jpnLineup.SeriesItems)
 	if a != b {
-		t.Fatalf("len: v.SeriesItems %d != %d", a, b)
+		t.Fatalf("len: jpnLineup.SeriesItems %d != %d", a, b)
+	}
+	if !reflect.ValueOf(jpnChart).IsZero() && !reflect.ValueOf(jpnLineup).IsZero() {
+		testJPN(t, jpnChart, jpnLineup)
 	}
 }
