@@ -1,70 +1,41 @@
 package amiibo_test
 
 import (
-	"log"
+	"os"
 	"path/filepath"
-	"reflect"
-	"runtime"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
 )
 
 var jpnLineup amiibo.JPNLineup
+var jpnLineupFilename = "jpn-lineup.xml"
+var jpnLineupFullpath = filepath.Join(filefolder, jpnLineupFilename)
 
 func TestGetJPNLineup(t *testing.T) {
 	var err error
-	_, caller, _, _ := runtime.Caller(0)
-	filefolder := filepath.Dir(caller)
-	filename := "jpn-lineup.xml"
-	jpnLineup, err = amiibo.ReadJPNLineup(filefolder, filename)
-	if err != nil {
-		log.Println("amiibo.ReadJPNLineup", err)
-	}
-	if err != nil {
+	if _, err := os.Stat(jpnLineupFullpath); !os.IsNotExist(err) {
+		jpnLineup, err = amiibo.ReadJPNLineup(filefolder, jpnLineupFilename)
+		if err != nil {
+			t.Fatal("amiibo.ReadJPNLineup", err)
+		}
+	} else {
 		_, _, jpnLineup, err = amiibo.GetJPNLineup()
 		if err != nil {
 			t.Fatal(err)
 		}
 	}
-	s, err := amiibo.WriteJPNLineup(filefolder, filename, jpnLineup)
+	s, err := amiibo.WriteJPNLineup(filefolder, jpnLineupFilename, jpnLineup)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if s != filepath.Join(filefolder, filename) {
-		t.Fatalf("%s != %s", s, filepath.Join(filefolder, filename))
+	if s != jpnLineupFullpath {
+		t.Fatalf("%s != %s", s, jpnLineupFullpath)
 	}
 	if l := len(jpnLineup.Items); l == 0 {
 		t.Fatal("len: jpnLineup.Items", l)
 	}
 	if l := len(jpnLineup.SeriesItems); l == 0 {
 		t.Fatal("len: jpnLineup.SeriesItems", l)
-	}
-	m := make(map[string]int)
-	for _, v := range jpnLineup.Items {
-		ID := v.GetID()
-		if _, ok := m[ID]; !ok {
-			m[ID] = 0
-		}
-		m[ID] = m[ID] + 1
-	}
-	a, b := len(m), len(jpnLineup.Items)
-	if a != b {
-		t.Fatalf("len: jpnLineup.Items %d != %d", a, b)
-	}
-	m = make(map[string]int)
-	for _, v := range jpnLineup.SeriesItems {
-		ID := v.Name
-		if _, ok := m[ID]; !ok {
-			m[ID] = 0
-		}
-		m[ID] = m[ID] + 1
-	}
-	a, b = len(m), len(jpnLineup.SeriesItems)
-	if a != b {
-		t.Fatalf("len: jpnLineup.SeriesItems %d != %d", a, b)
-	}
-	if !reflect.ValueOf(jpnChart).IsZero() && !reflect.ValueOf(jpnLineup).IsZero() {
-		testJPN(t, jpnChart, jpnLineup)
 	}
 }

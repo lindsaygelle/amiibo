@@ -11,7 +11,13 @@ import (
 
 // getRemoteFile gets a remote file from a remote URL.
 func getRemoteFile(URL string) (req *http.Request, res *http.Response, err error) {
-	req, err = http.NewRequest(http.MethodGet, JPNChartURL, nil)
+	if len(URL) == 0 {
+		err = fmt.Errorf("http: URL")
+	}
+	if err != nil {
+		return
+	}
+	req, err = http.NewRequest(http.MethodGet, URL, nil)
 	if err != nil {
 		return
 	}

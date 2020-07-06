@@ -2,10 +2,12 @@ package amiibo
 
 import (
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
+
+// JPNLineupComingURL is the URL for the Nintendo Japan Nintendo Amiibo lineup coming chart.
+const JPNLineupComingURL string = "https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml"
 
 // JPNLineupComing is the unfettered upcoming Nintendo Amiibo product information provided by nintendo.co.jp.
 type JPNLineupComing struct {
@@ -13,24 +15,14 @@ type JPNLineupComing struct {
 	// XMLName is the xml node.
 	XMLName xml.Name `xml:"data"`
 
+	// Items is a collection of Nintendo Amiibo product information.
 	Items []JPNLineupComingItem `xml:"items>item"`
 }
 
 // GetJPNLineupComing gets the http.Response from nintendo.co.jp for the lineup Nintendo Amiibo XML.
 func GetJPNLineupComing() (req *http.Request, res *http.Response, v JPNLineupComing, err error) {
-	const URL = "https://www.nintendo.co.jp/data/software/xml-system/amiibo-lineup-coming.xml"
 	var b ([]byte)
-	req, err = http.NewRequest(http.MethodGet, URL, nil)
-	if err != nil {
-		return
-	}
-	res, err = http.DefaultClient.Do(req)
-	if err != nil {
-		return
-	}
-	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf(("http: %d"), res.StatusCode)
-	}
+	req, res, err = getRemoteFile(JPNLineupComingURL)
 	if err != nil {
 		return
 	}
@@ -42,5 +34,17 @@ func GetJPNLineupComing() (req *http.Request, res *http.Response, v JPNLineupCom
 	if err != nil {
 		return
 	}
+	return
+}
+
+// ReadJPNLineupComing reads a JPNLineupComing from disc.
+func ReadJPNLineupComing(dir string, filename string) (v JPNLineupComing, err error) {
+	err = readXMLFile(dir, filename, &v)
+	return
+}
+
+// WriteJPNLineupComing writes a JPNLineupComing to disc.
+func WriteJPNLineupComing(dir string, filename string, v JPNLineupComing) (fullpath string, err error) {
+	fullpath, err = writeXMLFile(dir, filename, &v)
 	return
 }
