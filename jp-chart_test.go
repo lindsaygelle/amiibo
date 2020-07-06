@@ -1,7 +1,9 @@
 package amiibo_test
 
 import (
+	"path/filepath"
 	"reflect"
+	"runtime"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
@@ -11,9 +13,22 @@ var jpnChart amiibo.JPNChart
 
 func TestGetJPNChart(t *testing.T) {
 	var err error
-	_, _, jpnChart, err = amiibo.GetJPNChart()
+	_, caller, _, _ := runtime.Caller(0)
+	filefolder := filepath.Dir(caller)
+	filename := "jpn-chart.xml"
+	jpnChart, err = amiibo.ReadJPNChart(filefolder, filename)
+	if err != nil {
+		_, _, jpnChart, err = amiibo.GetJPNChart()
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	s, err := amiibo.WriteJPNChart(filefolder, filename, jpnChart)
 	if err != nil {
 		t.Fatal(err)
+	}
+	if s != filepath.Join(filefolder, filename) {
+		t.Fatalf("%s != %s", s, filepath.Join(filefolder, filename))
 	}
 	if l := len(jpnChart.Items); l == 0 {
 		t.Fatal("len: v.Items", l)

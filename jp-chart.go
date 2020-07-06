@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"path/filepath"
 )
 
 // JPNChartURL is the URL for the Nintendo Japan Nintendo Amiibo compatibility chart.
@@ -46,6 +47,35 @@ func GetJPNChart() (req *http.Request, res *http.Response, v JPNChart, err error
 		return
 	}
 	err = xml.Unmarshal(b, &v)
+	if err != nil {
+		return
+	}
+	return
+}
+
+// ReadJPNChart reads a JPNChart from disc.
+func ReadJPNChart(dir string, filename string) (v JPNChart, err error) {
+	var b ([]byte)
+	b, err = ioutil.ReadFile(filepath.Join(dir, filename))
+	if err != nil {
+		return
+	}
+	err = xml.Unmarshal(b, &v)
+	if err != nil {
+		return
+	}
+	return
+}
+
+// WriteJPNChart writes a JPNChart to disc.
+func WriteJPNChart(dir string, filename string, v JPNChart) (fullpath string, err error) {
+	var b ([]byte)
+	fullpath = filepath.Join(dir, filename)
+	b, err = xml.Marshal(v)
+	if err != nil {
+		return
+	}
+	err = ioutil.WriteFile(fullpath, b, 0644)
 	if err != nil {
 		return
 	}
