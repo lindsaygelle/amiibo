@@ -1,7 +1,6 @@
 package amiibo_test
 
 import (
-	"log"
 	"os"
 	"path/filepath"
 	"testing"
@@ -18,7 +17,7 @@ func TestGetENGLineup(t *testing.T) {
 	if _, err := os.Stat(engLineupFullpath); !os.IsNotExist(err) {
 		engLineup, err = amiibo.ReadENGLineup(filefolder, engLineupFileName)
 		if err != nil {
-			log.Println("amiibo.ReadENGLineup", err)
+			t.Fatal("amiibo.ReadENGLineup", err)
 		}
 	} else {
 		_, _, engLineup, err = amiibo.GetENGLineup()

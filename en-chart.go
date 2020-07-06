@@ -17,7 +17,7 @@ const ENGChartURL string = "https://www.nintendo.com/content/noa/en_US/amiibo/co
 type ENGChart struct {
 
 	// AmiiboList is a collection of Nintendo Amiibo product information.
-	AmiiboList []ENGChart `json:"amiiboList"`
+	AmiiboList []ENGChartAmiibo `json:"amiiboList"`
 
 	// GameList is a collection of Nintendo Amiibo supported games.
 	GameList []ENGChartGame `json:"gameList"`
