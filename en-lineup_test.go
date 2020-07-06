@@ -1,21 +1,42 @@
 package amiibo_test
 
 import (
+	"log"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
 )
 
-func TestGetLineup(t *testing.T) {
+var engLineup amiibo.ENGLineup
+var engLineupFileName = "eng-lineup.json"
+var engLineupFullpath = filepath.Join(filefolder, engLineupFileName)
 
-	_, _, v, err := amiibo.GetENGLineup()
+func TestGetENGLineup(t *testing.T) {
+	var err error
+	if _, err := os.Stat(engLineupFullpath); !os.IsNotExist(err) {
+		engLineup, err = amiibo.ReadENGLineup(filefolder, engLineupFileName)
+		if err != nil {
+			log.Println("amiibo.ReadENGLineup", err)
+		}
+	} else {
+		_, _, engLineup, err = amiibo.GetENGLineup()
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	s, err := amiibo.WriteENGLineup(filefolder, engLineupFileName, engLineup)
 	if err != nil {
 		t.Fatal(err)
 	}
-	if l := len(v.AmiiboList); l == 0 {
-		t.Fatal("len: v.AmiiboList", l)
+	if s != engLineupFullpath {
+		t.Fatalf("%s != %s", s, engLineupFullpath)
 	}
-	if l := len(v.Items); l == 0 {
-		t.Fatal("len: v.Items", l)
+	if l := len(engLineup.AmiiboList); l == 0 {
+		t.Fatal("len: enLineup.AmiiboList", l)
+	}
+	if l := len(engLineup.Items); l == 0 {
+		t.Fatal("len: enLineup.Items", l)
 	}
 }

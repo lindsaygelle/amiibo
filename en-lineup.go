@@ -42,3 +42,15 @@ func GetENGLineup() (req *http.Request, res *http.Response, v ENGLineup, err err
 	err = json.Unmarshal(b, &v)
 	return
 }
+
+// ReadENGLineup reads a ENGLineup from disc.
+func ReadENGLineup(dir string, filename string) (v ENGLineup, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return
+}
+
+// WriteENGLineup writes a ENGLineup to disc.
+func WriteENGLineup(dir string, filename string, v ENGLineup) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, &v)
+	return
+}

@@ -40,3 +40,15 @@ func GetENGChart() (req *http.Request, res *http.Response, v ENGChart, err error
 	err = json.Unmarshal(b, &v)
 	return
 }
+
+// ReadENGChart reads a ENGChart from disc.
+func ReadENGChart(dir string, filename string) (v ENGChart, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteENGChart writes a ENGChart to disc.
+func WriteENGChart(dir string, filename string, v ENGChart) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, &v)
+	return
+}
