@@ -60,10 +60,10 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 	e.Name = v.Name
 	e.ProductAlternative = v.Type
 	var releaseDateAlternative time.Time
-	releaseDateAlternative, _ = time.Parse("2006-01-02", v.ReleaseDateMask)
-	/* if err != nil {
-		return
-	} */
+	releaseDateAlternative, err = time.Parse("2006-01-02", v.ReleaseDateMask)
+	if err != nil {
+		// this is not acc
+	}
 	e.ReleaseDateAlternative = releaseDateAlternative
 	if !reflect.ValueOf(e.URL).IsZero() {
 		e.URL = v.URL
@@ -105,9 +105,9 @@ func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
 	e.ProductPage = v.AmiiboPage
 	var releaseDate time.Time
 	releaseDate, _ = time.Parse("2006-01-02", v.ReleaseDateMask)
-	/* if err != nil {
-		return
-	} */
+	if err != nil {
+		// this is not acc
+	}
 	e.ReleaseDate = releaseDate
 	e.Series = v.Series
 	e.Title = v.Slug
@@ -119,7 +119,7 @@ func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
 func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
 	e.DescriptionAlternative = v.Description
 	var lastModified time.Time
-	lastModified = time.Unix(v.LastModified, 0)
+	lastModified = time.Unix(0, v.LastModified)
 	e.LastModified = lastModified
 	e.Path = v.Path
 	e.TitleAlternative = v.Title
