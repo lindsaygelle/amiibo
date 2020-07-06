@@ -2,7 +2,6 @@ package amiibo
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -30,17 +29,7 @@ type ENGChart struct {
 // GetENGChart gets the ENGChart from nintendo.com.
 func GetENGChart() (req *http.Request, res *http.Response, v ENGChart, err error) {
 	var b ([]byte)
-	req, err = http.NewRequest(http.MethodGet, ENGChartURL, nil)
-	if err != nil {
-		return
-	}
-	res, err = http.DefaultClient.Do(req)
-	if err != nil {
-		return
-	}
-	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf(("http: %d"), res.StatusCode)
-	}
+	req, res, err = getRemoteFile(ENGChartURL)
 	if err != nil {
 		return
 	}

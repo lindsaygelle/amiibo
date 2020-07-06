@@ -2,7 +2,6 @@ package amiibo
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -32,17 +31,7 @@ type ENGLineup struct {
 // GetENGLineup gets the http.Response from nintendo.com for the lineup Nintendo Amiibo JSON.
 func GetENGLineup() (req *http.Request, res *http.Response, v ENGLineup, err error) {
 	var b ([]byte)
-	req, err = http.NewRequest(http.MethodGet, ENGLineupURL, nil)
-	if err != nil {
-		return
-	}
-	res, err = http.DefaultClient.Do(req)
-	if err != nil {
-		return
-	}
-	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf(("http: %d"), res.StatusCode)
-	}
+	req, res, err = getRemoteFile(ENGLineupURL)
 	if err != nil {
 		return
 	}

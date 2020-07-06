@@ -41,13 +41,15 @@ func readFile(dir, filename string, fn func(string) ([]byte, error)) (b []byte, 
 }
 
 // readJSONFile reads a JSON file from disc and unmarshals its contents using json.Unmarshal.
-func readJSONFile(dir, filename string, v interface{}) error {
-	return unmarshal(dir, filename, &v, json.Unmarshal)
+func readJSONFile(dir, filename string, v interface{}) (err error) {
+	err = unmarshal(dir, filename, &v, json.Unmarshal)
+	return
 }
 
 // readXMLFile reads a XML file from disc and unmarshals its contents using xml.Unmarshal.
-func readXMLFile(dir, filename string, v interface{}) error {
-	return unmarshal(dir, filename, &v, xml.Unmarshal)
+func readXMLFile(dir, filename string, v interface{}) (err error) {
+	err = unmarshal(dir, filename, &v, xml.Unmarshal)
+	return
 }
 
 // unmarshal handles a (package).Unmarshal operation.
