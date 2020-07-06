@@ -3,9 +3,30 @@ package amiibo
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"io/ioutil"
+	"net/http"
 	"path/filepath"
 )
+
+// getRemoteFile gets a remote file from a remote URL.
+func getRemoteFile(URL string) (req *http.Request, res *http.Response, err error) {
+	req, err = http.NewRequest(http.MethodGet, JPNChartURL, nil)
+	if err != nil {
+		return
+	}
+	res, err = http.DefaultClient.Do(req)
+	if err != nil {
+		return
+	}
+	if res.StatusCode != http.StatusOK {
+		err = fmt.Errorf(("http: %d"), res.StatusCode)
+	}
+	if err != nil {
+		return
+	}
+	return
+}
 
 // marshal handles a (package).Marshal operation.
 func marshal(v interface{}, fn func(interface{}) ([]byte, error)) (b []byte, err error) {

@@ -2,7 +2,6 @@ package amiibo
 
 import (
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -27,17 +26,7 @@ type JPNChart struct {
 // GetJPNChart gets the JPNChart from nintendo.co.jp.
 func GetJPNChart() (req *http.Request, res *http.Response, v JPNChart, err error) {
 	var b ([]byte)
-	req, err = http.NewRequest(http.MethodGet, JPNChartURL, nil)
-	if err != nil {
-		return
-	}
-	res, err = http.DefaultClient.Do(req)
-	if err != nil {
-		return
-	}
-	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf(("http: %d"), res.StatusCode)
-	}
+	req, res, err = getRemoteFile(JPNChartURL)
 	if err != nil {
 		return
 	}

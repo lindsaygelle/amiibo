@@ -1,6 +1,7 @@
 package amiibo_test
 
 import (
+	"log"
 	"path/filepath"
 	"reflect"
 	"runtime"
@@ -18,7 +19,7 @@ func TestGetJPNLineup(t *testing.T) {
 	filename := "jpn-lineup.xml"
 	jpnLineup, err = amiibo.ReadJPNLineup(filefolder, filename)
 	if err != nil {
-		t.Log("amiibo.ReadJPNLineup", err)
+		log.Println("amiibo.ReadJPNLineup", err)
 	}
 	if err != nil {
 		_, _, jpnLineup, err = amiibo.GetJPNLineup()

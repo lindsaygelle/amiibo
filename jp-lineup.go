@@ -2,7 +2,6 @@ package amiibo
 
 import (
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -30,17 +29,7 @@ type JPNLineup struct {
 // GetJPNLineup gets the http.Response from nintendo.co.jp for the lineup Nintendo Amiibo XML.
 func GetJPNLineup() (req *http.Request, res *http.Response, v JPNLineup, err error) {
 	var b ([]byte)
-	req, err = http.NewRequest(http.MethodGet, JPNLineupURL, nil)
-	if err != nil {
-		return
-	}
-	res, err = http.DefaultClient.Do(req)
-	if err != nil {
-		return
-	}
-	if res.StatusCode != http.StatusOK {
-		err = fmt.Errorf(("http: %d"), res.StatusCode)
-	}
+	req, res, err = getRemoteFile(JPNLineupURL)
 	if err != nil {
 		return
 	}

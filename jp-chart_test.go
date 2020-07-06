@@ -1,6 +1,7 @@
 package amiibo_test
 
 import (
+	"log"
 	"path/filepath"
 	"reflect"
 	"runtime"
@@ -18,7 +19,7 @@ func TestGetJPNChart(t *testing.T) {
 	filename := "jpn-chart.xml"
 	jpnChart, err = amiibo.ReadJPNChart(filefolder, filename)
 	if err != nil {
-		t.Log("amiibo.ReadJPNChart", err)
+		log.Println("amiibo.ReadJPNChart", err)
 	}
 	if err != nil {
 		_, _, jpnChart, err = amiibo.GetJPNChart()
