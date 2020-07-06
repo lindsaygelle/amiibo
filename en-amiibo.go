@@ -1,98 +1,67 @@
 package amiibo
 
-import (
-	"strconv"
-	"time"
-
-	"github.com/google/uuid"
-)
-
 // ENGAmiibo is a formatted ENGChartAmiibo, ENGLineupAmiibo and ENGLineupItem.
 type ENGAmiibo struct {
-
-	// Affiliation property is sourced from ENGChartAmiibo.IsRelatedTo OR ENGLineupAmiibo.PresentedBy
-	Affiliation string
-
-	// Available property is sourced from ENGChartAmiibo.IsReleased OR ENGLineupAmiibo.IsReleased
-	Available bool
-
-	// BoxImage property is sourced from ENGLineupAmiibo.BoxArtURL
-	BoxImage string
-
-	// Classification property is sourced from ENGChartAmiibo.Type
-	Classification string
-
-	// Description property is sourced from ENGLineupAmiibo.OverviewDescription OR ENGLineupItem.Description
-	Description string
-
-	// DetailsPath property is sourced from ENGLineupAmiibo.DetailsPath OR ENGLineupItem.Path
-	DetailsPath string
-
-	// DetailsURL property is sourced from ENGLineupAmiibo.AmiiboPage OR ENGLineupAmiibo.DetailsURL OR ENGLineupItem.URL
-	DetailsURL string
-
-	// Epoch property is sourced from ENGLineupAmiibo.UnixTimestamp
-	Epoch int64
-
-	// Hex property is sourced from ENGLineupAmiibo.HexCode
-	Hex string
-
-	// Franchise property is sourced from ENGLineupAmiibo.Franchise
-	Franchise string
-
-	// GameID property is sourced from ENGLineupAmiibo.GameCode
-	GameID string
-
-	// LastModified property is sourced from ENGLineupItem.LastModified
-	LastModified time.Time
-
-	// Name property is sourced from ENGChartAmiibo.Name OR ENGLineupAmiibo.AmiiboName OR ENGLineupItem.Title
-	Name string
-
-	// Price property is sourced from ENGLineupAmiibo.Price
-	Price float32
-
-	// Producer ENGChartAmiibo.TagID
-	Producer string
-
-	// Product property is sourced from ENGLineupAmiibo.Type
-	Product string
-
-	// ProductImage property is sourced from ENGChartAmiibo.Image OR ENGLineupAmiibo.Image
-	ProductImage string
-
-	// ProductURL property is sourced from ENGChartAmiibo.URL
-	ProductURL string
-
-	// ReleaseDate property is sourced from ENGChartAmiibo.ReleaseDateMask OR ENGLineupAmiibo.ReleaseDateMask
-	ReleaseDate time.Time
-
-	// Series property is sourced from ENGChartAmiibo.IsRelatedTo OR ENGLineupAmiibo.Series
-	Series string
-
-	// Title property is sourced from ENGChartLineupAmiibo.Slug
-	Title string
-
-	// UPC property is sourced from ENGLineupAmiibo.UPC
-	UPC string
-
-	// UUID property is sourced from ENGChartAmiibo.ID
-	UUID uuid.UUID
+	Affiliation            string `json:"affiliation"`
+	Availiable             string `json:"availiable"`
+	BoxImage               string `json:"box_image"`
+	Description            string `json:"description"`
+	DetailsPath            string `json:"details_path"`
+	DetailsURL             string `json:"details_url"`
+	Epoch                  int64  `json:"epoch"`
+	FigureImage            string `json:"figure_image"`
+	Franchise              string `json:"franchise"`
+	GameID                 string `json:"game_id"`
+	Hex                    string `json:"hex"`
+	ID                     string `json:"id"`
+	Name                   string `json:"name"`
+	NameAlternative        string `json:"name_alternative"`
+	Price                  string `json:"price"`
+	Producer               string `json:"producer"`
+	Product                string `json:"product"`
+	ProductAlternative     string `json:"product_alternative"`
+	ProductImage           string `json:"product_image"`
+	ProductPage            string `json:"product_page"`
+	ReleaseDate            string `json:"release_date"`
+	ReleaseDateAlternative string `json:"release_date_alternative"`
+	Series                 string `json:"series"`
+	Title                  string `json:"title"`
+	UPC                    string `json:"upc"`
+	URL                    string `json:"url"`
+	UUID                   string `json:"uuid"`
 }
 
-// addENGChartAmiibo adds the content of a ENGChartAmiibo.
-func (e ENGAmiibo) addENGChartAmiibo(v ENGChartAmiibo) {
+func (e ENGAmiibo) AddENChartAmiibo(v ENGChartAmiibo) {
+
 	e.Affiliation = v.IsRelatedTo
-	var available, _ = strconv.ParseBool(v.IsReleased)
-	e.Available = available
-	e.Classification = v.Type
+	e.Availiable = v.IsReleased
+	e.FigureImage = v.Image
+	e.ID = v.TagID
 	e.Name = v.Name
-	e.Producer = v.TagID
-	e.ProductImage = v.Image
-	e.ProductURL = v.URL
-	e.Series = v.IsRelatedTo
-	var releaseDate, _ = time.Parse("2006-01-02", v.ReleaseDateMask)
-	e.ReleaseDate = releaseDate
-	var UUID, _ = uuid.Parse(v.ID)
-	e.UUID = UUID
+	e.ProductAlternative = v.Type
+	e.ReleaseDateAlternative = v.ReleaseDateMask
+	e.URL = v.URL
+	e.UUID = v.ID
+}
+
+func (e ENGAmiibo) AddENLineupAmiibo(v ENGLineupAmiibo) {
+
+	e.BoxImage = v.BoxArtURL
+	e.Description = v.OverviewDescription
+	e.DetailsPath = v.DetailsPath
+	e.DetailsURL = v.DetailsURL
+	e.Epoch = v.UnixTimestamp
+	e.Franchise = v.Franchise
+	e.GameID = v.GameCode
+	e.Hex = v.HexCode
+	e.NameAlternative = v.AmiiboName
+	e.Price = v.Price
+	e.Product = v.Type
+	e.Producer = v.PresentedBy
+	e.ProductImage = v.FigureURL
+	e.ProductPage = v.AmiiboPage
+	e.ReleaseDate = v.ReleaseDateMask
+	e.Series = v.Series
+	e.Title = v.Slug
+	e.UPC = v.UPC
 }
