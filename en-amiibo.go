@@ -2,8 +2,10 @@ package amiibo
 
 import (
 	"fmt"
+	"html"
 	"reflect"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -78,7 +80,10 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 // AddENGLineupAmiibo adds the contents of a ENGLineupAmiibo to the ENGAmiibo.
 func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
 	e.BoxImage = v.BoxArtURL
-	e.Description = v.OverviewDescription
+	var description = v.OverviewDescription
+	description = regexpSpaces.ReplaceAllString(regexpHTML.ReplaceAllString(description, " "), " ")
+	description = html.UnescapeString(strings.TrimSpace(description))
+	e.Description = description
 	e.DetailsPath = v.DetailsPath
 	e.DetailsURL = v.DetailsURL
 	e.Epoch = v.UnixTimestamp

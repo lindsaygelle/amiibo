@@ -7,6 +7,32 @@ import (
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
+	"regexp"
+	"strings"
+	"unicode"
+
+	"golang.org/x/text/transform"
+	"golang.org/x/text/unicode/norm"
+)
+
+const (
+	noa string = "noa:publisher/"
+)
+
+var (
+	regexpHTML    = regexp.MustCompile(`(<[^>]*>|\n(\s{1,})?)`)  // match all HTML tokens.
+	regexpHyphens = regexp.MustCompile(`\-{2,}`)                 // match all repeating hyphens.
+	regexpName    = regexp.MustCompile(`(\&\#[0-9]+\;|™|\(|\))`) // match all unwanted characters.
+	regexpSpaces  = regexp.MustCompile(`\s{2,}`)                 // match all repeating spaces.
+	regexpURI     = regexp.MustCompile(`[^a-zA-Z0-9&]+`)         // match all unwanted characters in a URI.
+)
+var (
+	replacerURI = strings.NewReplacer([]string{"&", "and", "'", "", "é", "e"}...) // replacer for names like Pokémon.
+)
+
+var (
+	// transform formats unicode.
+	transformer = transform.Chain(norm.NFD, transform.RemoveFunc(func(r rune) bool { return unicode.Is(unicode.Mn, r) }), norm.NFC)
 )
 
 // getRemoteFile gets a remote file from a remote URL.
