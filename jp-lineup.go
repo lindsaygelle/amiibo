@@ -54,3 +54,15 @@ func GetJPNLineup() (req *http.Request, res *http.Response, v JPNLineup, err err
 	}
 	return
 }
+
+// ReadJPNLineup reads a JPNLineup from disc.
+func ReadJPNLineup(dir string, filename string) (v JPNLineup, err error) {
+	err = readXMLFile(dir, filename, &v)
+	return
+}
+
+// WriteJPNLineup writes a JPNLineup to disc.
+func WriteJPNLineup(dir string, filename string, v JPNLineup) (fullpath string, err error) {
+	fullpath, err = writeXMLFile(dir, filename, &v)
+	return
+}

@@ -18,6 +18,9 @@ func TestGetJPNChart(t *testing.T) {
 	filename := "jpn-chart.xml"
 	jpnChart, err = amiibo.ReadJPNChart(filefolder, filename)
 	if err != nil {
+		t.Log("amiibo.ReadJPNChart", err)
+	}
+	if err != nil {
 		_, _, jpnChart, err = amiibo.GetJPNChart()
 		if err != nil {
 			t.Fatal(err)

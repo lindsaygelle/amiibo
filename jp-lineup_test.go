@@ -1,7 +1,9 @@
 package amiibo_test
 
 import (
+	"path/filepath"
 	"reflect"
+	"runtime"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
@@ -11,9 +13,25 @@ var jpnLineup amiibo.JPNLineup
 
 func TestGetJPNLineup(t *testing.T) {
 	var err error
-	_, _, jpnLineup, err = amiibo.GetJPNLineup()
+	_, caller, _, _ := runtime.Caller(0)
+	filefolder := filepath.Dir(caller)
+	filename := "jpn-lineup.xml"
+	jpnLineup, err = amiibo.ReadJPNLineup(filefolder, filename)
+	if err != nil {
+		t.Log("amiibo.ReadJPNLineup", err)
+	}
+	if err != nil {
+		_, _, jpnLineup, err = amiibo.GetJPNLineup()
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	s, err := amiibo.WriteJPNLineup(filefolder, filename, jpnLineup)
 	if err != nil {
 		t.Fatal(err)
+	}
+	if s != filepath.Join(filefolder, filename) {
+		t.Fatalf("%s != %s", s, filepath.Join(filefolder, filename))
 	}
 	if l := len(jpnLineup.Items); l == 0 {
 		t.Fatal("len: jpnLineup.Items", l)
