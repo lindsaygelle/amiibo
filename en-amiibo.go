@@ -1,6 +1,7 @@
 package amiibo
 
 import (
+	"fmt"
 	"reflect"
 	"strconv"
 	"time"
@@ -43,8 +44,8 @@ type ENGAmiibo struct {
 	UUID                   uuid.UUID `json:"uuid"`
 }
 
-// AddENChartAmiibo adds the contents of a ENGChartAmiibo to the ENGAmiibo.
-func (e ENGAmiibo) AddENChartAmiibo(v ENGChartAmiibo) (err error) {
+// AddENGChartAmiibo adds the contents of a ENGChartAmiibo to the ENGAmiibo.
+func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 	e.Affiliation = v.IsRelatedTo
 	var available bool
 	available, err = strconv.ParseBool(v.IsReleased)
@@ -57,10 +58,10 @@ func (e ENGAmiibo) AddENChartAmiibo(v ENGChartAmiibo) (err error) {
 	e.Name = v.Name
 	e.ProductAlternative = v.Type
 	var releaseDateAlternative time.Time
-	releaseDateAlternative, err = time.Parse("2006-01-02", v.ReleaseDateMask)
-	if err != nil {
+	releaseDateAlternative, _ = time.Parse("2006-01-02", v.ReleaseDateMask)
+	/* if err != nil {
 		return
-	}
+	} */
 	e.ReleaseDateAlternative = releaseDateAlternative
 	if !reflect.ValueOf(e.URL).IsZero() {
 		e.URL = v.URL
@@ -74,8 +75,8 @@ func (e ENGAmiibo) AddENChartAmiibo(v ENGChartAmiibo) (err error) {
 	return
 }
 
-// AddENLineupAmiibo adds the contents of a ENGLineupAmiibo to the ENGAmiibo.
-func (e ENGAmiibo) AddENLineupAmiibo(v ENGLineupAmiibo) (err error) {
+// AddENGLineupAmiibo adds the contents of a ENGLineupAmiibo to the ENGAmiibo.
+func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
 	e.BoxImage = v.BoxArtURL
 	e.Description = v.OverviewDescription
 	e.DetailsPath = v.DetailsPath
@@ -86,9 +87,11 @@ func (e ENGAmiibo) AddENLineupAmiibo(v ENGLineupAmiibo) (err error) {
 	e.Hex = v.HexCode
 	e.NameAlternative = v.AmiiboName
 	var price float64
-	price, err = strconv.ParseFloat(v.Price, 32)
-	if err != nil {
-		return
+	if !reflect.ValueOf(v.Price).IsZero() {
+		price, err = strconv.ParseFloat(v.Price, 32)
+		if err != nil {
+			return
+		}
 	}
 	e.Price = price
 	e.Product = v.Type
@@ -96,10 +99,10 @@ func (e ENGAmiibo) AddENLineupAmiibo(v ENGLineupAmiibo) (err error) {
 	e.ProductImage = v.FigureURL
 	e.ProductPage = v.AmiiboPage
 	var releaseDate time.Time
-	releaseDate, err = time.Parse("2006-01-02", v.ReleaseDateMask)
-	if err != nil {
+	releaseDate, _ = time.Parse("2006-01-02", v.ReleaseDateMask)
+	/* if err != nil {
 		return
-	}
+	} */
 	e.ReleaseDate = releaseDate
 	e.Series = v.Series
 	e.Title = v.Slug
@@ -107,8 +110,8 @@ func (e ENGAmiibo) AddENLineupAmiibo(v ENGLineupAmiibo) (err error) {
 	return
 }
 
-// AddENLineupItem adds the contents of a ENGLineupItem to the ENGAmiibo.
-func (e ENGAmiibo) AddENLineupItem(v ENGLineupItem) (err error) {
+// AddENGLineupItem adds the contents of a ENGLineupItem to the ENGAmiibo.
+func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
 	e.DescriptionAlternative = v.Description
 	var lastModified time.Time
 	lastModified = time.Unix(v.LastModified, 0)
@@ -118,5 +121,34 @@ func (e ENGAmiibo) AddENLineupItem(v ENGLineupItem) (err error) {
 	if !reflect.ValueOf(e.URL).IsZero() {
 		e.URL = v.URL
 	}
+	return
+}
+
+// NewENAmiibo returns a ENAmiibo.
+func NewENAmiibo(ENGChartAmiibo ENGChartAmiibo, ENGLineupAmiibo ENGLineupAmiibo, ENGLineupItem ENGLineupItem) (v ENGAmiibo, err error) {
+	var ok bool
+	ok = ENGChartAmiibo.GetID() == ENGLineupAmiibo.GetID()
+	if !ok {
+		err = fmt.Errorf("ENGChartAmiibo != ENGLineupAmiibo")
+	}
+	if err != nil {
+		return
+	}
+	ok = ENGLineupAmiibo.GetID() == ENGLineupItem.GetID()
+	if !ok {
+		err = fmt.Errorf("ENGLineupAmiibo != ENGLineupItem")
+	}
+	if err != nil {
+		return
+	}
+	err = v.AddENGChartAmiibo(ENGChartAmiibo)
+	if err != nil {
+		return
+	}
+	err = v.AddENGLineupAmiibo(ENGLineupAmiibo)
+	if err != nil {
+		return
+	}
+	err = v.AddENGLineupItem(ENGLineupItem)
 	return
 }

@@ -3,6 +3,7 @@ package amiibo_test
 import (
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
@@ -37,5 +38,9 @@ func TestGetENGLineup(t *testing.T) {
 	}
 	if l := len(engLineup.Items); l == 0 {
 		t.Fatal("len: enLineup.Items", l)
+	}
+
+	if !reflect.ValueOf(engChart).IsZero() && !reflect.ValueOf(engLineup).IsZero() {
+		testENGAmiiboMap(t)
 	}
 }
