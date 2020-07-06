@@ -29,6 +29,7 @@ func readXMLFile(dir, filename string, v interface{}) error {
 	return unmarshal(dir, filename, &v, xml.Unmarshal)
 }
 
+// unmarshal handles a (package).Unmarshal operation.
 func unmarshal(dir, filename string, v interface{}, fn func([]byte, interface{}) error) (err error) {
 	var b ([]byte)
 	b, err = readFile(dir, filename, ioutil.ReadFile)
@@ -42,12 +43,14 @@ func unmarshal(dir, filename string, v interface{}, fn func([]byte, interface{})
 	return
 }
 
+// writeFile writes a file to disc using ioutil.WriteFile.
 func writeFile(dir, filename string, b []byte) (fullpath string, err error) {
 	fullpath = filepath.Join(dir, filename)
 	err = ioutil.WriteFile(fullpath, b, 0644)
 	return
 }
 
+// writeFileJSON writes a JSON file to disc.
 func writeJSONFile(dir, filename string, v interface{}) (fullpath string, err error) {
 	var b ([]byte)
 	b, err = marshal(&v, json.Marshal)
@@ -58,6 +61,7 @@ func writeJSONFile(dir, filename string, v interface{}) (fullpath string, err er
 	return
 }
 
+// writeXMLFile writes a XML fille to disc.
 func writeXMLFile(dir, filename string, v interface{}) (fullpath string, err error) {
 	var b ([]byte)
 	b, err = marshal(&v, xml.Marshal)
