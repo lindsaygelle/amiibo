@@ -14,4 +14,5 @@ func testJPNAmiiboMap(t *testing.T) {
 	if l := len(v); l != ((len(jpnChart.Items) + len(jpnLineup.Items)) / 2) {
 		t.Fatalf("jpnAmiiboMap %d jpnChart.Items %d jpnLineup.Items %d", l, len(jpnChart.Items), len(jpnLineup.Items))
 	}
+	//fmt.Println(v)
 }

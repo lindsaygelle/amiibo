@@ -57,7 +57,12 @@ func (j *JPNAmiibo) AddJPNLineupItem(v JPNLineupItem) (err error) {
 	j.Price = v.Price
 	j.Priority = v.Priority
 	var releaseDate time.Time
-	releaseDate, _ = time.Parse("2006-01-02", v.Date)
+	var l = len(v.Date)
+	var date = fmt.Sprintf("%s-%s-%s", v.Date[:4], v.Date[l-4:l-2], v.Date[l-2:])
+	releaseDate, err = time.Parse("2006-01-02", date)
+	if err != nil {
+		return
+	}
 	j.ReleaseDate = releaseDate
 	var releaseDateAlternative time.Time
 	releaseDateAlternative, _ = time.Parse("2006-01-02", v.DisplayDate)
@@ -66,6 +71,7 @@ func (j *JPNAmiibo) AddJPNLineupItem(v JPNLineupItem) (err error) {
 	return
 }
 
+// NewJPNAmiibo returns a new NewJPNAmiibo.
 func NewJPNAmiibo(JPNChartItem JPNChartItem, JPNLineupItem JPNLineupItem) (v JPNAmiibo, err error) {
 	var ok bool
 	ok = JPNChartItem.GetID() == JPNLineupItem.GetID()
