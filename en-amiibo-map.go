@@ -44,3 +44,15 @@ func NewENGAmiiboMap(ENGChart ENGChart, ENGLineup ENGLineup) (v ENGAmiiboMap, er
 	}
 	return
 }
+
+// ReadENGAmiiboMap reads a ENGAmiiboMap from disc.
+func ReadENGAmiiboMap(dir string, filename string) (v ENGAmiiboMap, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteENGAmiiboMap writes a ENGAmiiboMap to disc.
+func WriteENGAmiiboMap(dir string, filename string, v ENGAmiiboMap) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, &v)
+	return
+}

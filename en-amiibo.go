@@ -65,7 +65,7 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 		e.ReleaseDateAlternative = releaseDateAlternative
 	}
 	e.ReleaseDateAlternative = releaseDateAlternative
-	if !reflect.ValueOf(e.URL).IsZero() {
+	if reflect.ValueOf(e.URL).IsZero() {
 		e.URL = v.URL
 	}
 	var UUID uuid.UUID
@@ -92,10 +92,12 @@ func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
 	e.Hex = v.HexCode
 	e.NameAlternative = v.AmiiboName
 	var price float64
-	if !reflect.ValueOf(v.Price).IsZero() {
-		price, err = strconv.ParseFloat(v.Price, 32)
-		if err != nil {
-			return
+	if reflect.ValueOf(v.Price).IsZero() {
+		if len(v.Price) != 0 {
+			price, err = strconv.ParseFloat(v.Price, 32)
+			if err != nil {
+				return
+			}
 		}
 	}
 	e.Price = price
@@ -123,7 +125,7 @@ func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
 	e.LastModified = lastModified
 	e.Path = v.Path
 	e.TitleAlternative = v.Title
-	if !reflect.ValueOf(e.URL).IsZero() {
+	if reflect.ValueOf(e.URL).IsZero() {
 		e.URL = v.URL
 	}
 	return

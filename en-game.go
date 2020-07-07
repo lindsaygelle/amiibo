@@ -35,7 +35,7 @@ func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 	}
 	e.Available = available
 	e.Name = v.Name
-	if !reflect.ValueOf(v.Path).IsZero() {
+	if reflect.ValueOf(v.Path).IsZero() {
 		e.Path = v.Path
 	}
 	var releaseDate time.Time
@@ -50,7 +50,7 @@ func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 	if err != nil {
 		return
 	}
-	if !reflect.ValueOf(e.URL).IsZero() {
+	if reflect.ValueOf(e.URL).IsZero() {
 		e.URL = v.URL
 	}
 	e.UUID = UUID
@@ -67,10 +67,10 @@ func (e *ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
 		e.Path = v.Path
 	}
 	e.Title = v.Title
-	if !reflect.ValueOf(e.Path).IsZero() {
+	if reflect.ValueOf(e.Path).IsZero() {
 		e.URI = filepath.Dir(v.Path)
 	}
-	if !reflect.ValueOf(e.URL).IsZero() {
+	if reflect.ValueOf(e.URL).IsZero() {
 		e.URL = v.URL
 	}
 	return
