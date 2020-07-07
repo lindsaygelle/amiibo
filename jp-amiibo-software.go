@@ -8,11 +8,17 @@ type JPNAmiiboSoftware struct {
 	Name        string `json:"name"`
 }
 
+// AddJPNChartItemSoftware adds a JPNChartItemSoftware to the JPNAmiiboSoftware
+func (j *JPNAmiiboSoftware) AddJPNChartItemSoftware(v JPNChartItemSoftware) (err error) {
+	j.Description = v.More
+	j.Digital = v.Pickup != 0
+	j.ID = v.Code
+	j.Name = v.Name
+	return
+}
+
 // NewJPNAmiiboSoftware returns a new JPNAmiiboSoftware
 func NewJPNAmiiboSoftware(JPNChartItemSoftware JPNChartItemSoftware) (v JPNAmiiboSoftware, err error) {
-	v.Description = JPNChartItemSoftware.More
-	v.Digital = JPNChartItemSoftware.Pickup != 0
-	v.ID = JPNChartItemSoftware.Code
-	v.Name = JPNChartItemSoftware.Name
+	err = (&v).AddJPNChartItemSoftware(JPNChartItemSoftware)
 	return
 }
