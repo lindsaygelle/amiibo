@@ -1,18 +1,9 @@
 package amiibo_test
 
 import (
-	"testing"
+	"path/filepath"
+	"runtime"
 )
 
-func Test(t *testing.T) {
-	/*a, err := amiibo.Get()
-	if err != nil {
-		panic(err)
-	}
-	m, err := amiibo.NewMap("Name", a...)
-	if err != nil {
-		panic(err)
-	}
-	http.ListenAndServe(":80", amiibo.Server(m))
-	*/
-}
+var _, caller, _, _ = runtime.Caller(0)
+var filefolder = filepath.Dir(caller)
