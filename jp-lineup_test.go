@@ -3,6 +3,7 @@ package amiibo_test
 import (
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
@@ -37,5 +38,8 @@ func TestGetJPNLineup(t *testing.T) {
 	}
 	if l := len(jpnLineup.SeriesItems); l == 0 {
 		t.Fatal("len: jpnLineup.SeriesItems", l)
+	}
+	if !reflect.ValueOf(jpnChart).IsZero() && !reflect.ValueOf(jpnLineup).IsZero() {
+		testJPNAmiiboMap(t)
 	}
 }
