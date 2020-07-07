@@ -42,5 +42,6 @@ func TestGetENGLineup(t *testing.T) {
 
 	if !reflect.ValueOf(engChart).IsZero() && !reflect.ValueOf(engLineup).IsZero() {
 		testENGAmiiboMap(t)
+		testENGGameMap(t)
 	}
 }

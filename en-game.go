@@ -23,7 +23,7 @@ type ENGGame struct {
 	UUID         uuid.UUID `json:"uuid"`
 }
 
-func (e ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
+func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 	var available bool
 	available, err = strconv.ParseBool(v.IsReleased)
 	if err != nil {
@@ -53,10 +53,10 @@ func (e ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 	return
 }
 
-func (e ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
+func (e *ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
 	e.Description = v.Description
 	var lastModified time.Time
-	lastModified = time.Unix(0, v.LastModified)
+	lastModified = time.Unix(0, (v.LastModified * int64(time.Millisecond)))
 	e.LastModified = lastModified
 	if !reflect.ValueOf(v.Path).IsZero() {
 		e.Path = v.Path

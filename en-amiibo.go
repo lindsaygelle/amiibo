@@ -119,7 +119,7 @@ func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
 func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
 	e.DescriptionAlternative = v.Description
 	var lastModified time.Time
-	lastModified = time.Unix(0, v.LastModified)
+	lastModified = time.Unix(0, (v.LastModified * int64(time.Millisecond)))
 	e.LastModified = lastModified
 	e.Path = v.Path
 	e.TitleAlternative = v.Title
