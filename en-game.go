@@ -9,6 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// ENGGame is a formatted ENGChartGame and ENGChartItem.
 type ENGGame struct {
 	Available    bool      `json:"available"`
 	Description  string    `json:"description"`
@@ -23,6 +24,7 @@ type ENGGame struct {
 	UUID         uuid.UUID `json:"uuid"`
 }
 
+// AddENGChartGame adds the contents of a ENGChartGame to the ENGGame.
 func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 	var available bool
 	available, err = strconv.ParseBool(v.IsReleased)
@@ -53,6 +55,7 @@ func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 	return
 }
 
+// AddENGChartItem adds the contents of a ENGChartItem to the ENGGame.
 func (e *ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
 	e.Description = v.Description
 	var lastModified time.Time
@@ -68,6 +71,7 @@ func (e *ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
 	return
 }
 
+// NewENGGame returns a ENGGame.
 func NewENGGame(ENGChartGame ENGChartGame, ENGChartItem ENGChartItem) (v ENGGame, err error) {
 	var ok bool
 	ok = ENGChartGame.GetID() == ENGChartItem.GetID()
