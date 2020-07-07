@@ -1,73 +1,69 @@
 package amiibo
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+	"time"
+)
 
 // JPNAmiibo is a formatted JPN Nintendo Amiibo.
 type JPNAmiibo struct {
-
-	// BigSize relates to the scale of the Nintendo Amiibo product.
-	BigSize bool `json:"bigsize"`
-
-	// Chart is a integer representation of a boolean.
-	//
-	// Chart relates to the occurrence of the Nintendo Amiibo product in the chart json.
-	Chart int64 `json:"chart"`
-
-	// Code is the English ID for the Nintendo Amiibo product from the Japanese CDN.
-	Code string `json:"code"`
-
-	// Date is the YYYYMMDD expression of the Nintendo Amiibo product release date.
-	Date string `json:"date"`
-
-	// DisplayDate is the Japanese Hiragana expression of the Nintedo Amiibo product release date.
-	//
-	// DisplayDate currently (5/07/2020 (DD-MM-YYYY)) has a typo on the nintendo.co.jp and exists
-	// as dispalydate.
-	DisplayDate string `json:"displayDate"`
-
-	// Limited is a integer representation of a boolean.
-	//
-	// Limited relates to the rareness of the Nintendo Amiibo product.
-	Limited bool `json:"limited"`
-
-	Software []JPNAmiiboSoftware `json:"software"`
-
-	// Name is the name of the Nintendo product in Japanese Hiragana.
-	Name string `json:"name"`
-
-	// NameKana is the name of the Nintendo Amiibo product in Japanese Hiragana.
-	NameKana string `json:"nameKana"`
-
-	// New is a integer representation of a boolean.
-	//
-	// New relates to the newness of the Nintendo Amiibo product.
-	New bool `json:"new"`
-
-	// Price is the price of the Nintendo Amiibo product in Japanese Yen.
-	Price string `json:"price"`
-
-	// Priority is the numerical rank of the Nintendo Amiibo product.
-	Priority int64 `json:"priority"`
-
-	// Series is the Japanese Hiragana for the Nintendo product that the Nintendo Amiibo product is affiliated with.
-	Series string `json:"series"`
+	Chart                  bool                `json:"chart"`
+	ID                     string              `json:"id"`
+	Large                  bool                `json:"large"`
+	Limited                bool                `json:"limited"`
+	Name                   string              `json:"name"`
+	NameAlternative        string              `json:"name_alternative"`
+	New                    bool                `json:"new"`
+	Price                  string              `json:"price"`
+	Priority               int64               `json:"priority"`
+	ReleaseDate            time.Time           `json:"release_date"`
+	ReleaseDateAlternative time.Time           `json:"release_data_alternative"`
+	Series                 string              `json:"series"`
+	Software               []JPNAmiiboSoftware `json:"software"`
+	URL                    string              `json:"url"`
 }
 
-func newJPNAmiibo(a JPNChartItem, b JPNLineupItem) (v JPNAmiibo, err error) {
-	if len(a.GetID()) == 0 {
-		err = fmt.Errorf("JPNAmiibo: len(a.GetID())")
+// AddJPNChartItem adds a JPNChartItem to the JPNAmiibo.
+func (j *JPNAmiibo) AddJPNChartItem(v JPNChartItem) (err error) {
+	j.ID = v.Code
+	if !reflect.ValueOf(j.Name).IsZero() {
+		j.Name = v.Name
 	}
-	if err != nil {
-		return
+	if !reflect.ValueOf(j.Series).IsZero() {
+		j.Series = v.Series
 	}
-	if len(b.GetID()) == 0 {
-		err = fmt.Errorf("JPNAmiibo: len(b.GetID())")
+	// j.Software = v.Softwares
+	return
+}
+
+// AddJPNLineupItem adds a JPNLineupItem to the JPNAmiibo.
+func (j *JPNAmiibo) AddJPNLineupItem(v JPNLineupItem) (err error) {
+	j.Chart = v.Chart != 0
+	j.Large = v.BigSize != 0
+	j.Limited = v.Limited != 0
+	if !reflect.ValueOf(j.Name).IsZero() {
+		j.Name = v.Name
 	}
-	if err != nil {
-		return
-	}
-	if a.GetID() != b.GetID() {
-		err = fmt.Errorf("JPNAmiibo: a.GetID() != b.GetID()")
+	j.NameAlternative = v.NameKana
+	j.New = v.New != 0
+	j.Price = v.Price
+	j.Priority = v.Priority
+	var releaseDate time.Time
+	releaseDate, _ = time.Parse("2006-01-02", v.Date)
+	j.ReleaseDate = releaseDate
+	var releaseDateAlternative time.Time
+	releaseDateAlternative, _ = time.Parse("2006-01-02", v.DisplayDate)
+	j.ReleaseDateAlternative = releaseDateAlternative
+	j.Series = v.Series
+	return
+}
+
+func NewJPNAmiibo(JPNChartItem JPNChartItem, JPNLineupItem JPNLineupItem) (v JPNAmiibo, err error) {
+	var ok bool
+	ok = JPNChartItem.GetID() == JPNLineupItem.GetID()
+	if !ok {
+		err = fmt.Errorf("JPNChartItem != JPNLineupItem")
 	}
 	if err != nil {
 		return
