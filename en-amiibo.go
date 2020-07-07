@@ -66,7 +66,7 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 	}
 	e.ReleaseDateAlternative = releaseDateAlternative
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = v.URL
+		e.URL = "http://www.nintendo.com" + v.URL
 	}
 	var UUID uuid.UUID
 	UUID, err = uuid.Parse(v.ID)
@@ -126,7 +126,7 @@ func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
 	e.Path = v.Path
 	e.TitleAlternative = v.Title
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = v.URL
+		e.URL = "http://www.nintendo.com" + v.URL
 	}
 	return
 }
