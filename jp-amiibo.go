@@ -33,7 +33,14 @@ func (j *JPNAmiibo) AddJPNChartItem(v JPNChartItem) (err error) {
 	if !reflect.ValueOf(j.Series).IsZero() {
 		j.Series = v.Series
 	}
-	// j.Software = v.Softwares
+	for _, v := range v.Softwares {
+		var JPNAmiiboSoftware JPNAmiiboSoftware
+		JPNAmiiboSoftware, err = NewJPNAmiiboSoftware(v)
+		if err != nil {
+			continue
+		}
+		j.Software = append(j.Software, JPNAmiiboSoftware)
+	}
 	return
 }
 
