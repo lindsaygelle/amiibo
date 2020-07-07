@@ -129,8 +129,8 @@ func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
 	return
 }
 
-// NewENAmiibo returns a ENAmiibo.
-func NewENAmiibo(ENGChartAmiibo ENGChartAmiibo, ENGLineupAmiibo ENGLineupAmiibo, ENGLineupItem ENGLineupItem) (v ENGAmiibo, err error) {
+// NewENGAmiibo returns a ENGAmiibo.
+func NewENGAmiibo(ENGChartAmiibo ENGChartAmiibo, ENGLineupAmiibo ENGLineupAmiibo, ENGLineupItem ENGLineupItem) (v ENGAmiibo, err error) {
 	var ok bool
 	ok = ENGChartAmiibo.GetID() == ENGLineupAmiibo.GetID()
 	if !ok {
