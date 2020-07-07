@@ -15,13 +15,13 @@ import (
 type ENGAmiibo struct {
 	Affiliation            string    `json:"affiliation"`
 	Availiable             bool      `json:"availiable"`
-	BoxImage               string    `json:"box_image"`
+	BoxImageURL            string    `json:"box_image_url"`
 	Description            string    `json:"description"`
 	DescriptionAlternative string    `json:"description_alternative"`
 	DetailsPath            string    `json:"details_path"`
 	DetailsURL             string    `json:"details_url"`
 	Epoch                  int64     `json:"epoch"`
-	FigureImage            string    `json:"figure_image"`
+	FigureImageURL         string    `json:"figure_image_url"`
 	Franchise              string    `json:"franchise"`
 	GameID                 string    `json:"game_id"`
 	Hex                    string    `json:"hex"`
@@ -34,7 +34,7 @@ type ENGAmiibo struct {
 	Producer               string    `json:"producer"`
 	Product                string    `json:"product"`
 	ProductAlternative     string    `json:"product_alternative"`
-	ProductImage           string    `json:"product_image"`
+	ProductImageURL        string    `json:"product_image_url"`
 	ProductPage            string    `json:"product_page"`
 	ReleaseDate            time.Time `json:"release_date"`
 	ReleaseDateAlternative time.Time `json:"release_date_alternative"`
@@ -55,10 +55,10 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 		return
 	}
 	e.Availiable = available
-	e.FigureImage = v.Image
 	e.ID = v.TagID
 	e.Name = v.Name
-	e.ProductAlternative = v.Type
+	e.ProductAlternative = strings.ToLower(v.Type)
+	e.ProductImageURL = v.Image
 	var releaseDateAlternative time.Time
 	releaseDateAlternative, err = time.Parse("2006-01-02", v.ReleaseDateMask)
 	if err == nil {
@@ -66,7 +66,7 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 	}
 	e.ReleaseDateAlternative = releaseDateAlternative
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = "http://www.nintendo.com" + v.URL
+		e.URL = strings.ReplaceAll(("http://nintendo.com" + v.URL), " ", "%20")
 	}
 	var UUID uuid.UUID
 	UUID, err = uuid.Parse(v.ID)
@@ -79,13 +79,13 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 
 // AddENGLineupAmiibo adds the contents of a ENGLineupAmiibo to the ENGAmiibo.
 func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
-	e.BoxImage = v.BoxArtURL
+	e.BoxImageURL = strings.ReplaceAll(("http://nintendo.com" + v.BoxArtURL), " ", "%20")
 	var description = v.OverviewDescription
 	description = regexpSpaces.ReplaceAllString(regexpHTML.ReplaceAllString(description, " "), " ")
 	description = html.UnescapeString(strings.TrimSpace(description))
 	e.Description = description
 	e.DetailsPath = v.DetailsPath
-	e.DetailsURL = v.DetailsURL
+	e.DetailsURL = strings.ReplaceAll(("http://nintendo.com" + v.DetailsURL), " ", "%20")
 	e.Epoch = v.UnixTimestamp
 	e.Franchise = v.Franchise
 	e.GameID = v.GameCode
@@ -101,9 +101,9 @@ func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
 		}
 	}
 	e.Price = price
-	e.Product = v.Type
+	e.Product = strings.ToLower(v.Type)
 	e.Producer = v.PresentedBy
-	e.ProductImage = v.FigureURL
+	e.ProductImageURL = strings.ReplaceAll(("http://nintendo.com" + v.FigureURL), " ", "%20")
 	e.ProductPage = v.AmiiboPage
 	var releaseDate time.Time
 	releaseDate, _ = time.Parse("2006-01-02", v.ReleaseDateMask)
@@ -126,7 +126,7 @@ func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
 	e.Path = v.Path
 	e.TitleAlternative = v.Title
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = "http://www.nintendo.com" + v.URL
+		e.URL = strings.ReplaceAll(("http://nintendo.com" + v.URL), " ", "%20")
 	}
 	return
 }

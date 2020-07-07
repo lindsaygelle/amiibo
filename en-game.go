@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -12,18 +13,18 @@ import (
 
 // ENGGame is a formatted ENGChartGame and ENGChartItem.
 type ENGGame struct {
-	Available    bool      `json:"available"`
-	Description  string    `json:"description"`
-	LastModified time.Time `json:"last_modified"`
-	Name         string    `json:"name"`
-	Path         string    `json:"path"`
-	Product      string    `json:"product"`
-	ProductImage string    `json:"product_image"`
-	ReleaseDate  time.Time `json:"release_date"`
-	Title        string    `json:"title"`
-	URI          string    `json:"uri"`
-	URL          string    `json:"url"`
-	UUID         uuid.UUID `json:"uuid"`
+	Available       bool      `json:"available"`
+	Description     string    `json:"description"`
+	LastModified    time.Time `json:"last_modified"`
+	Name            string    `json:"name"`
+	Path            string    `json:"path"`
+	Product         string    `json:"product"`
+	ProductImageURL string    `json:"product_image_url"`
+	ReleaseDate     time.Time `json:"release_date"`
+	Title           string    `json:"title"`
+	URI             string    `json:"uri"`
+	URL             string    `json:"url"`
+	UUID            uuid.UUID `json:"uuid"`
 }
 
 // AddENGChartGame adds the contents of a ENGChartGame to the ENGGame.
@@ -43,15 +44,15 @@ func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 	if err == nil {
 		e.ReleaseDate = releaseDate
 	}
-	e.Product = v.Type
-	e.ProductImage = v.Image
+	e.Product = strings.ToLower(v.Type)
+	e.ProductImageURL = strings.ReplaceAll(("http://nintendo.com" + v.Image), " ", "%20")
 	var UUID uuid.UUID
 	UUID, err = uuid.Parse(v.ID)
 	if err != nil {
 		return
 	}
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = v.URL
+		e.URL = strings.ReplaceAll(("http://nintendo.com" + v.URL), " ", "%20")
 	}
 	e.UUID = UUID
 	return
@@ -71,7 +72,7 @@ func (e *ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
 		e.URI = filepath.Dir(v.Path)
 	}
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = v.URL
+		e.URL = strings.ReplaceAll(("http://nintendo.com" + v.URL), " ", "%20")
 	}
 	return
 }
