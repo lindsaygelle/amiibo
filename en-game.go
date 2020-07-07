@@ -2,6 +2,7 @@ package amiibo
 
 import (
 	"fmt"
+	"path/filepath"
 	"reflect"
 	"strconv"
 	"time"
@@ -20,6 +21,7 @@ type ENGGame struct {
 	ProductImage string    `json:"product_image"`
 	ReleaseDate  time.Time `json:"release_date"`
 	Title        string    `json:"title"`
+	URI          string    `json:"uri"`
 	URL          string    `json:"url"`
 	UUID         uuid.UUID `json:"uuid"`
 }
@@ -48,7 +50,7 @@ func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 	if err != nil {
 		return
 	}
-	if !reflect.ValueOf(v.URL).IsZero() {
+	if !reflect.ValueOf(e.URL).IsZero() {
 		e.URL = v.URL
 	}
 	e.UUID = UUID
@@ -65,7 +67,10 @@ func (e *ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
 		e.Path = v.Path
 	}
 	e.Title = v.Title
-	if !reflect.ValueOf(v.URL).IsZero() {
+	if !reflect.ValueOf(e.Path).IsZero() {
+		e.URI = filepath.Dir(v.Path)
+	}
+	if !reflect.ValueOf(e.URL).IsZero() {
 		e.URL = v.URL
 	}
 	return
