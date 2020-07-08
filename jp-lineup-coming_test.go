@@ -15,7 +15,7 @@ var jpnLineupComingFullpath = filepath.Join(filefolder, jpnLineupComingFileName)
 func TestGetJPNLineupComing(t *testing.T) {
 	var err error
 	if _, err := os.Stat(jpnLineupComingFullpath); !os.IsNotExist(err) {
-		jpnLineupComing, err = amiibo.ReadJPNLineupComing(filefolder, "jpn-lineup-coming.xml")
+		jpnLineupComing, err = amiibo.ReadJPNLineupComing(filefolder, jpnLineupComingFileName)
 		if err != nil {
 			t.Fatal("amiibo.ReadJPNLineupComing", err)
 		}
@@ -34,5 +34,9 @@ func TestGetJPNLineupComing(t *testing.T) {
 	}
 	if l := len(jpnLineupComing.Items); l == 0 {
 		t.Fatal("len: jpnLineupComing.Items", l)
+	}
+	_, err = amiibo.ReadJPNLineupComing(filefolder, jpnLineupComingFileName)
+	if err != nil {
+		t.Fatal(err)
 	}
 }

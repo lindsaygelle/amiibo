@@ -36,4 +36,8 @@ func TestGetJPNChart(t *testing.T) {
 	if l := len(jpnChart.Items); l == 0 {
 		t.Fatal("len: jpnChart.Items", l)
 	}
+	_, err = amiibo.ReadJPNChart(filefolder, jpnChartFileName)
+	if err != nil {
+		t.Fatal(err)
+	}
 }

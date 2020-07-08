@@ -6,6 +6,8 @@ import (
 	"github.com/lindsaygelle/amiibo"
 )
 
+var jpnSoftwareMapFileName = "jp-software-map.json"
+
 func testJPNSoftwareMap(t *testing.T) {
 	var v, err = amiibo.NewJPNSoftwareMap(&jpnChartSoftware)
 	if err != nil {
@@ -17,7 +19,11 @@ func testJPNSoftwareMap(t *testing.T) {
 	if l := len(v); l != len(jpnChartSoftware.Items) {
 		t.Logf("JPNSoftwareMap %d jpnChartSoftware.Items %d", l, len(jpnChartSoftware.Items))
 	}
-	_, err = amiibo.WriteJPNSoftwareMap(filefolder, "jp-software-map.json", &v)
+	_, err = amiibo.WriteJPNSoftwareMap(filefolder, jpnSoftwareMapFileName, &v)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = amiibo.ReadJPNSoftwareMap(filefolder, jpnSoftwareMapFileName)
 	if err != nil {
 		t.Fatal(err)
 	}
