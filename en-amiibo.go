@@ -159,3 +159,15 @@ func NewENGAmiibo(ENGChartAmiibo *ENGChartAmiibo, ENGLineupAmiibo *ENGLineupAmii
 	err = v.AddENGLineupItem(ENGLineupItem)
 	return
 }
+
+// ReadENGAmiibo reads a ENGAmiibo from disc.
+func ReadENGAmiibo(dir string, filename string) (v ENGAmiibo, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteENGAmiibo writes a ENGAmiibo to disc.
+func WriteENGAmiibo(dir string, filename string, v *ENGAmiibo) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}

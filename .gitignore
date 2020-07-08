@@ -13,3 +13,6 @@
 
 # OSX
 *.DS_Store
+
+# Test files
+*-test.json

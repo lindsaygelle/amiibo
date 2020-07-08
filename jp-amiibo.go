@@ -110,3 +110,15 @@ func NewJPNAmiibo(JPNChartItem *JPNChartItem, JPNLineupItem *JPNLineupItem) (v J
 	err = (&v).AddJPNLineupItem(JPNLineupItem)
 	return
 }
+
+// ReadJPNAmiibo reads a JPNAmiibo from disc.
+func ReadJPNAmiibo(dir string, filename string) (v JPNAmiibo, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteJPNAmiibo writes a JPNAmiibo to disc.
+func WriteJPNAmiibo(dir string, filename string, v *JPNAmiibo) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}

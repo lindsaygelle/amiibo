@@ -6,7 +6,7 @@ import (
 	"github.com/lindsaygelle/amiibo"
 )
 
-var jpnAmiiboMapFileName = "jp-amiibo-map.json"
+var jpnAmiiboMapFileName = "jpn-amiibo-map.json"
 
 func testJPNAmiiboMap(t *testing.T) {
 	var v, err = amiibo.NewJPNAmiiboMap(&jpnChart, &jpnLineup)
