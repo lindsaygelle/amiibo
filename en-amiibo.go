@@ -3,6 +3,7 @@ package amiibo
 import (
 	"fmt"
 	"html"
+	"path/filepath"
 	"reflect"
 	"strconv"
 	"strings"
@@ -37,7 +38,6 @@ type ENGAmiibo struct {
 	ProductImageURL        string    `json:"product_image_url"`
 	ProductPage            string    `json:"product_page"`
 	ReleaseDate            time.Time `json:"release_date"`
-	ReleaseDateAlternative time.Time `json:"release_date_alternative"`
 	Series                 string    `json:"series"`
 	Title                  string    `json:"title"`
 	TitleAlternative       string    `json:"title_alternative"`
@@ -59,12 +59,14 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v *ENGChartAmiibo) (err error) {
 	e.Name = v.Name
 	e.ProductAlternative = strings.ToLower(v.Type)
 	e.ProductImageURL = v.Image
-	var releaseDateAlternative time.Time
-	releaseDateAlternative, err = time.Parse("2006-01-02", v.ReleaseDateMask)
-	if err == nil {
-		e.ReleaseDateAlternative = releaseDateAlternative
+	var releaseDate time.Time
+	if reflect.ValueOf(e.ReleaseDate).IsZero() {
+		releaseDate, err = time.Parse("2006-01-02", v.ReleaseDateMask)
+		if err == nil {
+			e.ReleaseDate = releaseDate
+		}
+		err = nil
 	}
-	e.ReleaseDateAlternative = releaseDateAlternative
 	if reflect.ValueOf(e.URL).IsZero() {
 		e.URL = strings.ReplaceAll(("https://nintendo.com" + v.URL), " ", "%20")
 	}
@@ -106,11 +108,13 @@ func (e *ENGAmiibo) AddENGLineupAmiibo(v *ENGLineupAmiibo) (err error) {
 	e.ProductImageURL = strings.ReplaceAll(("https://nintendo.com" + v.FigureURL), " ", "%20")
 	e.ProductPage = v.AmiiboPage
 	var releaseDate time.Time
-	releaseDate, _ = time.Parse("2006-01-02", v.ReleaseDateMask)
-	if err == nil {
-		e.ReleaseDate = releaseDate
+	if reflect.ValueOf(e.ReleaseDate).IsZero() {
+		releaseDate, err = time.Parse("01-02-2006", strings.ReplaceAll(v.ReleaseDateMask, "/", "-"))
+		if err == nil {
+			e.ReleaseDate = releaseDate
+		}
+		err = nil
 	}
-	e.ReleaseDate = releaseDate
 	e.Series = v.Series
 	e.Title = v.Slug
 	e.UPC = v.UPC
@@ -129,6 +133,11 @@ func (e *ENGAmiibo) AddENGLineupItem(v *ENGLineupItem) (err error) {
 		e.URL = strings.ReplaceAll(("https://nintendo.com" + v.URL), " ", "%20")
 	}
 	return
+}
+
+// GetID returns the ENGAmiibo ID.
+func (e ENGAmiibo) GetID() string {
+	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
 }
 
 // NewENGAmiibo returns a ENGAmiibo.

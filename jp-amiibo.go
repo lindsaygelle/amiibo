@@ -50,6 +50,11 @@ func (j *JPNAmiibo) AddJPNChartItem(v *JPNChartItem) (err error) {
 	return
 }
 
+// GetID returns the JPNAmiibo ID.
+func (j JPNAmiibo) GetID() string {
+	return j.ID
+}
+
 // AddJPNLineupItem adds a JPNLineupItem to the JPNAmiibo.
 func (j *JPNAmiibo) AddJPNLineupItem(v *JPNLineupItem) (err error) {
 	j.Chart = v.Chart != 0
@@ -73,8 +78,11 @@ func (j *JPNAmiibo) AddJPNLineupItem(v *JPNLineupItem) (err error) {
 		j.ReleaseDate = releaseDate
 	}
 	var releaseDateAlternative time.Time
-	releaseDateAlternative, _ = time.Parse("2006-01-02", v.DisplayDate)
-	j.ReleaseDateAlternative = releaseDateAlternative
+	releaseDateAlternative, err = time.Parse("2006-01-02", v.DisplayDate)
+	if err == nil {
+		j.ReleaseDateAlternative = releaseDateAlternative
+	}
+	err = nil
 	j.Series = v.Series
 	if reflect.ValueOf(j.URL).IsZero() {
 		j.URL = "https://www.nintendo.co.jp/hardware/amiibo/lineup/" + j.ID

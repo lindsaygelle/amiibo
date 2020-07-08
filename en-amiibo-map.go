@@ -3,6 +3,11 @@ package amiibo
 // ENGAmiiboMap is map of ENGAmiibo.
 type ENGAmiiboMap (map[string]ENGAmiibo)
 
+// Add adds a ENGAmiibo to the ENGAmiiboMap.
+func (e *ENGAmiiboMap) Add(v *ENGAmiibo) {
+	(*e)[(*v).GetID()] = *v
+}
+
 // NewENGAmiiboMap returns a ENGAmiiboMap.
 func NewENGAmiiboMap(ENGChart ENGChart, ENGLineup ENGLineup) (v ENGAmiiboMap, err error) {
 	v = (make(ENGAmiiboMap))
