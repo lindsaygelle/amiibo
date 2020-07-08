@@ -2,6 +2,7 @@ package amiibo
 
 import "encoding/xml"
 
+// JPNChartSoftwareItem is the unfettered Japanese language Nintendo Amiibo software information.
 type JPNChartSoftwareItem struct {
 	XMLName xml.Name `xml:"item"`
 
@@ -23,6 +24,7 @@ type JPNChartSoftwareItem struct {
 	Subname     string      `xml:"subname"`
 }
 
+// GetID returns the JPNChartSoftwareItem ID.
 func (j JPNChartSoftwareItem) GetID() string {
 	return j.Code
 }
