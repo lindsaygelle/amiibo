@@ -28,3 +28,15 @@ type ENGChartItem struct {
 func (e ENGChartItem) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
 }
+
+// ReadENGChartItem reads a ENGChartItem from disc.
+func ReadENGChartItem(dir string, filename string) (v ENGChartItem, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteENGChartItem writes a ENGChartItem to disc.
+func WriteENGChartItem(dir string, filename string, v *ENGChartItem) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}
