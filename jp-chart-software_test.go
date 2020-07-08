@@ -3,19 +3,20 @@ package amiibo_test
 import (
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
 )
 
 var jpnChartSoftware amiibo.JPNChartSoftware
-var jpnChartSoftwareFilename = "jpn-chart-software.xml"
-var jpnChartSoftwareFullpath = filepath.Join(filefolder, jpnChartSoftwareFilename)
+var jpnChartSoftwareFileName = "jpn-chart-software.xml"
+var jpnChartSoftwareFullpath = filepath.Join(filefolder, jpnChartSoftwareFileName)
 
 func TestGetJPNChartSoftware(t *testing.T) {
 	var err error
 	if _, err := os.Stat(jpnChartSoftwareFullpath); !os.IsNotExist(err) {
-		jpnChartSoftware, err = amiibo.ReadJPNChartSoftware(filefolder, jpnChartSoftwareFilename)
+		jpnChartSoftware, err = amiibo.ReadJPNChartSoftware(filefolder, jpnChartSoftwareFileName)
 		if err != nil {
 			t.Fatal("amiibo.ReadJPNChartSoftware", err)
 		}
@@ -25,7 +26,7 @@ func TestGetJPNChartSoftware(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	s, err := amiibo.WriteJPNChartSoftware(filefolder, jpnChartSoftwareFilename, &jpnChartSoftware)
+	s, err := amiibo.WriteJPNChartSoftware(filefolder, jpnChartSoftwareFileName, &jpnChartSoftware)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,5 +35,12 @@ func TestGetJPNChartSoftware(t *testing.T) {
 	}
 	if l := len(jpnChartSoftware.Items); l == 0 {
 		t.Fatal("len: jpnChartSoftware.Items", l)
+	}
+	_, err = amiibo.ReadJPNChartSoftware(filefolder, jpnChartSoftwareFileName)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !reflect.ValueOf(jpnChartSoftware).IsZero() {
+		testJPNSoftwareMap(t)
 	}
 }

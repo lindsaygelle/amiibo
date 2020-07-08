@@ -10,13 +10,13 @@ import (
 )
 
 var jpnLineup amiibo.JPNLineup
-var jpnLineupFilename = "jpn-lineup.xml"
-var jpnLineupFullpath = filepath.Join(filefolder, jpnLineupFilename)
+var jpnLineupFileName = "jpn-lineup.xml"
+var jpnLineupFullpath = filepath.Join(filefolder, jpnLineupFileName)
 
 func TestGetJPNLineup(t *testing.T) {
 	var err error
 	if _, err := os.Stat(jpnLineupFullpath); !os.IsNotExist(err) {
-		jpnLineup, err = amiibo.ReadJPNLineup(filefolder, jpnLineupFilename)
+		jpnLineup, err = amiibo.ReadJPNLineup(filefolder, jpnLineupFileName)
 		if err != nil {
 			t.Fatal("amiibo.ReadJPNLineup", err)
 		}
@@ -26,7 +26,7 @@ func TestGetJPNLineup(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	s, err := amiibo.WriteJPNLineup(filefolder, jpnLineupFilename, &jpnLineup)
+	s, err := amiibo.WriteJPNLineup(filefolder, jpnLineupFileName, &jpnLineup)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -38,6 +38,10 @@ func TestGetJPNLineup(t *testing.T) {
 	}
 	if l := len(jpnLineup.SeriesItems); l == 0 {
 		t.Fatal("len: jpnLineup.SeriesItems", l)
+	}
+	_, err = amiibo.ReadJPNLineup(filefolder, jpnLineupFileName)
+	if err != nil {
+		t.Fatal(err)
 	}
 	if !reflect.ValueOf(jpnChart).IsZero() && !reflect.ValueOf(jpnLineup).IsZero() {
 		testJPNAmiiboMap(t)

@@ -14,6 +14,7 @@ type JPNSoftware struct {
 	Price           string    `json:"price"`
 	Priority        string    `json:"priority"`
 	ReleaseDate     time.Time `json:"release_date"`
+	URL             string    `json:"url"`
 }
 
 // AddJPNChartSoftwareItem adds a JPNChartSoftwareItem to the JPNSoftware.
@@ -31,5 +32,6 @@ func (j *JPNSoftware) AddJPNChartSoftwareItem(v *JPNChartSoftwareItem) (err erro
 	if err == nil {
 		j.ReleaseDate = releaseDate
 	}
+	j.URL = "https://www.nintendo.co.jp/hardware/amiibo/game/" + j.ID
 	return
 }

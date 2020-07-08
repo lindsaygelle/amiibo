@@ -39,7 +39,10 @@ func TestGetENGLineup(t *testing.T) {
 	if l := len(engLineup.Items); l == 0 {
 		t.Fatal("len: enLineup.Items", l)
 	}
-
+	_, err = amiibo.ReadENGLineup(filefolder, engChartFileName)
+	if err != nil {
+		t.Fatal(err)
+	}
 	if !reflect.ValueOf(engChart).IsZero() && !reflect.ValueOf(engLineup).IsZero() {
 		testENGAmiiboMap(t)
 		testENGGameMap(t)

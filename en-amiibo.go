@@ -31,7 +31,7 @@ type ENGAmiibo struct {
 	Name                   string    `json:"name"`
 	NameAlternative        string    `json:"name_alternative"`
 	Path                   string    `json:"path"`
-	Price                  float64   `json:"price"`
+	Price                  string    `json:"price"`
 	Producer               string    `json:"producer"`
 	Product                string    `json:"product"`
 	ProductAlternative     string    `json:"product_alternative"`
@@ -93,16 +93,7 @@ func (e *ENGAmiibo) AddENGLineupAmiibo(v *ENGLineupAmiibo) (err error) {
 	e.GameID = v.GameCode
 	e.Hex = v.HexCode
 	e.NameAlternative = v.AmiiboName
-	var price float64
-	if reflect.ValueOf(v.Price).IsZero() {
-		if len(v.Price) != 0 {
-			price, err = strconv.ParseFloat(v.Price, 32)
-			if err != nil {
-				return
-			}
-		}
-	}
-	e.Price = price
+	e.Price = v.Price
 	e.Product = strings.ToLower(v.Type)
 	e.Producer = v.PresentedBy
 	e.ProductImageURL = strings.ReplaceAll(("https://nintendo.com" + v.FigureURL), " ", "%20")
