@@ -32,3 +32,15 @@ func NewJPNAmiiboMap(JPNChart JPNChart, JPNLineup JPNLineup) (v JPNAmiiboMap, er
 	}
 	return
 }
+
+// ReadJPNAmiiboMap reads a JPNAmiiboMap from disc.
+func ReadJPNAmiiboMap(dir string, filename string) (v JPNAmiiboMap, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteJPNAmiiboMap writes a JPNAmiiboMap to disc.
+func WriteJPNAmiiboMap(dir string, filename string, v JPNAmiiboMap) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, &v)
+	return
+}

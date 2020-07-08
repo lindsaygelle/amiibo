@@ -17,6 +17,10 @@ func (j *JPNAmiiboSoftware) AddJPNChartItemSoftware(v JPNChartItemSoftware) (err
 	return
 }
 
+func (j JPNAmiiboSoftware) GetID() string {
+	return j.ID
+}
+
 // NewJPNAmiiboSoftware returns a new JPNAmiiboSoftware
 func NewJPNAmiiboSoftware(JPNChartItemSoftware JPNChartItemSoftware) (v JPNAmiiboSoftware, err error) {
 	err = (&v).AddJPNChartItemSoftware(JPNChartItemSoftware)

@@ -20,7 +20,7 @@ type JPNChartItem struct {
 	Series string `xml:"series"`
 
 	// Softwares is a collection of metadata that the Nintendo Amiibo product integrates with.
-	Softwares []JPNChartItemSoftware `xml:"softwares"`
+	Softwares []JPNChartItemSoftware `xml:"softwares>software"`
 }
 
 // GetID returns the JPCharItem ID.
