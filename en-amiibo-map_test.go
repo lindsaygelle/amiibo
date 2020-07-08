@@ -6,7 +6,7 @@ import (
 	"github.com/lindsaygelle/amiibo"
 )
 
-var engAmiiboMapFileName = "en-amiibo-map.json"
+var engAmiiboMapFileName = "eng-amiibo-map.json"
 
 func testENGAmiiboMap(t *testing.T) {
 	var v, err = amiibo.NewENGAmiiboMap(engChart, engLineup)
