@@ -23,7 +23,7 @@ type JPNLineup struct {
 	Items []JPNLineupItem `xml:"item"`
 
 	// SeriesItem is a collection of Nintendo Amiibo product auxiliary information.
-	SeriesItems []JPLineupSeriesItem `xml:"series_item"`
+	SeriesItems []JPNLineupSeriesItem `xml:"series_item"`
 }
 
 // GetJPNLineup gets the http.Response from nintendo.co.jp for the lineup Nintendo Amiibo XML.
