@@ -10,10 +10,16 @@ func NewJPNAmiiboMap(JPNChart *JPNChart, JPNLineup *JPNLineup) (v JPNAmiiboMap, 
 	v = (make(JPNAmiiboMap))
 	for _, JP := range JPNChart.Items {
 		ID := JP.GetID()
-		if _, ok := v[ID]; ok {
+		if _, ok := v[ID]; !ok {
 			v[ID] = JPNAmiibo{}
 		}
-		var p = v[ID]
+		var p, ok = v[ID]
+		if !ok {
+			err = fmt.Errorf("JPNAmiiboMap[JPNChart.Items.GetID()] != ok")
+		}
+		if err != nil {
+			return
+		}
 		err = (&p).AddJPNChartItem(&JP)
 		if err != nil {
 			return
@@ -22,17 +28,22 @@ func NewJPNAmiiboMap(JPNChart *JPNChart, JPNLineup *JPNLineup) (v JPNAmiiboMap, 
 	}
 	for _, JP := range JPNLineup.Items {
 		ID := JP.GetID()
-		if _, ok := v[ID]; ok {
+		if _, ok := v[ID]; !ok {
 			v[ID] = JPNAmiibo{}
 		}
-		var p = v[ID]
+		var p, ok = v[ID]
+		if !ok {
+			err = fmt.Errorf("JPNAmiiboMap[JPNLineup.Items.GetID()] != ok")
+		}
+		if err != nil {
+			return
+		}
 		err = (&p).AddJPNLineupItem(&JP)
 		if err != nil {
 			return
 		}
 		v[ID] = p
 	}
-	fmt.Println(v["aaaa"].Software)
 	return
 }
 

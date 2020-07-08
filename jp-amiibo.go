@@ -27,14 +27,22 @@ type JPNAmiibo struct {
 // AddJPNChartItem adds a JPNChartItem to the JPNAmiibo.
 func (j *JPNAmiibo) AddJPNChartItem(v *JPNChartItem) (err error) {
 	j.ID = v.Code
+	if reflect.ValueOf(j.Software).IsZero() {
+		j.Software = make(JPNAmiiboSoftwareMap)
+	}
 	if reflect.ValueOf(j.Name).IsZero() {
 		j.Name = v.Name
 	}
 	if reflect.ValueOf(j.Series).IsZero() {
 		j.Series = v.Series
 	}
-	for _, JP := range j.Software {
-		j.Software.Add(&JP)
+	for _, JP := range v.Softwares {
+		var v JPNAmiiboSoftware
+		v, err = NewJPNAmiiboSoftware(&JP)
+		if err != nil {
+			continue
+		}
+		j.Software[JP.Code] = v
 	}
 	if reflect.ValueOf(j.URL).IsZero() {
 		j.URL = "https://www.nintendo.co.jp/hardware/amiibo/lineup/" + j.ID
