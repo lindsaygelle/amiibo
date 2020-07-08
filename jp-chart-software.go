@@ -13,7 +13,7 @@ const JPNChartSoftwareURL string = "https://www.nintendo.co.jp/hardware/amiibo/c
 type JPNChartSoftware struct {
 	XMLName xml.Name `xml:"items"`
 
-	Items []JPNChartSoftwareItem `xml:"items>item"`
+	Items []JPNChartSoftwareItem `xml:"item"`
 }
 
 // GetJPNChartSoftware gets the JPNChartSoftware from nintendo.co.jp.
