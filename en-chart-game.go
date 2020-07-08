@@ -37,3 +37,15 @@ type ENGChartGame struct {
 func (e ENGChartGame) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
 }
+
+// ReadENGChartGame reads a ENGChartGame from disc.
+func ReadENGChartGame(dir string, filename string) (v ENGChartGame, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteENGChartGame writes a ENGChartGame to disc.
+func WriteENGChartGame(dir string, filename string, v *ENGChartGame) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}
