@@ -2,10 +2,10 @@ package amiibo
 
 import "encoding/xml"
 
-// JPLineupSeriesItem is the unfettered Nintendo Amiibo product additional information from nintendo.co.jp.
+// JPNLineupSeriesItem is the unfettered Nintendo Amiibo product additional information from nintendo.co.jp.
 //
-// JPLineupSeriesItem is provided in Japanese Hiragana.
-type JPLineupSeriesItem struct {
+// JPNLineupSeriesItem is provided in Japanese Hiragana.
+type JPNLineupSeriesItem struct {
 
 	// XMLName is the xml node.
 	XMLName xml.Name `xml:"series_item"`
