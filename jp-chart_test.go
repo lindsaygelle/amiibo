@@ -26,7 +26,7 @@ func TestGetJPNChart(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	s, err := amiibo.WriteJPNChart(filefolder, jpnChartFileName, jpnChart)
+	s, err := amiibo.WriteJPNChart(filefolder, jpnChartFileName, &jpnChart)
 	if err != nil {
 		t.Fatal(err)
 	}

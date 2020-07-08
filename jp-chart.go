@@ -48,7 +48,7 @@ func ReadJPNChart(dir string, filename string) (v JPNChart, err error) {
 }
 
 // WriteJPNChart writes a JPNChart to disc.
-func WriteJPNChart(dir string, filename string, v JPNChart) (fullpath string, err error) {
-	fullpath, err = writeXMLFile(dir, filename, &v)
+func WriteJPNChart(dir string, filename string, v *JPNChart) (fullpath string, err error) {
+	fullpath, err = writeXMLFile(dir, filename, v)
 	return
 }
