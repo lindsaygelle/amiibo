@@ -8,10 +8,10 @@ import (
 
 var engChartGameFileName = "eng-chart-game-test.json"
 
-func TestENGGameAmiibo(t *testing.T) {
+func TestENGChartGame(t *testing.T) {
 	var err error
-	var ENGGameAmiibo = amiibo.ENGChartGame{}
-	_, err = amiibo.WriteENGChartGame(filefolder, engChartGameFileName, &ENGGameAmiibo)
+	var ENGChartGame = amiibo.ENGChartGame{}
+	_, err = amiibo.WriteENGChartGame(filefolder, engChartGameFileName, &ENGChartGame)
 	if err != nil {
 		t.Fatal(err)
 	}
