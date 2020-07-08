@@ -45,14 +45,14 @@ func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 		e.ReleaseDate = releaseDate
 	}
 	e.Product = strings.ToLower(v.Type)
-	e.ProductImageURL = strings.ReplaceAll(("http://nintendo.com" + v.Image), " ", "%20")
+	e.ProductImageURL = strings.ReplaceAll(("https://nintendo.com" + v.Image), " ", "%20")
 	var UUID uuid.UUID
 	UUID, err = uuid.Parse(v.ID)
 	if err != nil {
 		return
 	}
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = strings.ReplaceAll(("http://nintendo.com" + v.URL), " ", "%20")
+		e.URL = strings.ReplaceAll(("https://nintendo.com" + v.URL), " ", "%20")
 	}
 	e.UUID = UUID
 	return
@@ -72,7 +72,7 @@ func (e *ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
 		e.URI = filepath.Dir(v.Path)
 	}
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = strings.ReplaceAll(("http://nintendo.com" + v.URL), " ", "%20")
+		e.URL = strings.ReplaceAll(("https://nintendo.com" + v.URL), " ", "%20")
 	}
 	return
 }

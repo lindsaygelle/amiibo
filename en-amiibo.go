@@ -66,7 +66,7 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 	}
 	e.ReleaseDateAlternative = releaseDateAlternative
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = strings.ReplaceAll(("http://nintendo.com" + v.URL), " ", "%20")
+		e.URL = strings.ReplaceAll(("https://nintendo.com" + v.URL), " ", "%20")
 	}
 	var UUID uuid.UUID
 	UUID, err = uuid.Parse(v.ID)
@@ -79,13 +79,13 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 
 // AddENGLineupAmiibo adds the contents of a ENGLineupAmiibo to the ENGAmiibo.
 func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
-	e.BoxImageURL = strings.ReplaceAll(("http://nintendo.com" + v.BoxArtURL), " ", "%20")
+	e.BoxImageURL = strings.ReplaceAll(("https://nintendo.com" + v.BoxArtURL), " ", "%20")
 	var description = v.OverviewDescription
 	description = regexpSpaces.ReplaceAllString(regexpHTML.ReplaceAllString(description, " "), " ")
 	description = html.UnescapeString(strings.TrimSpace(description))
 	e.Description = description
 	e.DetailsPath = v.DetailsPath
-	e.DetailsURL = strings.ReplaceAll(("http://nintendo.com" + v.DetailsURL), " ", "%20")
+	e.DetailsURL = strings.ReplaceAll(("https://nintendo.com" + v.DetailsURL), " ", "%20")
 	e.Epoch = v.UnixTimestamp
 	e.Franchise = v.Franchise
 	e.GameID = v.GameCode
@@ -103,7 +103,7 @@ func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
 	e.Price = price
 	e.Product = strings.ToLower(v.Type)
 	e.Producer = v.PresentedBy
-	e.ProductImageURL = strings.ReplaceAll(("http://nintendo.com" + v.FigureURL), " ", "%20")
+	e.ProductImageURL = strings.ReplaceAll(("https://nintendo.com" + v.FigureURL), " ", "%20")
 	e.ProductPage = v.AmiiboPage
 	var releaseDate time.Time
 	releaseDate, _ = time.Parse("2006-01-02", v.ReleaseDateMask)
@@ -126,7 +126,7 @@ func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
 	e.Path = v.Path
 	e.TitleAlternative = v.Title
 	if reflect.ValueOf(e.URL).IsZero() {
-		e.URL = strings.ReplaceAll(("http://nintendo.com" + v.URL), " ", "%20")
+		e.URL = strings.ReplaceAll(("https://nintendo.com" + v.URL), " ", "%20")
 	}
 	return
 }
