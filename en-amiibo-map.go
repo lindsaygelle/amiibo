@@ -52,7 +52,7 @@ func ReadENGAmiiboMap(dir string, filename string) (v ENGAmiiboMap, err error) {
 }
 
 // WriteENGAmiiboMap writes a ENGAmiiboMap to disc.
-func WriteENGAmiiboMap(dir string, filename string, v ENGAmiiboMap) (fullpath string, err error) {
-	fullpath, err = writeJSONFile(dir, filename, &v)
+func WriteENGAmiiboMap(dir string, filename string, v *ENGAmiiboMap) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
 	return
 }

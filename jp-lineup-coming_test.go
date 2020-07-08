@@ -25,7 +25,7 @@ func TestGetJPNLineupComing(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	s, err := amiibo.WriteJPNLineupComing(filefolder, jpnLineupComingFileName, jpnLineupComing)
+	s, err := amiibo.WriteJPNLineupComing(filefolder, jpnLineupComingFileName, &jpnLineupComing)
 	if err != nil {
 		t.Fatal(err)
 	}

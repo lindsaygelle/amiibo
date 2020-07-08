@@ -9,7 +9,7 @@ type JPNAmiiboSoftware struct {
 }
 
 // AddJPNChartItemSoftware adds a JPNChartItemSoftware to the JPNAmiiboSoftware
-func (j *JPNAmiiboSoftware) AddJPNChartItemSoftware(v JPNChartItemSoftware) (err error) {
+func (j *JPNAmiiboSoftware) AddJPNChartItemSoftware(v *JPNChartItemSoftware) (err error) {
 	j.Description = v.More
 	j.Digital = v.Pickup != 0
 	j.ID = v.Code
@@ -17,12 +17,13 @@ func (j *JPNAmiiboSoftware) AddJPNChartItemSoftware(v JPNChartItemSoftware) (err
 	return
 }
 
+// GetID returns the JPNAmiiboSoftware ID.
 func (j JPNAmiiboSoftware) GetID() string {
 	return j.ID
 }
 
 // NewJPNAmiiboSoftware returns a new JPNAmiiboSoftware
-func NewJPNAmiiboSoftware(JPNChartItemSoftware JPNChartItemSoftware) (v JPNAmiiboSoftware, err error) {
+func NewJPNAmiiboSoftware(JPNChartItemSoftware *JPNChartItemSoftware) (v JPNAmiiboSoftware, err error) {
 	err = (&v).AddJPNChartItemSoftware(JPNChartItemSoftware)
 	return
 }

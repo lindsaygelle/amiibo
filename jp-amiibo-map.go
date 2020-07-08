@@ -1,10 +1,12 @@
 package amiibo
 
+import "fmt"
+
 // JPNAmiiboMap is a map of JPNAmiibo.
 type JPNAmiiboMap (map[string]JPNAmiibo)
 
 // NewJPNAmiiboMap returns a new JPNAmiiboMap.
-func NewJPNAmiiboMap(JPNChart JPNChart, JPNLineup JPNLineup) (v JPNAmiiboMap, err error) {
+func NewJPNAmiiboMap(JPNChart *JPNChart, JPNLineup *JPNLineup) (v JPNAmiiboMap, err error) {
 	v = (make(JPNAmiiboMap))
 	for _, JP := range JPNChart.Items {
 		ID := JP.GetID()
@@ -12,7 +14,7 @@ func NewJPNAmiiboMap(JPNChart JPNChart, JPNLineup JPNLineup) (v JPNAmiiboMap, er
 			v[ID] = JPNAmiibo{}
 		}
 		var p = v[ID]
-		err = (&p).AddJPNChartItem(JP)
+		err = (&p).AddJPNChartItem(&JP)
 		if err != nil {
 			return
 		}
@@ -24,12 +26,13 @@ func NewJPNAmiiboMap(JPNChart JPNChart, JPNLineup JPNLineup) (v JPNAmiiboMap, er
 			v[ID] = JPNAmiibo{}
 		}
 		var p = v[ID]
-		err = (&p).AddJPNLineupItem(JP)
+		err = (&p).AddJPNLineupItem(&JP)
 		if err != nil {
 			return
 		}
 		v[ID] = p
 	}
+	fmt.Println(v["aaaa"].Software)
 	return
 }
 
@@ -40,7 +43,7 @@ func ReadJPNAmiiboMap(dir string, filename string) (v JPNAmiiboMap, err error) {
 }
 
 // WriteJPNAmiiboMap writes a JPNAmiiboMap to disc.
-func WriteJPNAmiiboMap(dir string, filename string, v JPNAmiiboMap) (fullpath string, err error) {
+func WriteJPNAmiiboMap(dir string, filename string, v *JPNAmiiboMap) (fullpath string, err error) {
 	fullpath, err = writeJSONFile(dir, filename, &v)
 	return
 }
