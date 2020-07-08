@@ -19,3 +19,15 @@ type JPNLineupSeriesItem struct {
 	// Name is the name of the Nintendo product in Japanese Hiragana.
 	Name string `xml:"name"`
 }
+
+// ReadJPNLineupSeriesItem reads a JPNLineupSeriesItem from disc.
+func ReadJPNLineupSeriesItem(dir string, filename string) (v JPNLineupSeriesItem, err error) {
+	err = readXMLFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteJPNLineupSeriesItem writes a JPNLineupSeriesItem to disc.
+func WriteJPNLineupSeriesItem(dir string, filename string, v *JPNLineupSeriesItem) (fullpath string, err error) {
+	fullpath, err = writeXMLFile(dir, filename, v)
+	return
+}
