@@ -30,12 +30,12 @@ func (j JPNChartItem) GetID() string {
 
 // ReadJPNChartItem reads a JPNChartItem from disc.
 func ReadJPNChartItem(dir string, filename string) (v JPNChartItem, err error) {
-	err = readJSONFile(dir, filename, &v)
+	err = readXMLFile(dir, filename, &v)
 	return v, err
 }
 
 // WriteJPNChartItem writes a JPNChartItem to disc.
 func WriteJPNChartItem(dir string, filename string, v *JPNChartItem) (fullpath string, err error) {
-	fullpath, err = writeJSONFile(dir, filename, v)
+	fullpath, err = writeXMLFile(dir, filename, v)
 	return
 }

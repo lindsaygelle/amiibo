@@ -6,7 +6,7 @@ import (
 	"github.com/lindsaygelle/amiibo"
 )
 
-var jpnChartItemFileName = "jpn-chart-item-test.json"
+var jpnChartItemFileName = "jpn-chart-item-test.xml"
 
 func TestJPNChartItem(t *testing.T) {
 	var err error

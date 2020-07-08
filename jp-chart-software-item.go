@@ -20,11 +20,23 @@ type JPNChartSoftwareItem struct {
 	Price       string      `xml:"price"`
 	Priority    string      `xml:"priority"`
 	Series      string      `xml:"series"`
-	Softoption  interface{} `xml:"softoption"`
+	SoftOption  interface{} `xml:"softoption"`
 	Subname     string      `xml:"subname"`
 }
 
 // GetID returns the JPNChartSoftwareItem ID.
 func (j JPNChartSoftwareItem) GetID() string {
 	return j.Code
+}
+
+// ReadJPNChartSoftwareItem reads a JPNChartSoftwareItem from disc.
+func ReadJPNChartSoftwareItem(dir string, filename string) (v JPNChartSoftwareItem, err error) {
+	err = readXMLFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteJPNChartSoftwareItem writes a JPNChartSoftwareItem to disc.
+func WriteJPNChartSoftwareItem(dir string, filename string, v *JPNChartSoftwareItem) (fullpath string, err error) {
+	fullpath, err = writeXMLFile(dir, filename, v)
+	return
 }

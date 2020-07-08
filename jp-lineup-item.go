@@ -64,3 +64,15 @@ type JPNLineupItem struct {
 func (j JPNLineupItem) GetID() string {
 	return j.Code
 }
+
+// ReadJPNLineupItem reads a JPNLineupItem from disc.
+func ReadJPNLineupItem(dir string, filename string) (v JPNLineupItem, err error) {
+	err = readXMLFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteJPNLineupItem writes a JPNLineupItem to disc.
+func WriteJPNLineupItem(dir string, filename string, v *JPNLineupItem) (fullpath string, err error) {
+	fullpath, err = writeXMLFile(dir, filename, v)
+	return
+}
