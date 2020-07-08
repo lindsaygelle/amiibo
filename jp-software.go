@@ -5,17 +5,19 @@ import (
 	"time"
 )
 
+// JPNSoftware is a formatted JPNChartSoftwareItem.
 type JPNSoftware struct {
-	ID              string
-	Name            string
-	NameAlternative string
-	Platform        string
-	Price           string
-	Priority        string
-	ReleaseDate     time.Time
+	ID              string    `json:"id"`
+	Name            string    `json:"name"`
+	NameAlternative string    `json:"name_alternative"`
+	Platform        string    `json:"platform"`
+	Price           string    `json:"price"`
+	Priority        string    `json:"priority"`
+	ReleaseDate     time.Time `json:"release_date"`
 }
 
-func (j *JPNSoftware) Add(v *JPNChartSoftwareItem) (err error) {
+// AddJPNChartSoftwareItem adds a JPNChartSoftwareItem to the JPNSoftware.
+func (j *JPNSoftware) AddJPNChartSoftwareItem(v *JPNChartSoftwareItem) (err error) {
 	j.ID = v.Code
 	j.Name = v.Name
 	j.NameAlternative = v.NameKana
