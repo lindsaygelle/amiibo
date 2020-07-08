@@ -36,3 +36,15 @@ type ENGLineupItem struct {
 func (e ENGLineupItem) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
 }
+
+// ReadENGLineupItem reads a ENGLineupItem from disc.
+func ReadENGLineupItem(dir string, filename string) (v ENGLineupItem, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteENGLineupItem writes a ENGLineupItem to disc.
+func WriteENGLineupItem(dir string, filename string, v *ENGLineupItem) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}
