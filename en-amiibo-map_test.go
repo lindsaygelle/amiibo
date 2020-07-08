@@ -18,4 +18,11 @@ func testENGAmiiboMap(t *testing.T) {
 		t.Logf("engAmiiboMap %d engChart.AmiiboList %d engLineup.AmiiboList %d engLineup.Items %d", l, len(engChart.AmiiboList), len(engLineup.AmiiboList), len(engLineup.Items))
 	}
 	_, err = amiibo.WriteENGAmiiboMap(filefolder, "en-amiibo-map.json", &v)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = amiibo.ReadENGAmiiboMap(filefolder, "en-amiibo-map.json")
+	if err != nil {
+		t.Fatal(err)
+	}
 }

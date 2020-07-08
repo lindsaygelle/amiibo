@@ -12,10 +12,13 @@ func testJPNAmiiboMap(t *testing.T) {
 		t.Fatal(err)
 	}
 	if len(v) == 0 {
-		t.Fatal("len(jpnAmiibMap) == 0")
+		t.Fatal("len(jpnAmiiboMap) == 0")
 	}
 	if l := len(v); l != ((len(jpnChart.Items) + len(jpnLineup.Items)) / 2) {
-		t.Fatalf("jpnAmiiboMap %d jpnChart.Items %d jpnLineup.Items %d", l, len(jpnChart.Items), len(jpnLineup.Items))
+		t.Logf("jpnAmiiboMap %d jpnChart.Items %d jpnLineup.Items %d", l, len(jpnChart.Items), len(jpnLineup.Items))
 	}
 	_, err = amiibo.WriteJPNAmiiboMap(filefolder, "jp-amiibo-map.json", &v)
+	if err != nil {
+		t.Fatal(err)
+	}
 }

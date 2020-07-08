@@ -3,6 +3,7 @@ package amiibo_test
 import (
 	"os"
 	"path/filepath"
+	"reflect"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
@@ -34,5 +35,8 @@ func TestGetJPNChartSoftware(t *testing.T) {
 	}
 	if l := len(jpnChartSoftware.Items); l == 0 {
 		t.Fatal("len: jpnChartSoftware.Items", l)
+	}
+	if !reflect.ValueOf(jpnChartSoftware).IsZero() {
+		testJPNSoftwareMap(t)
 	}
 }

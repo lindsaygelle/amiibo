@@ -17,4 +17,12 @@ func testENGGameMap(t *testing.T) {
 	if l := len(v); l != ((len(engChart.GameList) + len(engChart.Items)) / 2) {
 		t.Logf("engGameMap %d engChart.GameList %d engChart.Items %d", l, len(engChart.GameList), len(engChart.Items))
 	}
+	_, err = amiibo.WriteENGGameMap(filefolder, "en-game-map.json", &v)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = amiibo.ReadENGGameMap(filefolder, "en-game-map.json")
+	if err != nil {
+		t.Fatal(err)
+	}
 }
