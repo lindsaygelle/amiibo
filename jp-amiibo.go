@@ -25,17 +25,24 @@ type JPNAmiibo struct {
 }
 
 // AddJPNChartItem adds a JPNChartItem to the JPNAmiibo.
-func (j *JPNAmiibo) AddJPNChartItem(v JPNChartItem) (err error) {
+func (j *JPNAmiibo) AddJPNChartItem(v *JPNChartItem) (err error) {
 	j.ID = v.Code
+	if reflect.ValueOf(j.Software).IsZero() {
+		j.Software = make(JPNAmiiboSoftwareMap)
+	}
 	if reflect.ValueOf(j.Name).IsZero() {
 		j.Name = v.Name
 	}
 	if reflect.ValueOf(j.Series).IsZero() {
 		j.Series = v.Series
 	}
-	err = j.AddJPNChartItemSoftware(v.Softwares...)
-	if err != nil {
-		return
+	for _, JP := range v.Softwares {
+		var v JPNAmiiboSoftware
+		v, err = NewJPNAmiiboSoftware(&JP)
+		if err != nil {
+			continue
+		}
+		j.Software[JP.Code] = v
 	}
 	if reflect.ValueOf(j.URL).IsZero() {
 		j.URL = "https://www.nintendo.co.jp/hardware/amiibo/lineup/" + j.ID
@@ -43,23 +50,8 @@ func (j *JPNAmiibo) AddJPNChartItem(v JPNChartItem) (err error) {
 	return
 }
 
-// AddJPNChartItemSoftware adds a JPNChartItemSoftware to the JPNAmiibo
-func (j *JPNAmiibo) AddJPNChartItemSoftware(v ...JPNChartItemSoftware) (err error) {
-	var software = JPNAmiiboSoftwareMap{}
-	for _, JP := range v {
-		var v JPNAmiiboSoftware
-		v, err = NewJPNAmiiboSoftware(JP)
-		if err == nil {
-			software.Add(v)
-		}
-	}
-	fmt.Println(len(software))
-	j.Software = software
-	return
-}
-
 // AddJPNLineupItem adds a JPNLineupItem to the JPNAmiibo.
-func (j *JPNAmiibo) AddJPNLineupItem(v JPNLineupItem) (err error) {
+func (j *JPNAmiibo) AddJPNLineupItem(v *JPNLineupItem) (err error) {
 	j.Chart = v.Chart != 0
 	if reflect.ValueOf(j.ID).IsZero() {
 		j.ID = v.Code
@@ -91,7 +83,7 @@ func (j *JPNAmiibo) AddJPNLineupItem(v JPNLineupItem) (err error) {
 }
 
 // NewJPNAmiibo returns a new NewJPNAmiibo.
-func NewJPNAmiibo(JPNChartItem JPNChartItem, JPNLineupItem JPNLineupItem) (v JPNAmiibo, err error) {
+func NewJPNAmiibo(JPNChartItem *JPNChartItem, JPNLineupItem *JPNLineupItem) (v JPNAmiibo, err error) {
 	var ok bool
 	ok = JPNChartItem.GetID() == JPNLineupItem.GetID()
 	if !ok {

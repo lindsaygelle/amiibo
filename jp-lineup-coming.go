@@ -44,7 +44,7 @@ func ReadJPNLineupComing(dir string, filename string) (v JPNLineupComing, err er
 }
 
 // WriteJPNLineupComing writes a JPNLineupComing to disc.
-func WriteJPNLineupComing(dir string, filename string, v JPNLineupComing) (fullpath string, err error) {
-	fullpath, err = writeXMLFile(dir, filename, &v)
+func WriteJPNLineupComing(dir string, filename string, v *JPNLineupComing) (fullpath string, err error) {
+	fullpath, err = writeXMLFile(dir, filename, v)
 	return
 }

@@ -48,7 +48,7 @@ func ReadENGChart(dir string, filename string) (v ENGChart, err error) {
 }
 
 // WriteENGChart writes a ENGChart to disc.
-func WriteENGChart(dir string, filename string, v ENGChart) (fullpath string, err error) {
-	fullpath, err = writeJSONFile(dir, filename, &v)
+func WriteENGChart(dir string, filename string, v *ENGChart) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
 	return
 }

@@ -4,7 +4,7 @@ package amiibo
 type ENGGGameMap (map[string]ENGGame)
 
 // NewENGGameMap returns a ENGGGameMap.
-func NewENGGameMap(ENGChart ENGChart) (v ENGGGameMap, err error) {
+func NewENGGameMap(ENGChart *ENGChart) (v ENGGGameMap, err error) {
 	v = (make(ENGGGameMap))
 	for _, EN := range ENGChart.GameList {
 		ID := EN.GetID()
