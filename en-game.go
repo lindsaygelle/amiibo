@@ -77,6 +77,11 @@ func (e *ENGGame) AddENGChartItem(v *ENGChartItem) (err error) {
 	return
 }
 
+// GetID returns the ENGGame ID.
+func (e ENGGame) GetID() string {
+	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
+}
+
 // NewENGGame returns a ENGGame.
 func NewENGGame(ENGChartGame *ENGChartGame, ENGChartItem *ENGChartItem) (v ENGGame, err error) {
 	var ok bool
