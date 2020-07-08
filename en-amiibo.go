@@ -47,7 +47,7 @@ type ENGAmiibo struct {
 }
 
 // AddENGChartAmiibo adds the contents of a ENGChartAmiibo to the ENGAmiibo.
-func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
+func (e *ENGAmiibo) AddENGChartAmiibo(v *ENGChartAmiibo) (err error) {
 	e.Affiliation = v.IsRelatedTo
 	var available bool
 	available, err = strconv.ParseBool(v.IsReleased)
@@ -78,7 +78,7 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v ENGChartAmiibo) (err error) {
 }
 
 // AddENGLineupAmiibo adds the contents of a ENGLineupAmiibo to the ENGAmiibo.
-func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
+func (e *ENGAmiibo) AddENGLineupAmiibo(v *ENGLineupAmiibo) (err error) {
 	e.BoxImageURL = strings.ReplaceAll(("https://nintendo.com" + v.BoxArtURL), " ", "%20")
 	var description = v.OverviewDescription
 	description = regexpSpaces.ReplaceAllString(regexpHTML.ReplaceAllString(description, " "), " ")
@@ -118,7 +118,7 @@ func (e *ENGAmiibo) AddENGLineupAmiibo(v ENGLineupAmiibo) (err error) {
 }
 
 // AddENGLineupItem adds the contents of a ENGLineupItem to the ENGAmiibo.
-func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
+func (e *ENGAmiibo) AddENGLineupItem(v *ENGLineupItem) (err error) {
 	e.DescriptionAlternative = v.Description
 	var lastModified time.Time
 	lastModified = time.Unix(0, (v.LastModified * int64(time.Millisecond)))
@@ -132,7 +132,7 @@ func (e *ENGAmiibo) AddENGLineupItem(v ENGLineupItem) (err error) {
 }
 
 // NewENGAmiibo returns a ENGAmiibo.
-func NewENGAmiibo(ENGChartAmiibo ENGChartAmiibo, ENGLineupAmiibo ENGLineupAmiibo, ENGLineupItem ENGLineupItem) (v ENGAmiibo, err error) {
+func NewENGAmiibo(ENGChartAmiibo *ENGChartAmiibo, ENGLineupAmiibo *ENGLineupAmiibo, ENGLineupItem *ENGLineupItem) (v ENGAmiibo, err error) {
 	var ok bool
 	ok = ENGChartAmiibo.GetID() == ENGLineupAmiibo.GetID()
 	if !ok {
