@@ -1,9 +1,5 @@
 package amiibo
 
-import (
-	"fmt"
-)
-
 // JPNAmiiboSoftware is a formatted JPNChartItemSoftware.
 type JPNAmiiboSoftware struct {
 	Description string `json:"description"`
@@ -21,9 +17,12 @@ func (j *JPNAmiiboSoftware) AddJPNChartItemSoftware(v JPNChartItemSoftware) (err
 	return
 }
 
+func (j JPNAmiiboSoftware) GetID() string {
+	return j.ID
+}
+
 // NewJPNAmiiboSoftware returns a new JPNAmiiboSoftware
 func NewJPNAmiiboSoftware(JPNChartItemSoftware JPNChartItemSoftware) (v JPNAmiiboSoftware, err error) {
 	err = (&v).AddJPNChartItemSoftware(JPNChartItemSoftware)
-	fmt.Println(v)
 	return
 }
