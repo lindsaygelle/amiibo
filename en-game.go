@@ -102,3 +102,15 @@ func NewENGGame(ENGChartGame *ENGChartGame, ENGChartItem *ENGChartItem) (v ENGGa
 	}
 	return
 }
+
+// ReadENGGame reads a ENGGame from disc.
+func ReadENGGame(dir string, filename string) (v ENGGame, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteENGGame writes a ENGGame to disc.
+func WriteENGGame(dir string, filename string, v *ENGGame) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}

@@ -85,3 +85,15 @@ type ENGLineupAmiibo struct {
 func (e ENGLineupAmiibo) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.DetailsURL), ".html")
 }
+
+// ReadENGLineupAmiibo reads a ENGLineupAmiibo from disc.
+func ReadENGLineupAmiibo(dir string, filename string) (v ENGLineupAmiibo, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteENGLineupAmiibo writes a ENGLineupAmiibo to disc.
+func WriteENGLineupAmiibo(dir string, filename string, v *ENGLineupAmiibo) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}

@@ -29,3 +29,15 @@ func NewJPNAmiiboSoftware(JPNChartItemSoftware *JPNChartItemSoftware) (v JPNAmii
 	err = (&v).AddJPNChartItemSoftware(JPNChartItemSoftware)
 	return
 }
+
+// ReadJPNAmiiboSoftware reads a JPNAmiiboSoftware from disc.
+func ReadJPNAmiiboSoftware(dir string, filename string) (v JPNAmiiboSoftware, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteJPNAmiiboSoftware writes a JPNAmiiboSoftware to disc.
+func WriteJPNAmiiboSoftware(dir string, filename string, v *JPNAmiiboSoftware) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}

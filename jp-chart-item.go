@@ -27,3 +27,15 @@ type JPNChartItem struct {
 func (j JPNChartItem) GetID() string {
 	return j.Code
 }
+
+// ReadJPNChartItem reads a JPNChartItem from disc.
+func ReadJPNChartItem(dir string, filename string) (v JPNChartItem, err error) {
+	err = readXMLFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteJPNChartItem writes a JPNChartItem to disc.
+func WriteJPNChartItem(dir string, filename string, v *JPNChartItem) (fullpath string, err error) {
+	fullpath, err = writeXMLFile(dir, filename, v)
+	return
+}
