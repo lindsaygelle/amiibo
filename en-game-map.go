@@ -12,7 +12,7 @@ func NewENGGameMap(ENGChart *ENGChart) (v ENGGGameMap, err error) {
 			v[ID] = ENGGame{}
 		}
 		var p = v[ID]
-		err = (&p).AddENGChartGame(EN)
+		err = (&p).AddENGChartGame(&EN)
 		if err != nil {
 			return
 		}
@@ -24,7 +24,7 @@ func NewENGGameMap(ENGChart *ENGChart) (v ENGGGameMap, err error) {
 			v[ID] = ENGGame{}
 		}
 		var p = v[ID]
-		err = (&p).AddENGChartItem(EN)
+		err = (&p).AddENGChartItem(&EN)
 		if err != nil {
 			return
 		}

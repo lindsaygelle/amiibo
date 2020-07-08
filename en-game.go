@@ -28,7 +28,7 @@ type ENGGame struct {
 }
 
 // AddENGChartGame adds the contents of a ENGChartGame to the ENGGame.
-func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
+func (e *ENGGame) AddENGChartGame(v *ENGChartGame) (err error) {
 	var available bool
 	available, err = strconv.ParseBool(v.IsReleased)
 	if err != nil {
@@ -59,7 +59,7 @@ func (e *ENGGame) AddENGChartGame(v ENGChartGame) (err error) {
 }
 
 // AddENGChartItem adds the contents of a ENGChartItem to the ENGGame.
-func (e *ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
+func (e *ENGGame) AddENGChartItem(v *ENGChartItem) (err error) {
 	e.Description = v.Description
 	var lastModified time.Time
 	lastModified = time.Unix(0, (v.LastModified * int64(time.Millisecond)))
@@ -78,7 +78,7 @@ func (e *ENGGame) AddENGChartItem(v ENGChartItem) (err error) {
 }
 
 // NewENGGame returns a ENGGame.
-func NewENGGame(ENGChartGame ENGChartGame, ENGChartItem ENGChartItem) (v ENGGame, err error) {
+func NewENGGame(ENGChartGame *ENGChartGame, ENGChartItem *ENGChartItem) (v ENGGame, err error) {
 	var ok bool
 	ok = ENGChartGame.GetID() == ENGChartItem.GetID()
 	if !ok {
