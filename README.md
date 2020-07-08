@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/lindsaygelle/amiibo.svg?branch=master)](https://travis-ci.org/lindsaygelle/amiibo)
-[![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-blue.svg)](https://github.com/gelell/amiibo/blob/master/LICENSE)
+![Go](https://github.com/lindsaygelle/amiibo/workflows/Go/badge.svg)
+[![Apache V2 License](https://img.shields.io/badge/license-Apache%20V2-blue.svg)](https://github.com/lindsaygelle/amiibo/blob/master/LICENSE)
 
 # Amiibo
 
@@ -25,7 +25,7 @@ To update the SDK use `go get -u` to retrieve the latest version of the SDK.
 
 ## Dependencies
 
-The SDK includes a vendor folder containing the runtime dependencies of the SDK. The metadata of the SDK's dependencies can be found in the Go module file go.mod.
+The Amiibo SDK is built Go's module system. Please update to Go 1.13 to use `go mod` out of the box. 
 
 ## Go Modules
 
