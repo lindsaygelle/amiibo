@@ -33,12 +33,16 @@ func TestGetENGChart(t *testing.T) {
 		t.Fatalf("%s != %s", s, engChartFullpath)
 	}
 	if l := len(engChart.AmiiboList); l == 0 {
-		t.Fatal("len: enLineup.AmiiboList", l)
+		t.Fatal("len: engLineup.AmiiboList", l)
 	}
 	if l := len(engChart.GameList); l == 0 {
-		t.Fatal("len: enLineup.GameList", l)
+		t.Fatal("len: engLineup.GameList", l)
 	}
 	if l := len(engChart.Items); l == 0 {
-		t.Fatal("len: enLineup.Items", l)
+		t.Fatal("len: engLineup.Items", l)
+	}
+	_, err = amiibo.ReadENGChart(filefolder, engChartFileName)
+	if err != nil {
+		t.Fatal(err)
 	}
 }
