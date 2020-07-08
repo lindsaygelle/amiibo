@@ -40,3 +40,15 @@ type ENGChartAmiibo struct {
 func (e ENGChartAmiibo) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
 }
+
+// ReadENGChartAmiibo reads a ENGChartAmiibo from disc.
+func ReadENGChartAmiibo(dir string, filename string) (v ENGChartAmiibo, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteENGChartAmiibo writes a ENGChartAmiibo to disc.
+func WriteENGChartAmiibo(dir string, filename string, v *ENGChartAmiibo) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}
