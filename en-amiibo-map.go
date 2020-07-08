@@ -12,7 +12,7 @@ func NewENGAmiiboMap(ENGChart ENGChart, ENGLineup ENGLineup) (v ENGAmiiboMap, er
 			v[ID] = ENGAmiibo{}
 		}
 		var p = v[ID]
-		err = (&p).AddENGChartAmiibo(EN)
+		err = (&p).AddENGChartAmiibo(&EN)
 		if err != nil {
 			return
 		}
@@ -24,7 +24,7 @@ func NewENGAmiiboMap(ENGChart ENGChart, ENGLineup ENGLineup) (v ENGAmiiboMap, er
 			v[ID] = ENGAmiibo{}
 		}
 		var p = v[ID]
-		err = (&p).AddENGLineupAmiibo(EN)
+		err = (&p).AddENGLineupAmiibo(&EN)
 		if err != nil {
 			return
 		}
@@ -36,7 +36,7 @@ func NewENGAmiiboMap(ENGChart ENGChart, ENGLineup ENGLineup) (v ENGAmiiboMap, er
 			v[ID] = ENGAmiibo{}
 		}
 		var p = v[ID]
-		err = (&p).AddENGLineupItem(EN)
+		err = (&p).AddENGLineupItem(&EN)
 		if err != nil {
 			return
 		}
