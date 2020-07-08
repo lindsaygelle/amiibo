@@ -6,9 +6,10 @@ import (
 	"net/http"
 )
 
+// JPNChartSoftwareURL is the URL for the Nintendo Japan Nintendo Amiibo software chart.
 const JPNChartSoftwareURL string = "https://www.nintendo.co.jp/hardware/amiibo/chart/data/software.xml"
 
-// JPNChartSoftware is the unfettered Japanese language Nintendo software information.
+// JPNChartSoftware is the unfettered Japanese language Nintendo Amiibo software information.
 type JPNChartSoftware struct {
 	XMLName xml.Name `xml:"items"`
 
