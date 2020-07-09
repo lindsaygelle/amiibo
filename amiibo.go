@@ -10,6 +10,7 @@ import (
 type Amiibo interface {
 	GetID() string
 	GetLanguage() language.Tag
+	GetMD5() (string, error)
 	GetName() string
 	GetNameAlternative() string
 	GetPrice() string

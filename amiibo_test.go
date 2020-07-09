@@ -36,6 +36,9 @@ func TestAmiibo(t *testing.T) {
 	if getNameAlternative := engAmiibo.GetNameAlternative(); getNameAlternative != nameAlt {
 		t.Fatalf("(Amiibo).GetNameAlternative() %s != %s", getNameAlternative, nameAlt)
 	}
+	if MD5, err := engAmiibo.GetMD5(); err != nil {
+		t.Fatalf("(Amiibo).GetMD5() (%s, %s)", MD5, err)
+	}
 	if getPrice := engAmiibo.GetPrice(); getPrice != price {
 		t.Fatalf("(Amiibo).GetPrice() %s != %s", getPrice, price)
 	}

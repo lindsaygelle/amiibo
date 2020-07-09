@@ -1,6 +1,8 @@
 package amiibo
 
 import (
+	"crypto/md5"
+	"encoding/json"
 	"fmt"
 	"html"
 	"path/filepath"
@@ -185,6 +187,17 @@ func (e ENGAmiibo) GetName() string {
 // GetNameAlternative returns the ENGAmiibo name alternative.
 func (e ENGAmiibo) GetNameAlternative() string {
 	return e.NameAlternative
+}
+
+// GetMD5 returns the ENGAmiibo MD5.
+func (e ENGAmiibo) GetMD5() (MD5 string, err error) {
+	var b ([]byte)
+	b, err = marshal(&e, json.Marshal)
+	if err != nil {
+		return
+	}
+	MD5 = fmt.Sprintf("%x", md5.Sum(b))
+	return
 }
 
 // GetPrice returns the ENGAmiibo price.

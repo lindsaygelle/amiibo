@@ -1,6 +1,8 @@
 package amiibo
 
 import (
+	"crypto/md5"
+	"encoding/json"
 	"fmt"
 	"reflect"
 	"time"
@@ -90,6 +92,17 @@ func (j JPNAmiibo) GetName() string {
 // GetNameAlternative returns the JPNAmiibo name alternative.
 func (j JPNAmiibo) GetNameAlternative() string {
 	return j.NameAlternative
+}
+
+// GetMD5 returns the JPNAmiibo MD5.
+func (j JPNAmiibo) GetMD5() (MD5 string, err error) {
+	var b ([]byte)
+	b, err = marshal(&j, json.Marshal)
+	if err != nil {
+		return
+	}
+	MD5 = fmt.Sprintf("%x", md5.Sum(b))
+	return
 }
 
 // GetPrice returns the JPNAmiibo price.
