@@ -44,3 +44,20 @@ type JPNLineupComingItem struct {
 	// TitleRuby is the Japanese Hiragana for the Nintendo Amiibo product.
 	TitleRuby string `xml:"title_ruby"`
 }
+
+// GetID returns the JPNLineupComingItem ID.
+func (j JPNLineupComingItem) GetID() string {
+	return j.ThumbVariation
+}
+
+// ReadJPNLineupComingItem reads a JPNLineupComingItem from disc.
+func ReadJPNLineupComingItem(dir string, filename string) (v JPNLineupComingItem, err error) {
+	err = readXMLFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteJPNLineupComingItem writes a JPNLineupComingItem to disc.
+func WriteJPNLineupComingItem(dir string, filename string, v *JPNLineupComingItem) (fullpath string, err error) {
+	fullpath, err = writeXMLFile(dir, filename, v)
+	return
+}
