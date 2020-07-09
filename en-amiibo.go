@@ -176,6 +176,31 @@ func (e ENGAmiibo) GetName() string {
 	return e.Name
 }
 
+// GetNameAlternative returns the ENGAmiibo name alternative.
+func (e ENGAmiibo) GetNameAlternative() string {
+	return e.NameAlternative
+}
+
+// GetPrice returns the ENGAmiibo price.
+func (e ENGAmiibo) GetPrice() string {
+	return e.Price
+}
+
+// GetReleaseDate returns the ENGAmiibo release date.
+func (e ENGAmiibo) GetReleaseDate() time.Time {
+	return e.ReleaseDate
+}
+
+// GetSeries returns the ENGAmiibo series.
+func (e ENGAmiibo) GetSeries() string {
+	return e.Series
+}
+
+// GetURL returns the ENGAmiibo URL.
+func (e ENGAmiibo) GetURL() string {
+	return e.URL
+}
+
 // NewENGAmiibo returns a ENGAmiibo.
 func NewENGAmiibo(ENGChartAmiibo *ENGChartAmiibo, ENGLineupAmiibo *ENGLineupAmiibo, ENGLineupItem *ENGLineupItem) (v ENGAmiibo, err error) {
 	var ok bool

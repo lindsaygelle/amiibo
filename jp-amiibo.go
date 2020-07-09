@@ -80,6 +80,31 @@ func (j JPNAmiibo) GetName() string {
 	return j.Name
 }
 
+// GetNameAlternative returns the JPNAmiibo name alternative.
+func (j JPNAmiibo) GetNameAlternative() string {
+	return j.NameAlternative
+}
+
+// GetPrice returns the JPNAmiibo price.
+func (j JPNAmiibo) GetPrice() string {
+	return j.Price
+}
+
+// GetReleaseDate returns the JPNAmiibo release date.
+func (j JPNAmiibo) GetReleaseDate() time.Time {
+	return j.ReleaseDate
+}
+
+// GetSeries returns the JPNAmiibo series.
+func (j JPNAmiibo) GetSeries() string {
+	return j.Series
+}
+
+// GetURL returns the JPNAmiibo URL
+func (j JPNAmiibo) GetURL() string {
+	return j.URL
+}
+
 // AddJPNLineupItem adds a JPNLineupItem to the JPNAmiibo.
 func (j *JPNAmiibo) AddJPNLineupItem(v *JPNLineupItem) (err error) {
 	j.Chart = v.Chart != 0
