@@ -2,11 +2,18 @@ package amiibo
 
 // JPNAmiiboSoftware is a formatted JPNChartItemSoftware.
 type JPNAmiiboSoftware struct {
+	// Description is the verbose description for the Nintendo software product.
 	Description string `json:"description"`
-	Digital     bool   `json:"digital"`
-	ID          string `json:"id"`
-	Name        string `json:"name"`
-	URL         string `json:"url"`
+	// Digital indicates the whether the Nintendo software product is a digital only release.
+	Digital bool `json:"digital"`
+	// ID is the fully qualified ID for the Nintendo software product given by Nintendo Japan.
+	ID string `json:"id"`
+	// Name is the official name of the Nintendo software product.
+	//
+	// Name contains Japanese Hiragana.
+	Name string `json:"name"`
+	// URL is the direct URL to the Nintendo software product page.
+	URL string `json:"url"`
 }
 
 // AddJPNChartItemSoftware adds a JPNChartItemSoftware to the JPNAmiiboSoftware
