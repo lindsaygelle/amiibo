@@ -35,3 +35,15 @@ func (j *JPNSoftware) AddJPNChartSoftwareItem(v *JPNChartSoftwareItem) (err erro
 	j.URL = "https://www.nintendo.co.jp/hardware/amiibo/game/" + j.ID
 	return
 }
+
+// ReadJPNSoftware reads a JPNSoftware from disc.
+func ReadJPNSoftware(dir string, filename string) (v JPNSoftware, err error) {
+	err = readJSONFile(dir, filename, &v)
+	return v, err
+}
+
+// WriteJPNSoftware writes a JPNSoftware to disc.
+func WriteJPNSoftware(dir string, filename string, v *JPNSoftware) (fullpath string, err error) {
+	fullpath, err = writeJSONFile(dir, filename, v)
+	return
+}
