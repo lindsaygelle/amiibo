@@ -76,13 +76,10 @@ func (e *ENGGame) AddENGChartItem(v *ENGChartItem) (err error) {
 	var lastModified time.Time
 	lastModified = time.Unix(0, (v.LastModified * int64(time.Millisecond)))
 	e.LastModified = lastModified
-	if !reflect.ValueOf(v.Path).IsZero() {
+	if reflect.ValueOf(v.Path).IsZero() {
 		e.Path = v.Path
 	}
 	e.Title = v.Title
-	if reflect.ValueOf(e.Path).IsZero() {
-		e.URI = filepath.Dir(v.Path)
-	}
 	if reflect.ValueOf(e.URL).IsZero() {
 		e.URL = strings.ReplaceAll(("https://nintendo.com" + v.URL), " ", "%20")
 	}

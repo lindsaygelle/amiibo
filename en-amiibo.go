@@ -169,6 +169,11 @@ func (e *ENGAmiibo) AddENGLineupItem(v *ENGLineupItem) (err error) {
 	return
 }
 
+// GetAvailable returns the ENGAmiibo availability.
+func (e ENGAmiibo) GetAvailable() bool {
+	return time.Now().After(e.ReleaseDate)
+}
+
 // GetID returns the ENGAmiibo ID.
 func (e ENGAmiibo) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.URL), ".html")

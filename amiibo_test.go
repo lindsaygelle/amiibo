@@ -42,6 +42,9 @@ func TestAmiibo(t *testing.T) {
 		t.Fatalf("(Amiibo).GetLanguage() %v != %v", getLanguage, language.Japanese)
 	}
 	for _, v := range []amiibo.Amiibo{engAmiibo, jpnAmiibo} {
+		if getAvailable := v.GetAvailable(); !getAvailable {
+			t.Fatalf("(Amiibo).GetAvailable() %t != true", getAvailable)
+		}
 		if getName := v.GetName(); getName != name {
 			t.Fatalf("(Amiibo).GetName() %s != %s", getName, name)
 		}
