@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+var _ Amiibo = (JPNAmiibo{})
+
 // JPNAmiibo is a formatted JPN Nintendo Amiibo.
 type JPNAmiibo struct {
 	Chart bool `json:"chart"`
@@ -71,6 +73,11 @@ func (j *JPNAmiibo) AddJPNChartItem(v *JPNChartItem) (err error) {
 // GetID returns the JPNAmiibo ID.
 func (j JPNAmiibo) GetID() string {
 	return j.ID
+}
+
+// GetName returns the JPNAmiibo name.
+func (j JPNAmiibo) GetName() string {
+	return j.Name
 }
 
 // AddJPNLineupItem adds a JPNLineupItem to the JPNAmiibo.

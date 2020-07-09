@@ -12,6 +12,8 @@ import (
 	"github.com/google/uuid"
 )
 
+var _ Amiibo = (ENGAmiibo{})
+
 // ENGAmiibo is a formatted ENGChartAmiibo, ENGLineupAmiibo and ENGLineupItem.
 type ENGAmiibo struct {
 	// Affiliation is the series of Nintendo Amiibo products the item is associated with.
@@ -167,6 +169,11 @@ func (e *ENGAmiibo) AddENGLineupItem(v *ENGLineupItem) (err error) {
 // GetID returns the ENGAmiibo ID.
 func (e ENGAmiibo) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
+}
+
+// GetName returns the ENGAmiibo name.
+func (e ENGAmiibo) GetName() string {
+	return e.Name
 }
 
 // NewENGAmiibo returns a ENGAmiibo.
