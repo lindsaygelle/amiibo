@@ -16,13 +16,17 @@ var filefolder = filepath.Dir(caller)
 func TestAmiibo(t *testing.T) {
 	var name = "name"
 	var nameAlt = "nameAlt"
-	var price = "420.69"
+	var price = "1.99"
 	var releaseDate = time.Now()
+	var series = "series"
+	var URL = "https://ninendo.com/"
 	var engAmiibo amiibo.Amiibo = amiibo.ENGAmiibo{
 		Name:            name,
 		NameAlternative: nameAlt,
 		Price:           price,
-		ReleaseDate:     releaseDate}
+		ReleaseDate:     releaseDate,
+		Series:          series,
+		URL:             URL}
 	if getLanguage := engAmiibo.GetLanguage(); getLanguage != language.English {
 		t.Fatalf("(Amiibo).GetLanguage() %v != %v", getLanguage, language.English)
 	}
@@ -37,5 +41,11 @@ func TestAmiibo(t *testing.T) {
 	}
 	if getReleaseDate := engAmiibo.GetReleaseDate(); getReleaseDate != releaseDate {
 		t.Fatalf("(Amiibo).GetReleaseDate() %v != %v", getReleaseDate, releaseDate)
+	}
+	if getSeries := engAmiibo.GetSeries(); getSeries != series {
+		t.Fatalf("(Amiibo).GetSeries() %v != %v", getSeries, series)
+	}
+	if getURL := engAmiibo.GetURL(); getURL != URL {
+		t.Fatalf("(Amiibo).GetURL() %s != %s", getURL, URL)
 	}
 }
