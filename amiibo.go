@@ -10,6 +10,7 @@ import (
 //
 // Amiibo provides a handler to get all common fields between the ENGAmiibo and JPNAmiibo.
 type Amiibo interface {
+	GetAvailable() bool
 	GetID() string
 	GetLanguage() language.Tag
 	GetMD5() (string, error)

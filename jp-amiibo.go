@@ -74,6 +74,11 @@ func (j *JPNAmiibo) AddJPNChartItem(v *JPNChartItem) (err error) {
 	return
 }
 
+// GetAvailable returns the JPNAmiibo availability.
+func (j JPNAmiibo) GetAvailable() bool {
+	return time.Now().After(j.ReleaseDate)
+}
+
 // GetID returns the JPNAmiibo ID.
 func (j JPNAmiibo) GetID() string {
 	return j.ID
