@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"reflect"
 	"time"
+
+	"golang.org/x/text/language"
 )
 
 var _ Amiibo = (JPNAmiibo{})
@@ -73,6 +75,11 @@ func (j *JPNAmiibo) AddJPNChartItem(v *JPNChartItem) (err error) {
 // GetID returns the JPNAmiibo ID.
 func (j JPNAmiibo) GetID() string {
 	return j.ID
+}
+
+// GetLanguage returns the JPNAmiibo language.
+func (j JPNAmiibo) GetLanguage() language.Tag {
+	return language.Japanese
 }
 
 // GetName returns the JPNAmiibo name.

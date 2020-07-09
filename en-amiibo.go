@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"golang.org/x/text/language"
 )
 
 var _ Amiibo = (ENGAmiibo{})
@@ -169,6 +170,11 @@ func (e *ENGAmiibo) AddENGLineupItem(v *ENGLineupItem) (err error) {
 // GetID returns the ENGAmiibo ID.
 func (e ENGAmiibo) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
+}
+
+// GetLanguage returns the ENGAmiibo language.
+func (e ENGAmiibo) GetLanguage() language.Tag {
+	return language.English
 }
 
 // GetName returns the ENGAmiibo name.
