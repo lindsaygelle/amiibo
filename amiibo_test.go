@@ -4,6 +4,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"testing"
+	"time"
 
 	"github.com/lindsaygelle/amiibo"
 	"golang.org/x/text/language"
@@ -16,10 +17,12 @@ func TestAmiibo(t *testing.T) {
 	var name = "name"
 	var nameAlt = "nameAlt"
 	var price = "420.69"
+	var releaseDate = time.Now()
 	var engAmiibo amiibo.Amiibo = amiibo.ENGAmiibo{
 		Name:            name,
 		NameAlternative: nameAlt,
-		Price:           price}
+		Price:           price,
+		ReleaseDate:     releaseDate}
 	if getLanguage := engAmiibo.GetLanguage(); getLanguage != language.English {
 		t.Fatalf("(Amiibo).GetLanguage() %v != %v", getLanguage, language.English)
 	}
@@ -31,5 +34,8 @@ func TestAmiibo(t *testing.T) {
 	}
 	if getPrice := engAmiibo.GetPrice(); getPrice != price {
 		t.Fatalf("(Amiibo).GetPrice() %s != %s", getPrice, price)
+	}
+	if getReleaseDate := engAmiibo.GetReleaseDate(); getReleaseDate != releaseDate {
+		t.Fatalf("(Amiibo).GetReleaseDate() %v != %v", getReleaseDate, releaseDate)
 	}
 }
