@@ -66,7 +66,7 @@ type ENGAmiibo struct {
 	ProductImageURL string `json:"product_image_url"`
 	// ProductPage is the relative nintendo.com URL to the Nintendo Amiibo product page.
 	ProductPage string `json:"product_page"`
-	// ReleaseDate is the foramtted timestamp of the Nintendo Amiibo products release date.
+	// ReleaseDate is the formatted timestamp of the Nintendo Amiibo products release date.
 	ReleaseDate time.Time `json:"release_date"`
 	// Series is the defined series of products that the Nintendo Amiibo product is group or affiliated with.
 	Series string `json:"series"`

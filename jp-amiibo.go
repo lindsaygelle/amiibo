@@ -30,7 +30,7 @@ type JPNAmiibo struct {
 	// Price can be empty.
 	Price    string `json:"price"`
 	Priority int64  `json:"priority"`
-	// ReleaseDate is the foramtted timestamp of the Nintendo Amiibo products release date.
+	// ReleaseDate is the formatted timestamp of the Nintendo Amiibo products release date.
 	ReleaseDate time.Time `json:"release_date"`
 	// ReleaseDateAlternative is the Japanese formatted Nintendo Amiibo product release date.
 	ReleaseDateAlternative time.Time `json:"release_data_alternative"`
