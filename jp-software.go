@@ -15,25 +15,33 @@ var _ Software = (JPNSoftware{})
 
 // JPNSoftware is a formatted JPNChartSoftwareItem.
 type JPNSoftware struct {
+
 	// ID is the fully qualified ID for the Nintendo software product given by Nintendo Japan.
 	ID string `json:"id"`
+
 	// Name is the official name of the Nintendo software product.
 	//
 	// Name contains Japanese Hiragana.
 	Name string `json:"name"`
+
 	// NameAlternative is the alternative name given to the Nintendo software product.
 	//
 	// NameAlternative contains Japanese Hiragana.
 	NameAlternative string `json:"name_alternative"`
+
 	// Platform is the Nintendo hardware platform the software is available on.
 	Platform string `json:"platform"`
+
 	// Price is the price of the Nintendo software product in JPY.
 	//
 	// Price can be empty.
-	Price    string `json:"price"`
+	Price string `json:"price"`
+
 	Priority string `json:"priority"`
+
 	// ReleaseDate is the formatted timestamp of the Nintendo software products release date.
 	ReleaseDate time.Time `json:"release_date"`
+
 	// URL is the direct URL to the Nintendo software product page.
 	URL string `json:"url"`
 }
