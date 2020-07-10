@@ -1,9 +1,17 @@
 package amiibo
 
 import (
+	"crypto/md5"
+	"encoding/json"
 	"fmt"
+	"path/filepath"
+	"strings"
 	"time"
+
+	"golang.org/x/text/language"
 )
+
+var _ Software = (JPNSoftware{})
 
 // JPNSoftware is a formatted JPNChartSoftwareItem.
 type JPNSoftware struct {
@@ -47,6 +55,52 @@ func (j *JPNSoftware) AddJPNChartSoftwareItem(v *JPNChartSoftwareItem) (err erro
 	}
 	j.URL = "https://www.nintendo.co.jp/hardware/amiibo/game/" + j.ID
 	return
+}
+
+// GetAvailable returns the JPNSoftware availability.
+func (j JPNSoftware) GetAvailable() bool {
+	return time.Now().After(j.ReleaseDate)
+}
+
+// GetID returns the JPNSoftware ID.
+func (j JPNSoftware) GetID() string {
+	return strings.TrimSuffix(filepath.Base(j.URL), ".html")
+}
+
+// GetLanguage returns the JPNSoftware language.
+func (j JPNSoftware) GetLanguage() language.Tag {
+	return language.Japanese
+}
+
+// GetName returns the JPNSoftware name.
+func (j JPNSoftware) GetName() string {
+	return j.Name
+}
+
+// GetNameAlternative returns the JPNSoftware name alternative.
+func (j JPNSoftware) GetNameAlternative() string {
+	return j.Name
+}
+
+// GetMD5 returns the JPNSoftware MD5.
+func (j JPNSoftware) GetMD5() (MD5 string, err error) {
+	var b ([]byte)
+	b, err = marshal(&j, json.Marshal)
+	if err != nil {
+		return
+	}
+	MD5 = fmt.Sprintf("%x", md5.Sum(b))
+	return
+}
+
+// GetReleaseDate returns the JPNSoftware release date.
+func (j JPNSoftware) GetReleaseDate() time.Time {
+	return j.ReleaseDate
+}
+
+// GetURL returns the JPNSoftware URL.
+func (j JPNSoftware) GetURL() string {
+	return j.URL
 }
 
 // ReadJPNSoftware reads a JPNSoftware from disc.
