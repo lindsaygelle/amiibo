@@ -15,35 +15,48 @@ var _ Amiibo = (JPNAmiibo{})
 // JPNAmiibo is a formatted JPN Nintendo Amiibo.
 type JPNAmiibo struct {
 	Chart bool `json:"chart"`
+
 	// ID is the fully qualified ID for the Nintendo Amiibo product given by Nintendo Japan.
 	ID string `json:"id"`
+
 	// Large indicates the whether the Nintendo Amiibo product is considered a large scale item.
 	Large bool `json:"large"`
+
 	// Limited indicates the whether the Nintendo Amiibo product is a limited release.
 	Limited bool `json:"limited"`
+
 	// Name is the official name of the Nintendo Amiibo product.
 	//
 	// Name contains Japanese Hiragana.
 	Name string `json:"name"`
+
 	// NameAlternative is the alternative name given to the Nintendo Amiibo product.
 	//
 	// NameAlternative contains Japanese Hiragana.
 	NameAlternative string `json:"name_alternative"`
+
 	// New indicates the whether the Nintendo Amiibo product is a new release.
 	New bool `json:"new"`
+
 	// Price is the price of the Nintendo Amiibo product in JPY.
 	//
 	// Price can be empty.
-	Price    string `json:"price"`
-	Priority int64  `json:"priority"`
+	Price string `json:"price"`
+
+	Priority int64 `json:"priority"`
+
 	// ReleaseDate is the formatted timestamp of the Nintendo Amiibo products release date.
 	ReleaseDate time.Time `json:"release_date"`
+
 	// ReleaseDateAlternative is the Japanese formatted Nintendo Amiibo product release date.
 	ReleaseDateAlternative time.Time `json:"release_data_alternative"`
+
 	// Series is the defined series of products that the Nintendo Amiibo product is group or affiliated with.
 	Series string `json:"series"`
+
 	// Software is a collection of Nintendo software products the Nintendo Amiibo is compatible with.
 	Software JPNAmiiboSoftwareMap `json:"software"`
+
 	// URL is the direct URL to the Nintendo Amiibo product page.
 	URL string `json:"url"`
 }
