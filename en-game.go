@@ -18,6 +18,7 @@ var _ Software = (&ENGGame{})
 
 // ENGGame is a formatted ENGChartGame and ENGChartItem.
 type ENGGame struct {
+
 	// Available is the Nintendo game availability status.
 	Available bool `json:"available"`
 
