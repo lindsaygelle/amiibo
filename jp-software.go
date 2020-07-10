@@ -53,7 +53,7 @@ func (j *JPNSoftware) AddJPNChartSoftwareItem(v *JPNChartSoftwareItem) (err erro
 	if err == nil {
 		j.ReleaseDate = releaseDate
 	}
-	j.URL = "https://www.nintendo.co.jp/hardware/amiibo/game/" + j.ID
+	j.URL = NintendoURLJPN + "/hardware/amiibo/game/" + j.ID
 	return
 }
 

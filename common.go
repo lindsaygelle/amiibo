@@ -15,6 +15,11 @@ import (
 	"golang.org/x/text/unicode/norm"
 )
 
+// NintendoURL is the URL to the Nintendo of America website.
+const NintendoURL string = "https://nintendo.com"
+
+const NintendoURLJPN string = "https://www.nintendo.co.jp"
+
 const (
 	noa string = "noa:publisher/"
 )
