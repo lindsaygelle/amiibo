@@ -22,7 +22,7 @@ func (j *JPNAmiiboSoftware) AddJPNChartItemSoftware(v *JPNChartItemSoftware) (er
 	j.Digital = v.Pickup != 0
 	j.ID = v.Code
 	j.Name = v.Name
-	j.URL = "https://www.nintendo.co.jp/hardware/amiibo/game/" + j.ID
+	j.URL = NintendoURLJPN + "/hardware/amiibo/game/" + j.ID
 	return
 }
 
