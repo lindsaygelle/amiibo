@@ -117,8 +117,7 @@ func (e ENGGame) GetNameAlternative() string {
 }
 
 // GetMD5 returns the ENGGame MD5.
-func (e ENGGame) GetMD5() (MD5 string, err error) {
-	var b ([]byte)
+func (e ENGGame) GetMD5() (MD5 string, b []byte, err error) {
 	b, err = marshal(&e, json.Marshal)
 	if err != nil {
 		return

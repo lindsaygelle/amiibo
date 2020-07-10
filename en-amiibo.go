@@ -195,8 +195,7 @@ func (e ENGAmiibo) GetNameAlternative() string {
 }
 
 // GetMD5 returns the ENGAmiibo MD5.
-func (e ENGAmiibo) GetMD5() (MD5 string, err error) {
-	var b ([]byte)
+func (e ENGAmiibo) GetMD5() (MD5 string, b []byte, err error) {
 	b, err = marshal(&e, json.Marshal)
 	if err != nil {
 		return
