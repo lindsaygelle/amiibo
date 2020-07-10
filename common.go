@@ -18,6 +18,7 @@ import (
 // NintendoURL is the URL to the Nintendo of America website.
 const NintendoURL string = "https://nintendo.com"
 
+// NintendoURLJPN is the URL to the Nintendo of Japan website.
 const NintendoURLJPN string = "https://www.nintendo.co.jp"
 
 const (

@@ -6,8 +6,10 @@ import "fmt"
 type JPNAmiiboMap (map[string]JPNAmiibo)
 
 // Add adds a JPNAmiibo to the JPNAmiiboMap.
-func (j *JPNAmiiboMap) Add(v *JPNAmiibo) {
-	(*j)[(*v).GetID()] = *v
+func (j *JPNAmiiboMap) Add(v *JPNAmiibo) (ok bool) {
+	(*j)[v.GetID()] = *v
+	ok = j.Has(v.GetID())
+	return
 }
 
 // Del deletes a JPNAmiibo from the JPNAmiiboMap.
