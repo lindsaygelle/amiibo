@@ -69,7 +69,7 @@ func (j JPNSoftware) GetID() string {
 
 // GetLanguage returns the JPNSoftware language.
 func (j JPNSoftware) GetLanguage() language.Tag {
-	return language.English
+	return language.Japanese
 }
 
 // GetName returns the JPNSoftware name.
