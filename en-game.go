@@ -20,26 +20,37 @@ var _ Software = (&ENGGame{})
 type ENGGame struct {
 	// Available is the Nintendo game availability status.
 	Available bool `json:"available"`
+
 	// Description is the verbose description for the Nintendo game product.
+
 	Description string `json:"description"`
+
 	// LastModified is the formatted timestamp when the dataset was modified by Nintendo of America.
 	LastModified time.Time `json:"last_modified"`
+
 	// Name is the official name of the Nintendo game product.
 	//
 	// Name can contain unicode.
 	Name string `json:"name"`
+
 	// Path is the relative path to the Nintendo game product details.
 	Path string `json:"path"`
+
 	// Product is the product classification of the Nintendo software item.
 	Product string `json:"product"`
+
 	// ProductImageURL is the direct URL to the Nintendo software product image.
 	ProductImageURL string `json:"product_image_url"`
+
 	// ReleaseDate is the formatted timestamp of the Nintendo software release date.
 	ReleaseDate time.Time `json:"release_date"`
+
 	// Title is the title for the Nintendo Amiibo product.
 	Title string `json:"title"`
+
 	// URL is the direct URL to the Nintendo Amiibo software page.
 	URL string `json:"url"`
+
 	// UUID is the UUID for the product given by Nintendo.
 	UUID uuid.UUID `json:"uuid"`
 }
