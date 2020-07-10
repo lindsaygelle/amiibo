@@ -1,6 +1,8 @@
 package amiibo
 
 import (
+	"crypto/md5"
+	"encoding/json"
 	"fmt"
 	"path/filepath"
 	"reflect"
@@ -9,7 +11,10 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"golang.org/x/text/language"
 )
+
+var _ Software = (&ENGGame{})
 
 // ENGGame is a formatted ENGChartGame and ENGChartItem.
 type ENGGame struct {
@@ -86,9 +91,50 @@ func (e *ENGGame) AddENGChartItem(v *ENGChartItem) (err error) {
 	return
 }
 
+// GetAvailable returns the ENGGame availability.
+func (e ENGGame) GetAvailable() bool {
+	return time.Now().After(e.ReleaseDate)
+}
+
 // GetID returns the ENGGame ID.
 func (e ENGGame) GetID() string {
 	return strings.TrimSuffix(filepath.Base(e.URL), ".html")
+}
+
+// GetLanguage returns the ENGGame language.
+func (e ENGGame) GetLanguage() language.Tag {
+	return language.English
+}
+
+// GetName returns the ENGGame name.
+func (e ENGGame) GetName() string {
+	return e.Name
+}
+
+// GetNameAlternative returns the ENGGame name alternative.
+func (e ENGGame) GetNameAlternative() string {
+	return e.Name
+}
+
+// GetMD5 returns the ENGGame MD5.
+func (e ENGGame) GetMD5() (MD5 string, err error) {
+	var b ([]byte)
+	b, err = marshal(&e, json.Marshal)
+	if err != nil {
+		return
+	}
+	MD5 = fmt.Sprintf("%x", md5.Sum(b))
+	return
+}
+
+// GetReleaseDate returns the ENGGame release date.
+func (e ENGGame) GetReleaseDate() time.Time {
+	return e.ReleaseDate
+}
+
+// GetURL returns the ENGGame URL.
+func (e ENGGame) GetURL() string {
+	return e.URL
 }
 
 // NewENGGame returns a ENGGame.

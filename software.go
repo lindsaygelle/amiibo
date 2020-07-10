@@ -11,10 +11,11 @@ import (
 // Software provides a handler to get all common fields between the ENGGame and JPNSoftware.
 type Software interface {
 	GetAvailable() bool
+	GetID() string
 	GetLanguage() language.Tag
 	GetMD5() (string, error)
-	Name() string
-	NameAlternative() string
-	ReleaseDate() time.Time
+	GetName() string
+	GetNameAlternative() string
+	GetReleaseDate() time.Time
 	GetURL() string
 }
