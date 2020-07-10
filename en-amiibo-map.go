@@ -4,8 +4,29 @@ package amiibo
 type ENGAmiiboMap (map[string]ENGAmiibo)
 
 // Add adds a ENGAmiibo to the ENGAmiiboMap.
-func (e *ENGAmiiboMap) Add(v *ENGAmiibo) {
-	(*e)[(*v).GetID()] = *v
+func (e *ENGAmiiboMap) Add(v *ENGAmiibo) (ok bool) {
+	(*e)[v.GetID()] = *v
+	ok = e.Has(v.GetID())
+	return
+}
+
+// Del deletes a ENGAmiibo from the ENGAmiiboMap.
+func (e *ENGAmiiboMap) Del(ID string) (ok bool) {
+	delete(*e, ID)
+	ok = e.Has(ID) == false
+	return
+}
+
+// Get gets an ENGAmiibo from the ENGAmiiboMap.
+func (e *ENGAmiiboMap) Get(ID string) (v ENGAmiibo, ok bool) {
+	v, ok = (*e)[ID]
+	return
+}
+
+// Has checks if the ENGAmiiboMap has a ENGAmiibo with the corresponding ID.
+func (e *ENGAmiiboMap) Has(ID string) (ok bool) {
+	_, ok = e.Get(ID)
+	return
 }
 
 // NewENGAmiiboMap returns a ENGAmiiboMap.

@@ -69,7 +69,7 @@ func (j *JPNAmiibo) AddJPNChartItem(v *JPNChartItem) (err error) {
 		j.Software[JP.Code] = v
 	}
 	if reflect.ValueOf(j.URL).IsZero() {
-		j.URL = "https://www.nintendo.co.jp/hardware/amiibo/lineup/" + j.ID
+		j.URL = NintendoURLJPN + "/hardware/amiibo/lineup/" + j.ID
 	}
 	return
 }
@@ -160,7 +160,7 @@ func (j *JPNAmiibo) AddJPNLineupItem(v *JPNLineupItem) (err error) {
 	err = nil
 	j.Series = v.Series
 	if reflect.ValueOf(j.URL).IsZero() {
-		j.URL = "https://www.nintendo.co.jp/hardware/amiibo/lineup/" + j.ID
+		j.URL = NintendoURLJPN + "/hardware/amiibo/lineup/" + j.ID
 	}
 	return
 }

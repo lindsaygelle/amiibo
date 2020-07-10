@@ -5,6 +5,32 @@ import "fmt"
 // JPNAmiiboMap is a map of JPNAmiibo.
 type JPNAmiiboMap (map[string]JPNAmiibo)
 
+// Add adds a JPNAmiibo to the JPNAmiiboMap.
+func (j *JPNAmiiboMap) Add(v *JPNAmiibo) (ok bool) {
+	(*j)[v.GetID()] = *v
+	ok = j.Has(v.GetID())
+	return
+}
+
+// Del deletes a JPNAmiibo from the JPNAmiiboMap.
+func (j *JPNAmiiboMap) Del(ID string) (ok bool) {
+	delete(*j, ID)
+	ok = j.Has(ID) == false
+	return
+}
+
+// Get gets an JPNAmiibo from the JPNAmiiboMap.
+func (j *JPNAmiiboMap) Get(ID string) (v JPNAmiibo, ok bool) {
+	v, ok = (*j)[ID]
+	return
+}
+
+// Has checks if the JPNAmiiboMap has a JPNAmiibo with the corresponding ID.
+func (j *JPNAmiiboMap) Has(ID string) (ok bool) {
+	_, ok = j.Get(ID)
+	return
+}
+
 // NewJPNAmiiboMap returns a new JPNAmiiboMap.
 func NewJPNAmiiboMap(JPNChart *JPNChart, JPNLineup *JPNLineup) (v JPNAmiiboMap, err error) {
 	v = (make(JPNAmiiboMap))
