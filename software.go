@@ -13,7 +13,7 @@ type Software interface {
 	GetAvailable() bool
 	GetID() string
 	GetLanguage() language.Tag
-	GetMD5() (string, error)
+	GetMD5() (string, []byte, error)
 	GetName() string
 	GetNameAlternative() string
 	GetReleaseDate() time.Time

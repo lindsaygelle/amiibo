@@ -39,7 +39,7 @@ func TestSoftware(t *testing.T) {
 		if getNameAlternative := v.GetNameAlternative(); !(getNameAlternative == nameAlt || getNameAlternative == name) {
 			t.Fatalf("(Software).GetNameAlternative() %s != %s || %s", getNameAlternative, nameAlt, name)
 		}
-		if MD5, err := v.GetMD5(); err != nil {
+		if MD5, _, err := v.GetMD5(); err != nil {
 			t.Fatalf("(Software).GetMD5() (%s, %s)", MD5, err)
 		}
 		if getReleaseDate := v.GetReleaseDate(); getReleaseDate != releaseDate {

@@ -1,6 +1,7 @@
 package amiibo_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/lindsaygelle/amiibo"
@@ -26,5 +27,16 @@ func testENGAmiiboMap(t *testing.T) {
 	_, err = amiibo.ReadENGAmiiboMap(filefolder, engAmiiboMapFileName)
 	if err != nil {
 		t.Fatal(err)
+	}
+	engAmiibo := &amiibo.ENGAmiibo{URL: "/1"}
+	if ok := v.Add(engAmiibo); !ok {
+		t.Fatal("(ENGAmiiboMap).Add(*ENGAmiibo) bool != true")
+	}
+	a, ok := v.Get("1")
+	if !ok {
+		t.Fatal("(ENGAmiiboMap).Get(string) (ENGAmiibo, bool) != _, true")
+	}
+	if a.GetID() != "1" {
+		t.Fatalf("ENGAmiiboMap provides incorrect keys; %s != %s", a.GetID(), strings.TrimPrefix(engAmiibo.URL, "/"))
 	}
 }

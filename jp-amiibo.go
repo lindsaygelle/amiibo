@@ -100,8 +100,7 @@ func (j JPNAmiibo) GetNameAlternative() string {
 }
 
 // GetMD5 returns the JPNAmiibo MD5.
-func (j JPNAmiibo) GetMD5() (MD5 string, err error) {
-	var b ([]byte)
+func (j JPNAmiibo) GetMD5() (MD5 string, b []byte, err error) {
 	b, err = marshal(&j, json.Marshal)
 	if err != nil {
 		return
