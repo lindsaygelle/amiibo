@@ -19,72 +19,102 @@ var _ Amiibo = (ENGAmiibo{})
 
 // ENGAmiibo is a formatted ENGChartAmiibo, ENGLineupAmiibo and ENGLineupItem.
 type ENGAmiibo struct {
+
 	// Affiliation is the series of Nintendo Amiibo products the item is associated with.
 	Affiliation string `json:"affiliation"`
+
 	// Available is the Nintendo Amiibo availability status.
 	Availiable bool `json:"availiable"`
+
 	// BoxImageURL is the direct URL to the Nintendo Amiibo product box.
 	BoxImageURL string `json:"box_image_url"`
+
 	// Description is the verbose description for the Nintendo Amiibo product.
 	Description string `json:"description"`
+
 	// DescriptionAlternative is the alternative description for the Nintendo Amiibo product.
 	DescriptionAlternative string `json:"description_alternative"`
+
 	// Path is the relative path to the Nintendo Amiibo product details.
 	DetailsPath string `json:"details_path"`
+
 	// DetailsURL is the direct URL to the Nintendo Amiibo product page.
 	DetailsURL string `json:"details_url"`
+
 	// Epoch is the release date for the Nintendo Amiibo product in seconds.
 	Epoch int64 `json:"epoch"`
+
 	// FigureImageURL is the direct URL to the Nintendo Amiibo figurine image.
 	FigureImageURL string `json:"figure_image_url"`
+
 	// Franchise is the name of the series the Nintendo Amiibo product is affiliated with.
 	Franchise string `json:"franchise"`
+
 	// GameID is the ID associated with the Nintendo software the Nintendo Amiibo product is associated with.
 	GameID string `json:"game_id"`
+
 	// Hex is the hexidecimal code associated with the Nintendo Amiibo product.
 	Hex string `json:"hex"`
+
 	// ID is the fully qualified ID for the Nintendo Amiibo product given by Nintendo of America.
 	ID string `json:"id"`
+
 	// LastModified is the formatted timestamp when the dataset was modified by Nintendo of America.
 	LastModified time.Time `json:"last_modified"`
+
 	// Name is the official name of the Nintendo Amiibo product.
 	//
 	// Name can contain unicode.
 	Name string `json:"name"`
+
 	// NameAlternative is the alternative name given to the Nintendo Amiibo product.
 	//
 	// NameAlternative can contain unicode.
 	NameAlternative string `json:"name_alternative"`
+
 	// Path is the relative path to the Nintendo Amiibo product details.
 	Path string `json:"path"`
+
 	// Price is the price of the Nintendo Amiibo product in USD.
 	//
 	// Price can be empty.
 	Price string `json:"price"`
+
 	// Producer is the company affiliation of the Nintendo Amiibo product.
 	Producer string `json:"producer"`
+
 	// Product is the product classification of the Nintendo Amiibo item.
 	Product string `json:"product"`
+
 	// ProductAlternative is the alternative classification for the Nintendo Amiibo product.
 	ProductAlternative string `json:"product_alternative"`
+
 	// ProductImageURL is the direct URL to the Nintendo Amiibo product image.
 	ProductImageURL string `json:"product_image_url"`
+
 	// ProductPage is the relative nintendo.com URL to the Nintendo Amiibo product page.
 	ProductPage string `json:"product_page"`
+
 	// ReleaseDate is the formatted timestamp of the Nintendo Amiibo products release date.
 	ReleaseDate time.Time `json:"release_date"`
+
 	// Series is the defined series of products that the Nintendo Amiibo product is group or affiliated with.
 	Series string `json:"series"`
+
 	// Title is the title for the Nintendo Amiibo product.
 	Title string `json:"title"`
+
 	// TitleAternative is the alternative title for the Nintendo Amiibo product.
 	//
 	// TitleAlternative can contain unicode.
 	TitleAlternative string `json:"title_alternative"`
+
 	// UPC is the universal product code for the Nintendo Amiibo product.
 	UPC string `json:"upc"`
+
 	// URL is the direct URL to the Nintendo Amiibo product page.
 	URL string `json:"url"`
+
 	// UUID is the UUID for the product given by Nintendo.
 	UUID uuid.UUID `json:"uuid"`
 }
