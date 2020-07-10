@@ -6,7 +6,7 @@ import (
 	"golang.org/x/text/language"
 )
 
-// Amiibo is a generic interface for an Amiibo product.
+// Amiibo is a generic interface for a Nintendo Amiibo product.
 //
 // Amiibo provides a handler to get all common fields between the ENGAmiibo and JPNAmiibo.
 type Amiibo interface {
