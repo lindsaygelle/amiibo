@@ -22,7 +22,6 @@ type ENGGame struct {
 	Available bool `json:"available"`
 
 	// Description is the verbose description for the Nintendo game product.
-
 	Description string `json:"description"`
 
 	// LastModified is the formatted timestamp when the dataset was modified by Nintendo of America.
