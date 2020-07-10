@@ -12,7 +12,7 @@ import (
 
 var _ Amiibo = (JPNAmiibo{})
 
-// JPNAmiibo is a formatted JPN Nintendo Amiibo.
+// JPNAmiibo is a formatted JPNChartItem and JPNLineupItem.
 type JPNAmiibo struct {
 	Chart bool `json:"chart"`
 
