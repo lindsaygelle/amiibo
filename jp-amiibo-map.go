@@ -48,7 +48,7 @@ func NewJPNAmiiboMap(JPNChart *JPNChart, JPNLineup *JPNLineup) (v JPNAmiiboMap, 
 		}
 		var p, ok = v[ID]
 		if !ok {
-			err = fmt.Errorf("JPNAmiiboMap[JPNChart.Items.GetID()] != ok")
+			err = fmt.Errorf("(JPNAmiiboMap)[ID]: false")
 		}
 		if err != nil {
 			return
