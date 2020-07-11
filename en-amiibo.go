@@ -44,9 +44,6 @@ type ENGAmiibo struct {
 	// Epoch is the release date for the Nintendo Amiibo product in seconds.
 	Epoch int64 `json:"epoch"`
 
-	// FigureImageURL is the direct URL to the Nintendo Amiibo figurine image.
-	FigureImageURL string `json:"figure_image_url"`
-
 	// Franchise is the name of the series the Nintendo Amiibo product is affiliated with.
 	Franchise string `json:"franchise"`
 
