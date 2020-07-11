@@ -1,5 +1,7 @@
 package amiibo
 
+import "fmt"
+
 // ENGGameMap is map of ENGGame.
 type ENGGameMap (map[string]ENGGame)
 
@@ -44,7 +46,13 @@ func NewENGGameMap(ENGChart *ENGChart) (v ENGGameMap, err error) {
 		if _, ok := v[ID]; !ok {
 			v[ID] = ENGGame{}
 		}
-		var p = v[ID]
+		var p, ok = v[ID]
+		if !ok {
+			err = fmt.Errorf("(ENGGameMap)[ID]: false")
+		}
+		if err != nil {
+			return
+		}
 		err = (&p).AddENGChartGame(&EN)
 		if err != nil {
 			return
