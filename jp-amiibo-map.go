@@ -19,6 +19,13 @@ func (j *JPNAmiiboMap) Del(ID string) (ok bool) {
 	return
 }
 
+// Each performs a for-each loop through the ENGAmiiboMap.
+func (j *JPNAmiiboMap) Each(f func(string, JPNAmiibo)) {
+	for k, v := range *j {
+		f(k, v)
+	}
+}
+
 // Get gets an JPNAmiibo from the JPNAmiiboMap.
 func (j *JPNAmiiboMap) Get(ID string) (v JPNAmiibo, ok bool) {
 	v, ok = (*j)[ID]
