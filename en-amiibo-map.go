@@ -17,6 +17,13 @@ func (e *ENGAmiiboMap) Del(ID string) (ok bool) {
 	return
 }
 
+// Each performs a for-each loop through the ENGAmiiboMap.
+func (e *ENGAmiiboMap) Each(f func(string, ENGAmiibo)) {
+	for k, v := range *e {
+		f(k, v)
+	}
+}
+
 // Get gets an ENGAmiibo from the ENGAmiiboMap.
 func (e *ENGAmiiboMap) Get(ID string) (v ENGAmiibo, ok bool) {
 	v, ok = (*e)[ID]
