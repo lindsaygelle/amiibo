@@ -19,6 +19,13 @@ func (j *JPNAmiiboMap) Del(ID string) (ok bool) {
 	return
 }
 
+// Each performs a for-each loop through the ENGAmiiboMap.
+func (j *JPNAmiiboMap) Each(f func(string, JPNAmiibo)) {
+	for k, v := range *j {
+		f(k, v)
+	}
+}
+
 // Get gets an JPNAmiibo from the JPNAmiiboMap.
 func (j *JPNAmiiboMap) Get(ID string) (v JPNAmiibo, ok bool) {
 	v, ok = (*j)[ID]
@@ -41,7 +48,7 @@ func NewJPNAmiiboMap(JPNChart *JPNChart, JPNLineup *JPNLineup) (v JPNAmiiboMap, 
 		}
 		var p, ok = v[ID]
 		if !ok {
-			err = fmt.Errorf("JPNAmiiboMap[JPNChart.Items.GetID()] != ok")
+			err = fmt.Errorf("(JPNAmiiboMap)[ID]: false")
 		}
 		if err != nil {
 			return

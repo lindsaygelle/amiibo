@@ -1,5 +1,7 @@
 package amiibo
 
+import "fmt"
+
 // ENGAmiiboMap is map of ENGAmiibo.
 type ENGAmiiboMap (map[string]ENGAmiibo)
 
@@ -15,6 +17,13 @@ func (e *ENGAmiiboMap) Del(ID string) (ok bool) {
 	delete(*e, ID)
 	ok = e.Has(ID) == false
 	return
+}
+
+// Each performs a for-each loop through the ENGAmiiboMap.
+func (e *ENGAmiiboMap) Each(f func(string, ENGAmiibo)) {
+	for k, v := range *e {
+		f(k, v)
+	}
 }
 
 // Get gets an ENGAmiibo from the ENGAmiiboMap.
@@ -37,7 +46,13 @@ func NewENGAmiiboMap(ENGChart ENGChart, ENGLineup ENGLineup) (v ENGAmiiboMap, er
 		if _, ok := v[ID]; !ok {
 			v[ID] = ENGAmiibo{}
 		}
-		var p = v[ID]
+		var p, ok = v[ID]
+		if !ok {
+			err = fmt.Errorf("(ENGAmiiboMap)[ID]: false")
+		}
+		if err != nil {
+			return
+		}
 		err = (&p).AddENGChartAmiibo(&EN)
 		if err != nil {
 			return
@@ -49,7 +64,13 @@ func NewENGAmiiboMap(ENGChart ENGChart, ENGLineup ENGLineup) (v ENGAmiiboMap, er
 		if _, ok := v[ID]; !ok {
 			v[ID] = ENGAmiibo{}
 		}
-		var p = v[ID]
+		var p, ok = v[ID]
+		if !ok {
+			err = fmt.Errorf("(ENGAmiiboMap)[ID]: false")
+		}
+		if err != nil {
+			return
+		}
 		err = (&p).AddENGLineupAmiibo(&EN)
 		if err != nil {
 			return
@@ -61,7 +82,13 @@ func NewENGAmiiboMap(ENGChart ENGChart, ENGLineup ENGLineup) (v ENGAmiiboMap, er
 		if _, ok := v[ID]; !ok {
 			v[ID] = ENGAmiibo{}
 		}
-		var p = v[ID]
+		var p, ok = v[ID]
+		if !ok {
+			err = fmt.Errorf("(ENGAmiiboMap)[ID]: false")
+		}
+		if err != nil {
+			return
+		}
 		err = (&p).AddENGLineupItem(&EN)
 		if err != nil {
 			return
