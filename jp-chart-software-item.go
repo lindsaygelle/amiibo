@@ -8,7 +8,8 @@ type JPNChartSoftwareItem struct {
 	// XMLName is the xml node.
 	XMLName xml.Name `xml:"item"`
 
-	Blank interface{} `xml:"blank"`
+	// Blank is the direct URL to the Nintendo software information.
+	Blank string `xml:"blank"`
 
 	// Chart is a integer representation of a boolean.
 	//
@@ -34,7 +35,8 @@ type JPNChartSoftwareItem struct {
 
 	Icon int `xml:"icon"`
 
-	Info interface{} `xml:"info"`
+	// Info is the verbose description of the Nintendo software product in Japanese Hiragana.
+	Info string `xml:"info"`
 
 	// Name is the name of the Nintendo product in Japanese Hiragana.
 	Name string `xml:"name"`
@@ -60,8 +62,12 @@ type JPNChartSoftwareItem struct {
 	// Series will need to be translated from Japanese to English.
 	Series string `xml:"series"`
 
-	SoftOption interface{} `xml:"softoption"`
+	// SoftOption is the Japanese Hiragana for the Nintendo hardware system that the software is supported for.
+	//
+	// SoftOption will need to be translated from Japanese to English.
+	SoftOption string `xml:"softoption"`
 
+	// Subname is the alternative description for the Nintendo software product.
 	Subname string `xml:"subname"`
 }
 
