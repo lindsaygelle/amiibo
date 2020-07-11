@@ -128,7 +128,9 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v *ENGChartAmiibo) (err error) {
 	e.ID = v.TagID
 	e.Name = v.Name
 	e.ProductAlternative = strings.ToLower(v.Type)
-	e.ProductImageURL = v.Image
+	if reflect.ValueOf(e.ProductImageURL).IsZero() {
+		e.ProductImageURL = strings.ReplaceAll((NintendoURL + v.Image), " ", "%20")
+	}
 	var releaseDate time.Time
 	if reflect.ValueOf(e.ReleaseDate).IsZero() {
 		releaseDate, err = time.Parse("2006-01-02", v.ReleaseDateMask)
