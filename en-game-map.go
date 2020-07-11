@@ -3,6 +3,39 @@ package amiibo
 // ENGGameMap is map of ENGGame.
 type ENGGameMap (map[string]ENGGame)
 
+// Add adds a ENGGame to the ENGGameMap.
+func (e *ENGGameMap) Add(v *ENGGame) (ok bool) {
+	(*e)[v.GetID()] = *v
+	ok = e.Has(v.GetID())
+	return
+}
+
+// Del deletes a ENGGame from the ENGGameMap.
+func (e *ENGGameMap) Del(ID string) (ok bool) {
+	delete(*e, ID)
+	ok = e.Has(ID) == false
+	return
+}
+
+// Each performs a for-each loop through the ENGGameMap.
+func (e *ENGGameMap) Each(f func(string, ENGGame)) {
+	for k, v := range *e {
+		f(k, v)
+	}
+}
+
+// Get gets an ENGGame from the ENGGameMap.
+func (e *ENGGameMap) Get(ID string) (v ENGGame, ok bool) {
+	v, ok = (*e)[ID]
+	return
+}
+
+// Has checks if the ENGGameMap has a ENGGame with the corresponding ID.
+func (e *ENGGameMap) Has(ID string) (ok bool) {
+	_, ok = e.Get(ID)
+	return
+}
+
 // NewENGGameMap returns a ENGGameMap.
 func NewENGGameMap(ENGChart *ENGChart) (v ENGGameMap, err error) {
 	v = (make(ENGGameMap))
