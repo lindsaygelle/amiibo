@@ -1,6 +1,8 @@
 package amiibo_test
 
 import (
+	"fmt"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -28,6 +30,10 @@ func testENGAmiiboMap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	(&v).Each(func(k string, v amiibo.ENGAmiibo) {
+		fmt.Println(v.GetNamespace(), "-", strings.ToLower(strings.ReplaceAll(regexp.MustCompile(`(\.|\,|\:)`).ReplaceAllString(v.Series, ""), " ", "-")))
+		fmt.Println("---")
+	})
 	engAmiibo := &amiibo.ENGAmiibo{URL: "/1"}
 	if ok := v.Add(engAmiibo); !ok {
 		t.Fatal("(ENGAmiiboMap).Add(*ENGAmiibo) bool != true")

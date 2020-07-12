@@ -7,6 +7,7 @@ import (
 	"html"
 	"path/filepath"
 	"reflect"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -216,6 +217,17 @@ func (e ENGAmiibo) GetLanguage() language.Tag {
 // GetName returns the ENGAmiibo name.
 func (e ENGAmiibo) GetName() string {
 	return e.Name
+}
+
+// GetNamespace returns the ENGAmiibo formatted name.
+func (e ENGAmiibo) GetNamespace() (s string) {
+	if len(e.Series) != 0 {
+		s = strings.ReplaceAll(e.Title, strings.ToLower(strings.ReplaceAll(regexp.MustCompile(`(\.|\,|\:)`).ReplaceAllString(e.Series, ""), " ", "-")), "")
+	}
+	if len(e.ProductAlternative) != 0 {
+		s = strings.ReplaceAll(s, e.ProductAlternative, "")
+	}
+	return
 }
 
 // GetNameAlternative returns the ENGAmiibo name alternative.
