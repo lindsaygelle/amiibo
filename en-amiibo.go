@@ -220,15 +220,36 @@ func (e ENGAmiibo) GetName() string {
 
 // GetNamespace returns the ENGAmiibo formatted name.
 func (e ENGAmiibo) GetNamespace() (s string) {
-	if len(e.Series) != 0 {
-		s = strings.ReplaceAll(e.Title, strings.ToLower(strings.ReplaceAll(regexPunctuation.ReplaceAllString(e.Series, ""), " ", "-")), "")
+	var franchiseOK, seriesOK, productAlternativeOK = len(e.Franchise) != 0, len(e.Series) != 0, len(e.ProductAlternative) != 0
+	s = e.Title
+	if !franchiseOK && !seriesOK && !productAlternativeOK {
+		return s
 	}
-	if len(e.ProductAlternative) != 0 {
+	var substrings = []string{}
+	if franchiseOK {
+		substrings = append(substrings, e.Franchise)
+	}
+	if seriesOK {
+		substrings = append(substrings, e.Series)
+	}
+	for _, substring := range substrings {
+		var v = strings.ToLower(strings.ReplaceAll(regexPunctuation.ReplaceAllString(substring, ""), " ", "-"))
+		s = strings.ReplaceAll(s, (v + "-" + "series"), "")
+	}
+	if productAlternativeOK {
 		s = strings.ReplaceAll(s, e.ProductAlternative, "")
 	}
-	s = strings.ReplaceAll(s, "series", "")
+	fmt.Println(s)
+	//s = strings.ReplaceAll(s, "series", "")
+	//fmt.Println(s)
 	s = regexpHyphens.ReplaceAllString(s, "-")
+	fmt.Println(s)
 	s = strings.Trim(s, "-")
+	fmt.Println(s)
+	fmt.Println("")
+	fmt.Println("")
+	fmt.Println("")
+	fmt.Println("-")
 	return
 }
 

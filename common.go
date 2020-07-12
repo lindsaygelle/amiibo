@@ -29,7 +29,7 @@ var (
 	regexpHTML       = regexp.MustCompile(`(<[^>]*>|\n(\s{1,})?)`)  // match all HTML tokens.
 	regexpHyphens    = regexp.MustCompile(`\-{2,}`)                 // match all repeating hyphens.
 	regexpName       = regexp.MustCompile(`(\&\#[0-9]+\;|™|\(|\))`) // match all unwanted characters.
-	regexPunctuation = regexp.MustCompile(`(\.|\,|\:)`)             // match all punctuation.
+	regexPunctuation = regexp.MustCompile(`[\.\,\:\']`)             // match all punctuation.
 	regexpSpaces     = regexp.MustCompile(`\s{2,}`)                 // match all repeating spaces.
 	regexpURI        = regexp.MustCompile(`[^a-zA-Z0-9&]+`)         // match all unwanted characters in a URI.
 )
