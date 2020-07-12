@@ -7,7 +7,6 @@ import (
 	"html"
 	"path/filepath"
 	"reflect"
-	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -222,11 +221,14 @@ func (e ENGAmiibo) GetName() string {
 // GetNamespace returns the ENGAmiibo formatted name.
 func (e ENGAmiibo) GetNamespace() (s string) {
 	if len(e.Series) != 0 {
-		s = strings.ReplaceAll(e.Title, strings.ToLower(strings.ReplaceAll(regexp.MustCompile(`(\.|\,|\:)`).ReplaceAllString(e.Series, ""), " ", "-")), "")
+		s = strings.ReplaceAll(e.Title, strings.ToLower(strings.ReplaceAll(regexPunctuation.ReplaceAllString(e.Series, ""), " ", "-")), "")
 	}
 	if len(e.ProductAlternative) != 0 {
 		s = strings.ReplaceAll(s, e.ProductAlternative, "")
 	}
+	s = strings.ReplaceAll(s, "series", "")
+	s = regexpHyphens.ReplaceAllString(s, "-")
+	s = strings.Trim(s, "-")
 	return
 }
 
