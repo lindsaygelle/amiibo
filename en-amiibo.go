@@ -44,9 +44,6 @@ type ENGAmiibo struct {
 	// Epoch is the release date for the Nintendo Amiibo product in seconds.
 	Epoch int64 `json:"epoch"`
 
-	// FigureImageURL is the direct URL to the Nintendo Amiibo figurine image.
-	FigureImageURL string `json:"figure_image_url"`
-
 	// Franchise is the name of the series the Nintendo Amiibo product is affiliated with.
 	Franchise string `json:"franchise"`
 
@@ -131,7 +128,9 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v *ENGChartAmiibo) (err error) {
 	e.ID = v.TagID
 	e.Name = v.Name
 	e.ProductAlternative = strings.ToLower(v.Type)
-	e.ProductImageURL = v.Image
+	if reflect.ValueOf(e.ProductImageURL).IsZero() {
+		e.ProductImageURL = strings.ReplaceAll((NintendoURL + v.Image), " ", "%20")
+	}
 	var releaseDate time.Time
 	if reflect.ValueOf(e.ReleaseDate).IsZero() {
 		releaseDate, err = time.Parse("2006-01-02", v.ReleaseDateMask)
@@ -217,6 +216,32 @@ func (e ENGAmiibo) GetLanguage() language.Tag {
 // GetName returns the ENGAmiibo name.
 func (e ENGAmiibo) GetName() string {
 	return e.Name
+}
+
+// GetNamespace returns the ENGAmiibo formatted name.
+func (e ENGAmiibo) GetNamespace() (s string) {
+	var franchiseOK, seriesOK, productAlternativeOK = len(e.Franchise) != 0, len(e.Series) != 0, len(e.ProductAlternative) != 0
+	s = e.Title
+	if !franchiseOK && !seriesOK && !productAlternativeOK {
+		return s
+	}
+	var substrings = []string{}
+	if franchiseOK {
+		substrings = append(substrings, e.Franchise)
+	}
+	if seriesOK {
+		substrings = append(substrings, e.Series)
+	}
+	for _, substring := range substrings {
+		var v = strings.ToLower(strings.ReplaceAll(regexPunctuation.ReplaceAllString(substring, ""), " ", "-"))
+		s = strings.ReplaceAll(s, (v + "-" + "series"), "")
+	}
+	if productAlternativeOK {
+		s = strings.ReplaceAll(s, e.ProductAlternative, "")
+	}
+	s = regexpHyphens.ReplaceAllString(s, "-")
+	s = strings.Trim(s, "-")
+	return
 }
 
 // GetNameAlternative returns the ENGAmiibo name alternative.

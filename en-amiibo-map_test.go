@@ -28,6 +28,9 @@ func testENGAmiiboMap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	(&v).Each(func(k string, v amiibo.ENGAmiibo) {
+		testENGAmiibo(t, &v)
+	})
 	engAmiibo := &amiibo.ENGAmiibo{URL: "/1"}
 	if ok := v.Add(engAmiibo); !ok {
 		t.Fatal("(ENGAmiiboMap).Add(*ENGAmiibo) bool != true")
