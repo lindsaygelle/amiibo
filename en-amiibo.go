@@ -239,17 +239,8 @@ func (e ENGAmiibo) GetNamespace() (s string) {
 	if productAlternativeOK {
 		s = strings.ReplaceAll(s, e.ProductAlternative, "")
 	}
-	fmt.Println(s)
-	//s = strings.ReplaceAll(s, "series", "")
-	//fmt.Println(s)
 	s = regexpHyphens.ReplaceAllString(s, "-")
-	fmt.Println(s)
 	s = strings.Trim(s, "-")
-	fmt.Println(s)
-	fmt.Println("")
-	fmt.Println("")
-	fmt.Println("")
-	fmt.Println("-")
 	return
 }
 
