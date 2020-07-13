@@ -26,6 +26,9 @@ type ENGAmiibo struct {
 	// Available is the Nintendo Amiibo availability status.
 	Availiable bool `json:"availiable"`
 
+	// BoxImage is the image data for the Nintendo Amiibo product box.
+	BoxImage *Image `json:"box_image,omitempty"`
+
 	// BoxImageURL is the direct URL to the Nintendo Amiibo product box.
 	BoxImageURL string `json:"box_image_url"`
 
@@ -85,6 +88,9 @@ type ENGAmiibo struct {
 
 	// ProductAlternative is the alternative classification for the Nintendo Amiibo product.
 	ProductAlternative string `json:"product_alternative"`
+
+	// ProductImage is the image data for the Nintend Amiibo product.
+	ProductImage *Image `json:"product_image,omitempty"`
 
 	// ProductImageURL is the direct URL to the Nintendo Amiibo product image.
 	ProductImageURL string `json:"product_image_url"`
@@ -277,6 +283,17 @@ func (e ENGAmiibo) GetSeries() string {
 // GetURL returns the ENGAmiibo URL.
 func (e ENGAmiibo) GetURL() string {
 	return e.URL
+}
+
+// GetENGAmiiboBoxImage gets the box art image for the ENGAMiibo.
+func GetENGAmiiboBoxImage(ENGAmiibo *ENGAmiibo) (err error) {
+	var v Image
+	v, err = NewImage(ENGAmiibo.BoxImageURL)
+	if err != nil {
+		return
+	}
+	ENGAmiibo.BoxImage = &v
+	return
 }
 
 // NewENGAmiibo returns a ENGAmiibo.

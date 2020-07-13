@@ -75,15 +75,14 @@ func getRemoteFile(URL string) (req *http.Request, res *http.Response, err error
 
 // getRemoteImage gets a remote image file from a remote URL.
 func getRemoteImage(URL string) (i image.Image, ext string, err error) {
+	ext = strings.TrimPrefix(filepath.Ext(URL), ".")
 	var res *http.Response
 	_, res, err = getRemoteFile(URL)
 	if err != nil {
 		return
 	}
-	ext = strings.TrimSuffix(URL, filepath.Ext(URL))
-	ext = strings.ToUpper(ext)
 	var fn func(io.Reader) (image.Image, error)
-	switch exxt {
+	switch strings.ToUpper(ext) {
 	case "GIF":
 		fn = gif.Decode
 	case "JPEG":

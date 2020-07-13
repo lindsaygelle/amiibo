@@ -11,13 +11,15 @@ type Image struct {
 	Width  int    `json:"width"`
 }
 
+// NewImage returns a Image.
 func NewImage(URL string) (v Image, err error) {
+	var ext string
 	var i image.Image
 	i, ext, err = getRemoteImage(URL)
 	if err != nil {
 		return
 	}
-	var r = i.Bounds().Max
+	var r = (i.Bounds().Max)
 	v.Ext = ext
 	v.Height = r.Y
 	v.Width = r.Y
