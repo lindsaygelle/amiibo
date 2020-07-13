@@ -39,6 +39,9 @@ type ENGGame struct {
 	// Product is the product classification of the Nintendo software item.
 	Product string `json:"product"`
 
+	// ProductImage is the image data for the Nintend software product.
+	ProductImage *Image `json:"product_image,omitempty"`
+
 	// ProductImageURL is the direct URL to the Nintendo software product image.
 	ProductImageURL string `json:"product_image_url"`
 
@@ -145,6 +148,17 @@ func (e ENGGame) GetReleaseDate() time.Time {
 // GetURL returns the ENGGame URL.
 func (e ENGGame) GetURL() string {
 	return e.URL
+}
+
+// GetENGGameProductImage gets the product image for the ENGGame.
+func GetENGGameProductImage(ENGGame *ENGGame) (err error) {
+	var v Image
+	v, err = NewImage(ENGGame.ProductImageURL)
+	if err != nil {
+		return
+	}
+	ENGGame.ProductImage = &v
+	return
 }
 
 // NewENGGame returns a ENGGame.
