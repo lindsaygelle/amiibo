@@ -4,9 +4,15 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	"image"
+	"image/gif"
+	"image/jpeg"
+	"image/png"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
+	"reflect"
 	"regexp"
 	"strings"
 	"unicode"
@@ -64,6 +70,31 @@ func getRemoteFile(URL string) (req *http.Request, res *http.Response, err error
 	if err != nil {
 		return
 	}
+	return
+}
+
+// getRemoteImage gets a remote image file from a remote URL.
+func getRemoteImage(URL string) (i image.Image, ext string, err error) {
+	ext = strings.TrimPrefix(filepath.Ext(URL), ".")
+	var res *http.Response
+	_, res, err = getRemoteFile(URL)
+	if err != nil {
+		return
+	}
+	var fn func(io.Reader) (image.Image, error)
+	switch strings.ToUpper(ext) {
+	case "GIF":
+		fn = gif.Decode
+	case "JPEG":
+		fn = jpeg.Decode
+	case "PNG":
+		fn = png.Decode
+	}
+	if !reflect.ValueOf(fn).IsZero() {
+		i, err = fn(res.Body)
+		return
+	}
+	i, _, err = image.Decode(res.Body)
 	return
 }
 
