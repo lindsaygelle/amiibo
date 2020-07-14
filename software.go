@@ -19,6 +19,8 @@ type Software interface {
 
 	// GetID returns the Nintendo software products hash key ID.
 	GetID() string
+
+	// GetLanguage returns the Nintendo software products language identifier.
 	GetLanguage() language.Tag
 	GetMD5() (string, []byte, error)
 	GetName() string
