@@ -16,6 +16,8 @@ type Software interface {
 	// GetAvailable is calculated by evaluating the Nintendo softwares products release date is
 	// before the now's timestamp.
 	GetAvailable() bool
+
+	// GetID returns the Nintendo software products hash key ID.
 	GetID() string
 	GetLanguage() language.Tag
 	GetMD5() (string, []byte, error)
