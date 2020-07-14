@@ -10,6 +10,11 @@ import (
 //
 // Software provides a handler to get all common fields between the ENGGame and JPNSoftware.
 type Software interface {
+
+	// GetAvailable returns the Nintendo software product availability status.
+	//
+	// GetAvailable is calculated by evaluating the Nintendo softwares products release date is
+	// before the now's timestamp.
 	GetAvailable() bool
 	GetID() string
 	GetLanguage() language.Tag
