@@ -6,9 +6,10 @@ import (
 
 // Image is an image resource from Nintendo.
 type Image struct {
-	Ext    string `json:"ext"`
-	Height int    `json:"height"`
-	Width  int    `json:"width"`
+	Ext    string      `json:"ext"`
+	Image  image.Image `json:"-"`
+	Height int         `json:"height"`
+	Width  int         `json:"width"`
 }
 
 // NewImage returns a Image.
@@ -21,6 +22,7 @@ func NewImage(URL string) (v Image, err error) {
 	}
 	var r = (i.Bounds().Max)
 	v.Ext = ext
+	v.Image = i
 	v.Height = r.Y
 	v.Width = r.Y
 	return
