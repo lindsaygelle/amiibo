@@ -28,8 +28,20 @@ type Software interface {
 	// GetMD5 returns an additional error if the byte sequence cannot be generated or if the
 	// MD5 hash cannot be produced.
 	GetMD5() (string, []byte, error)
+
+	// GetName returns the Nintendo software product name.
+	//
+	// GetName can contain unicode.
 	GetName() string
+
+	// GetNameAlternative returns the Nintendo softwares products alternative name.
+	//
+	// GetNameAlternative can contain unicode.
 	GetNameAlternative() string
+
+	// GetReleaseDate returns the Nintendo softwares products retail release date as a formatted timestamp.
 	GetReleaseDate() time.Time
+
+	// GetURL return the direct URL to the Nintendo software product page.
 	GetURL() string
 }
