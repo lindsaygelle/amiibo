@@ -32,6 +32,9 @@ type ENGAmiibo struct {
 	// BoxImageURL is the direct URL to the Nintendo Amiibo product box.
 	BoxImageURL string `json:"box_image_url"`
 
+	// CompatibilityURL is the direct URL to the Nintendo Amiibo product software compatibility.
+	CompatibilityURL string `json:"compatibility_url"`
+
 	// Description is the verbose description for the Nintendo Amiibo product.
 	Description string `json:"description"`
 
@@ -131,6 +134,7 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v *ENGChartAmiibo) (err error) {
 		return
 	}
 	e.Availiable = available
+	e.CompatibilityURL = (NintendoURL + "amiibo/compatibility/#compatible/amiibo/" + v.ID)
 	e.ID = v.TagID
 	e.Name = v.Name
 	e.ProductAlternative = strings.ToLower(v.Type)
