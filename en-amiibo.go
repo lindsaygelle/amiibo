@@ -134,7 +134,7 @@ func (e *ENGAmiibo) AddENGChartAmiibo(v *ENGChartAmiibo) (err error) {
 		return
 	}
 	e.Availiable = available
-	e.CompatibilityURL = (NintendoURL + "amiibo/compatibility/#compatible/amiibo/" + v.ID)
+	e.CompatibilityURL = (NintendoURL + "/amiibo/compatibility/#compatible/amiibo/" + v.ID)
 	e.ID = v.TagID
 	e.Name = v.Name
 	e.ProductAlternative = strings.ToLower(v.Type)
