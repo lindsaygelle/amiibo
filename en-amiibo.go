@@ -292,7 +292,7 @@ func (e ENGAmiibo) GetURL() string {
 // GetENGAmiiboBoxImage gets the box art image for the ENGAmiibo.
 func GetENGAmiiboBoxImage(ENGAmiibo *ENGAmiibo) (err error) {
 	var v Image
-	v, err = NewImage(ENGAmiibo.BoxImageURL)
+	v, err = GetImage(ENGAmiibo.BoxImageURL)
 	if err != nil {
 		return
 	}
@@ -303,7 +303,7 @@ func GetENGAmiiboBoxImage(ENGAmiibo *ENGAmiibo) (err error) {
 // GetENGAmiiboProductImage gets the product image for the ENGAmiibo.
 func GetENGAmiiboProductImage(ENGAmiibo *ENGAmiibo) (err error) {
 	var v Image
-	v, err = NewImage(ENGAmiibo.ProductImageURL)
+	v, err = GetImage(ENGAmiibo.ProductImageURL)
 	if err != nil {
 		return
 	}
