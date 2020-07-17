@@ -82,7 +82,8 @@ func getRemoteImage(URL string) (i image.Image, ext string, err error) {
 		return
 	}
 	var fn func(io.Reader) (image.Image, error)
-	switch strings.ToUpper(ext) {
+	ext = strings.ToUpper(ext)
+	switch ext {
 	case "GIF":
 		fn = gif.Decode
 	case "JPEG":
