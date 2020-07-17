@@ -15,4 +15,11 @@ func TestImage(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	v, err = amiibo.ReadImage(filefolder, "bowser.png")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if v.Ext != "PNG" {
+		t.Fatalf("(Image).Ext %s != PNG", v.Ext)
+	}
 }

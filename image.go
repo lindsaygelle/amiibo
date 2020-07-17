@@ -48,7 +48,7 @@ func ReadImage(dir string, filename string) (v Image, err error) {
 		return
 	}
 	var r = (i.Bounds().Max)
-	v.Ext = strings.TrimPrefix(filepath.Ext(filename), ".")
+	v.Ext = strings.ToUpper(strings.TrimPrefix(filepath.Ext(filename), "."))
 	v.Image = i
 	v.Height = r.Y
 	v.Width = r.Y
@@ -65,7 +65,7 @@ func WriteImage(dir string, filename string, v *Image) (fullpath string, err err
 		return
 	}
 	defer f.Close()
-	switch v.Ext {
+	switch strings.ToUpper(v.Ext) {
 	case "GIF":
 		err = gif.Encode(f, v.Image, nil)
 	case "JPG":
