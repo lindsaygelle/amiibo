@@ -153,7 +153,7 @@ func (e ENGGame) GetURL() string {
 // GetENGGameProductImage gets the product image for the ENGGame.
 func GetENGGameProductImage(ENGGame *ENGGame) (err error) {
 	var v Image
-	v, err = NewImage(ENGGame.ProductImageURL)
+	v, err = GetImage(ENGGame.ProductImageURL)
 	if err != nil {
 		return
 	}
