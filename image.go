@@ -19,8 +19,8 @@ type Image struct {
 	Width  int         `json:"width"`
 }
 
-// NewImage returns a Image.
-func NewImage(URL string) (v Image, err error) {
+// GetImage returns a Image.
+func GetImage(URL string) (v Image, err error) {
 	var ext string
 	var i image.Image
 	i, ext, err = getRemoteImage(URL)
@@ -35,9 +35,30 @@ func NewImage(URL string) (v Image, err error) {
 	return
 }
 
+// ReadImage reads an Image from disc.
+func ReadImage(dir string, filename string) (v Image, err error) {
+	var f *os.File
+	var i image.Image
+	f, err = os.Open(filepath.Join(dir, filename))
+	if err != nil {
+		return
+	}
+	i, _, err = image.Decode(f)
+	if err != nil {
+		return
+	}
+	var r = (i.Bounds().Max)
+	v.Ext = strings.TrimPrefix(filepath.Ext(filename), ".")
+	v.Image = i
+	v.Height = r.Y
+	v.Width = r.Y
+	return
+}
+
 // WriteImage writes an Image to disc.
 func WriteImage(dir string, filename string, v *Image) (fullpath string, err error) {
 	var f *os.File
+	filename = strings.TrimSuffix(filename, filepath.Ext(filename))
 	fullpath = filepath.Join(dir, fmt.Sprintf("%s.%s", filename, strings.ToLower(v.Ext)))
 	f, err = os.Create(fullpath)
 	if err != nil {
