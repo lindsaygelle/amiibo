@@ -38,6 +38,9 @@ func (j *JPNAmiiboMap) Has(ID string) (ok bool) {
 	return
 }
 
+// Len returns the length of the JPNAmiiboMap.
+func (j *JPNAmiiboMap) Len() int { return len(*j) }
+
 // NewJPNAmiiboMap returns a new JPNAmiiboMap.
 func NewJPNAmiiboMap(JPNChart *JPNChart, JPNLineup *JPNLineup) (v JPNAmiiboMap, err error) {
 	v = (make(JPNAmiiboMap))
