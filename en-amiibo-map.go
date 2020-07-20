@@ -38,6 +38,9 @@ func (e *ENGAmiiboMap) Has(ID string) (ok bool) {
 	return
 }
 
+// Len returns the length of the ENGAmiiboMap.
+func (e *ENGAmiiboMap) Len() int { return len(*e) }
+
 // NewENGAmiiboMap returns a ENGAmiiboMap.
 func NewENGAmiiboMap(ENGChart ENGChart, ENGLineup ENGLineup) (v ENGAmiiboMap, err error) {
 	v = (make(ENGAmiiboMap))
