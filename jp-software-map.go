@@ -38,6 +38,9 @@ func (j *JPNSoftwareMap) Has(ID string) (ok bool) {
 	return
 }
 
+// Len returns the length of the JPNSoftwareMap.
+func (j *JPNSoftwareMap) Len() int { return len(*j) }
+
 // NewJPNSoftwareMap returns a new JPNSoftwareMap.
 func NewJPNSoftwareMap(JPNChartSoftware *JPNChartSoftware) (v JPNSoftwareMap, err error) {
 	v = (make(JPNSoftwareMap))
