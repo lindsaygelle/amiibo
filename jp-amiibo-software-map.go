@@ -35,3 +35,6 @@ func (j *JPNAmiiboSoftwareMap) Has(ID string) (ok bool) {
 	_, ok = j.Get(ID)
 	return
 }
+
+// Len returns the length of the JPNAmiiboSoftwareMap.
+func (j *JPNAmiiboSoftwareMap) Len() int { return len(*j) }
