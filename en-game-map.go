@@ -38,6 +38,9 @@ func (e *ENGGameMap) Has(ID string) (ok bool) {
 	return
 }
 
+// Len returns the len of the ENGGameMap.
+func (e *ENGGameMap) Len() int { return len(*e) }
+
 // NewENGGameMap returns a ENGGameMap.
 func NewENGGameMap(ENGChart *ENGChart) (v ENGGameMap, err error) {
 	v = (make(ENGGameMap))
